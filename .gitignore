@@ -1,0 +1,47 @@
+# Python environments and generated files
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Local credentials, settings and databases
+.env
+.env.*
+*.pem
+*.key
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+/.config/
+/ccna-network-ops/theme
+/private/
+/study-materials/
+/notes/
+
+# Temporary files and editor state
+/tmp/
+/temp/
+*.tmp
+*.swp
+*.bak
+*~
+.idea/
+.vscode/
+
+# Local design and feasibility records. Publish only the reviewed capture.
+/REPORT.md
+/evidence/
+/design/iterations/
+/design/review.md
+/design/screenshots/*
+!/design/screenshots/composition-neon-rose-140x45.png
