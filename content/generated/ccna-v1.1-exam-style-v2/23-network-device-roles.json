@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-network-device-roles",
+  "version": 1,
+  "topic": "Network device roles",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-23-01",
+      "category": "networking_theory",
+      "subtopic": "Router",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "A small office needs forwarding between its LAN and a WAN IP network. Which role provides that function?",
+      "options": {
+        "A": "PoE injector",
+        "B": "Hub",
+        "C": "Passive patch panel",
+        "D": "Router"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "A router forwards IP packets between networks."
+    },
+    {
+      "id": "ccna-exam-v2-23-02",
+      "category": "networking_theory",
+      "subtopic": "Access point",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which device provides a radio attachment point for Wi-Fi clients on a wired LAN?",
+      "options": {
+        "A": "Wireless LAN controller alone",
+        "B": "Access point",
+        "C": "Ethernet hub",
+        "D": "WAN router with no wireless radio"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The AP supplies the over-the-air link and attaches clients to the network."
+    },
+    {
+      "id": "ccna-exam-v2-23-03",
+      "category": "networking_theory",
+      "subtopic": "Layer 2 switch",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which device forwards local Ethernet frames by learned destination MAC rather than routing between IP networks?",
+      "options": {
+        "A": "Wireless LAN controller managing AP firmware",
+        "B": "Hub",
+        "C": "Router using a routed interface",
+        "D": "Layer 2 switch"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "An L2 switch uses a MAC forwarding table. A hub repeats signals without lookup."
+    },
+    {
+      "id": "ccna-exam-v2-23-04",
+      "category": "networking_theory",
+      "subtopic": "Layer 3 switch",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A campus needs one device to switch within VLANs and route between its VLAN gateways. Which device fits both roles?",
+      "options": {
+        "A": "Ethernet hub",
+        "B": "Midspan PoE injector",
+        "C": "Layer 3 switch",
+        "D": "Unmanaged Layer 2 switch"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "A capable Layer 3 switch can combine MAC switching and IP routing."
+    },
+    {
+      "id": "ccna-exam-v2-23-05",
+      "category": "networking_theory",
+      "subtopic": "Firewall",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which role enforces policy on which network sessions may cross the boundary between two security zones?",
+      "options": {
+        "A": "PoE power source",
+        "B": "Firewall",
+        "C": "Hub",
+        "D": "Layer 2 repeater"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "A firewall applies traffic policy at the security boundary."
+    },
+    {
+      "id": "ccna-exam-v2-23-06",
+      "category": "networking_theory",
+      "subtopic": "IPS",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which device role inspects live traffic for known attack patterns and can block matching traffic inline?",
+      "options": {
+        "A": "Passive hub",
+        "B": "Ethernet media converter",
+        "C": "Out-of-band read-only collector",
+        "D": "IPS"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "An inline intrusion prevention system can detect and stop policy-matching traffic."
+    },
+    {
+      "id": "ccna-exam-v2-23-07",
+      "category": "networking_theory",
+      "subtopic": "Wireless controller",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A campus wants centralized configuration for many lightweight APs. What device fills that management role?",
+      "options": {
+        "A": "Ethernet hub",
+        "B": "Local PoE injector",
+        "C": "Unmanaged switch",
+        "D": "Wireless LAN controller"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "A WLC coordinates compatible APs and centralizes wireless policy and configuration."
+    },
+    {
+      "id": "ccna-exam-v2-23-08",
+      "category": "networking_theory",
+      "subtopic": "Collaboration",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A company needs centralized enterprise call control for its Cisco IP phones. Which platform addresses that function?",
+      "options": {
+        "A": "Cisco Unified Communications Manager",
+        "B": "Cisco Catalyst access switch",
+        "C": "Cisco Nexus data-center switch",
+        "D": "Cisco wireless LAN controller"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Unified Communications Manager handles functions such as call setup and routing for enterprise voice endpoints."
+    },
+    {
+      "id": "ccna-exam-v2-23-09",
+      "category": "networking_theory",
+      "subtopic": "Data center switching",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A data center needs a device that aggregates server Ethernet links and provides high-speed uplinks. Which Cisco family is aimed at that switching role?",
+      "options": {
+        "A": "Nexus",
+        "B": "Wireless LAN Controller",
+        "C": "Unified Communications Manager",
+        "D": "IP Phone 8800"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Nexus is Cisco's data-center switching family, while the others address voice or wireless roles."
+    },
+    {
+      "id": "ccna-exam-v2-23-10",
+      "category": "networking_theory",
+      "subtopic": "Device roles in a failure",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Mobiles still associate to their APs and reach the local default gateway. The gateway can reach a server behind the firewall, but the firewall logs deny the client subnet for that service. Which component owns the restriction?",
+      "options": {
+        "A": "The access point providing radio coverage",
+        "B": "The WLC controlling association",
+        "C": "The firewall enforcing the client policy",
+        "D": "The switch learning the client MACs"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The associations and local path work. The logged policy deny identifies the firewall boundary as the source of this restriction."
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "pack_id": "network-fundamentals",
+  "version": 1,
+  "topic": "Network Fundamentals",
+  "questions": [
+    {
+      "id": "fund-001",
+      "category": "networking_theory",
+      "subtopic": "OSI model",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which OSI layer routes IP packets between networks?",
+      "options": {
+        "A": "Physical",
+        "B": "Data Link",
+        "C": "Network",
+        "D": "Transport"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The Network layer (Layer 3) moves packets between networks using logical addresses."
+    },
+    {
+      "id": "fund-002",
+      "category": "networking_theory",
+      "subtopic": "Ethernet",
+      "difficulty": 1,
+      "type": "multiple_choice",
+      "question": "Which two fields in an Ethernet frame identify the sending and receiving interfaces?",
+      "options": {
+        "A": "Source MAC address",
+        "B": "Destination IPv4 address",
+        "C": "Destination MAC address",
+        "D": "UDP source port"
+      },
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "explanation": "Ethernet carries source and destination MAC addresses. IP addresses and UDP ports are fields in higher-layer protocol headers."
+    },
+    {
+      "id": "fund-003",
+      "category": "networking_theory",
+      "subtopic": "TCP and UDP",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which transport protocol provides a reliable ordered byte stream?",
+      "options": {
+        "A": "IP",
+        "B": "UDP",
+        "C": "ICMP",
+        "D": "TCP"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "TCP uses sequence numbers and acknowledgements to deliver an ordered byte stream. UDP does not provide these guarantees."
+    }
+  ]
+}

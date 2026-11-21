@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-private-ipv4-and-nat",
+  "version": 1,
+  "topic": "Private IPv4 and NAT",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-17-01",
+      "category": "networking_theory",
+      "subtopic": "10/8",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which address belongs to the RFC 1918 block beginning with 10?",
+      "options": {
+        "A": "100.64.16.2",
+        "B": "10.254.16.2",
+        "C": "11.0.0.2",
+        "D": "169.254.16.2"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "RFC 1918 reserves all of 10.0.0.0/8."
+    },
+    {
+      "id": "ccna-exam-v2-17-02",
+      "category": "networking_theory",
+      "subtopic": "192.168 boundary",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "A branch is selecting a private 192.x address for a lab host. Which candidate falls within RFC 1918 space?",
+      "options": {
+        "A": "192.168.200.6",
+        "B": "192.167.200.6",
+        "C": "192.0.2.6",
+        "D": "192.169.200.6"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The private block is specifically 192.168.0.0/16."
+    },
+    {
+      "id": "ccna-exam-v2-17-03",
+      "category": "networking_theory",
+      "subtopic": "172.16/12",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which supplied router interface address falls inside the 172.16.0.0/12 private block?",
+      "options": {
+        "A": "172.32.5.1",
+        "B": "172.63.5.1",
+        "C": "172.15.5.1",
+        "D": "172.30.5.1"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "A /12 here covers second octets 16 through 31."
+    },
+    {
+      "id": "ccna-exam-v2-17-04",
+      "category": "networking_theory",
+      "subtopic": "Comparing ranges",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which allocation is completely within RFC 1918 space?",
+      "options": {
+        "A": "172.24.0.0/13",
+        "B": "192.168.0.0/15",
+        "C": "10.0.0.0/7",
+        "D": "172.0.0.0/12"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "172.24.0.0/13 covers 172.24 through 172.31. The other options extend outside the private ranges."
+    },
+    {
+      "id": "ccna-exam-v2-17-05",
+      "category": "networking_theory",
+      "subtopic": "Isolated reuse",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Why can two disconnected labs both use 10.40.0.0/16?",
+      "options": {
+        "A": "No shared forwarding domain must distinguish the duplicated destinations",
+        "B": "The prefix is unique when both sites use /16",
+        "C": "Every private host address is globally registered twice",
+        "D": "ARP assigns a different IPv4 prefix to each lab"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Private addresses can be reused in isolated networks. Connecting overlapping networks requires a way to disambiguate them."
+    },
+    {
+      "id": "ccna-exam-v2-17-06",
+      "category": "networking_theory",
+      "subtopic": "NAT intent",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A private host browses the public Internet through source NAT. What address is modified on the outbound flow?",
+      "options": {
+        "A": "The address in the subnet mask",
+        "B": "The destination IPv4 address",
+        "C": "The source IPv4 address",
+        "D": "The local gateway's configured IPv4 address"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Source NAT presents a translated source address to the outside network."
+    },
+    {
+      "id": "ccna-exam-v2-17-07",
+      "category": "networking_theory",
+      "subtopic": "Return flow",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "An edge router maintains a dynamic translation for an outbound session. How is a returning packet delivered?",
+      "options": {
+        "A": "The outside server rewrites the destination to the private address",
+        "B": "The router uses translation state to restore the internal destination",
+        "C": "The inside gateway advertises the private subnet to the Internet",
+        "D": "The inside client assigns the public address to its own NIC"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The NAT device reverses the mapping on the inbound return packet."
+    },
+    {
+      "id": "ccna-exam-v2-17-08",
+      "category": "networking_theory",
+      "subtopic": "Private versus reachable",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Two offices use different private subnets and have a private WAN with valid routes in both directions. What is required solely because the IPs are private?",
+      "options": {
+        "A": "The addresses must be replaced with public loopbacks",
+        "B": "Both routers must use source NAT",
+        "C": "Each office must apply destination NAT to its LAN",
+        "D": "No translation is required for this internal communication"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "RFC 1918 addresses can be routed across private networks with coordinated addressing."
+    },
+    {
+      "id": "ccna-exam-v2-17-09",
+      "category": "networking_theory",
+      "subtopic": "Diagnosing overlap",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Two offices merge and both have a server at 10.50.4.40. Why is adding one route to 10.50.4.0/24 insufficient to address both servers independently?",
+      "options": {
+        "A": "A /24 route only accepts broadcast destinations",
+        "B": "The same destination cannot uniquely identify the intended server",
+        "C": "The common mask prevents ARP from resolving any address",
+        "D": "Private prefixes cannot appear in routing tables"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The identical destination is ambiguous in one routing context. Renumbering or appropriate translation can resolve that ambiguity."
+    },
+    {
+      "id": "ccna-exam-v2-17-10",
+      "category": "networking_theory",
+      "subtopic": "NAT evidence",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A firewall log outside the edge sees source 198.51.100.7, while the paired internal capture shows source 10.1.2.7 to the same external destination. Which interpretation matches the evidence and the configured source NAT?",
+      "options": {
+        "A": "The edge replaces destination IPs to select its upstream gateway",
+        "B": "The clients changed subnets after the firewall logged them",
+        "C": "The edge presents a different source on its outside path",
+        "D": "The external server rewrites its own destination before the internal capture"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The source changes across the edge. The external destination stays the same."
+    }
+  ]
+}

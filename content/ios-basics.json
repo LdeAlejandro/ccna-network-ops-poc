@@ -1,0 +1,62 @@
+{
+  "pack_id": "ios-basics",
+  "version": 1,
+  "topic": "Cisco IOS",
+  "questions": [
+    {
+      "id": "ios-001",
+      "category": "ios_commands",
+      "subtopic": "Show commands",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which command summarizes interface IPv4 addresses and interface and protocol status?",
+      "options": {
+        "A": "show running-config",
+        "B": "show ip interface brief",
+        "C": "show vlan brief",
+        "D": "show ip route"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "show ip interface brief gives a one-line summary per interface with the IP address and status columns."
+    },
+    {
+      "id": "ios-002",
+      "category": "ios_commands",
+      "subtopic": "Show commands",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which command displays the IPv4 routing table?",
+      "options": {
+        "A": "show interfaces",
+        "B": "show vlan brief",
+        "C": "show version",
+        "D": "show ip route"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "show ip route displays installed IPv4 routes, including directly connected routes."
+    },
+    {
+      "id": "ios-003",
+      "category": "ios_output",
+      "subtopic": "Interface status",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "What does the status of Gi0/0 indicate?",
+      "options": {
+        "A": "The interface and line protocol are both up.",
+        "B": "The interface is administratively disabled.",
+        "C": "The interface is up, but the line protocol is down.",
+        "D": "The interface has no IPv4 address."
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Status and Protocol are separate columns. Status is up while Protocol is down, so Layer 2 is not operational.",
+      "snippet": "Interface  IP-Address   OK? Method Status Protocol\nGi0/0      192.0.2.1    YES manual up     down"
+    }
+  ]
+}

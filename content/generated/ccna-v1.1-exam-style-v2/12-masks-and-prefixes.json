@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-masks-and-prefixes",
+  "version": 1,
+  "topic": "Masks and prefixes",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-12-01",
+      "category": "subnetting",
+      "subtopic": "Mask notation",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which mask should be entered for a /22 assignment?",
+      "options": {
+        "A": "255.255.248.0",
+        "B": "255.255.255.0",
+        "C": "255.255.252.0",
+        "D": "255.255.254.0"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Six leading bits in the third octet total 252."
+    },
+    {
+      "id": "ccna-exam-v2-12-02",
+      "category": "subnetting",
+      "subtopic": "Host portion",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "How many IPv4 host bits does a /19 leave?",
+      "options": {
+        "A": "13",
+        "B": "19",
+        "C": "11",
+        "D": "21"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Subtract 19 network bits from 32."
+    },
+    {
+      "id": "ccna-exam-v2-12-03",
+      "category": "subnetting",
+      "subtopic": "Prefix conversion",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which prefix length should replace 255.255.255.248 in a diagram?",
+      "options": {
+        "A": "/30",
+        "B": "/29",
+        "C": "/31",
+        "D": "/28"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The final octet 248 has five leading ones, giving 24 + 5 bits."
+    },
+    {
+      "id": "ccna-exam-v2-12-04",
+      "category": "subnetting",
+      "subtopic": "Mask validity",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which value is a valid contiguous IPv4 subnet mask?",
+      "options": {
+        "A": "255.240.255.0",
+        "B": "255.255.0.128",
+        "C": "255.255.232.0",
+        "D": "255.255.240.0"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "A valid prefix mask has an unbroken run of ones followed by zeros."
+    },
+    {
+      "id": "ccna-exam-v2-12-05",
+      "category": "subnetting",
+      "subtopic": "Local delivery",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A host at 192.0.2.142/27 sends to 192.0.2.157 with no overriding route. Which delivery decision is correct?",
+      "options": {
+        "A": "Send to the default gateway",
+        "B": "Treat the target as on-link",
+        "C": "Treat the target as its own address",
+        "D": "Treat the target as the subnet broadcast"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Both endpoints lie within the host range .129–.158 of 192.0.2.128/27."
+    },
+    {
+      "id": "ccna-exam-v2-12-06",
+      "category": "subnetting",
+      "subtopic": "Remote delivery",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A host at 198.51.100.94/27 uses gateway 198.51.100.65. Where does it send a frame for IPv4 destination 198.51.100.101?",
+      "options": {
+        "A": "To its own interface MAC",
+        "B": "To the gateway MAC",
+        "C": "To the Ethernet broadcast address for the entire IP packet",
+        "D": "To the destination host's MAC learned by direct ARP"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The host is in the .64/27 network. Destination .101 is outside its connected range, so the next hop is the gateway."
+    },
+    {
+      "id": "ccna-exam-v2-12-07",
+      "category": "subnetting",
+      "subtopic": "Boundary octet",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which octet contains both network and host bits in 172.20.89.7/20?",
+      "options": {
+        "A": "Fourth",
+        "B": "Third",
+        "C": "First",
+        "D": "Second"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Sixteen network bits cover the first two octets and four further bits are in octet three."
+    },
+    {
+      "id": "ccna-exam-v2-12-08",
+      "category": "subnetting",
+      "subtopic": "Mismatched masks",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A is 198.51.100.61/26 and B is 198.51.100.70/25 on the same Ethernet. How do they classify each other's destination before ARP?",
+      "options": {
+        "A": "Both treat each other as remote",
+        "B": "Both treat each other as local",
+        "C": "A treats B as local and B treats A as remote",
+        "D": "A treats B as remote and B treats A as local"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "A's /26 ends at .63, while B's /25 includes both addresses."
+    },
+    {
+      "id": "ccna-exam-v2-12-09",
+      "category": "subnetting",
+      "subtopic": "Selecting a common prefix",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Which is the longest prefix that puts 203.0.113.33 and 203.0.113.62 on the same subnet as usable hosts?",
+      "options": {
+        "A": "/27",
+        "B": "/28",
+        "C": "/25",
+        "D": "/26"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Both addresses are usable in .32/27. A /28 divides them into separate blocks."
+    },
+    {
+      "id": "ccna-exam-v2-12-10",
+      "category": "subnetting",
+      "subtopic": "Cross-octet membership",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Which address is on-link for 172.19.47.32/21, assuming ordinary connected routing?",
+      "options": {
+        "A": "172.19.40.9",
+        "B": "172.20.40.9",
+        "C": "172.19.48.1",
+        "D": "172.19.39.254"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "A /21 advances by eight in octet three. The local block spans third octets 40 through 47."
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-binary",
+  "version": 1,
+  "topic": "Binary",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-11-01",
+      "category": "subnetting",
+      "subtopic": "Bit weights",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "An engineer labels the bits of an octet from left to right. Which decimal weight belongs to the third bit?",
+      "options": {
+        "A": "64",
+        "B": "16",
+        "C": "32",
+        "D": "4"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The weights start at 128 and halve with each position."
+    },
+    {
+      "id": "ccna-exam-v2-11-02",
+      "category": "subnetting",
+      "subtopic": "Binary notation",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which decimal octet corresponds to 10000001?",
+      "options": {
+        "A": "128",
+        "B": "130",
+        "C": "129",
+        "D": "65"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The leftmost and rightmost bits contribute 128 and 1."
+    },
+    {
+      "id": "ccna-exam-v2-11-03",
+      "category": "subnetting",
+      "subtopic": "Octet conversion",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A capture shows the octet 10110110. Which decimal value should the engineer record?",
+      "options": {
+        "A": "180",
+        "B": "178",
+        "C": "186",
+        "D": "182"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "128 + 32 + 16 + 4 + 2 equals 182."
+    },
+    {
+      "id": "ccna-exam-v2-11-04",
+      "category": "subnetting",
+      "subtopic": "Decimal conversion",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which eight-bit string represents decimal 107?",
+      "options": {
+        "A": "01111011",
+        "B": "01101101",
+        "C": "01011011",
+        "D": "01101011"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "107 is 64 + 32 + 8 + 2 + 1."
+    },
+    {
+      "id": "ccna-exam-v2-11-05",
+      "category": "subnetting",
+      "subtopic": "Binary mask",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which binary octet appears third in the mask 255.255.224.0?",
+      "options": {
+        "A": "11100000",
+        "B": "11100100",
+        "C": "11000000",
+        "D": "11110000"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "224 is 128 + 64 + 32, making the first three bits ones."
+    },
+    {
+      "id": "ccna-exam-v2-11-06",
+      "category": "subnetting",
+      "subtopic": "Bitwise AND",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which result should a worksheet show for 11010110 AND 11110000?",
+      "options": {
+        "A": "11010000",
+        "B": "00100110",
+        "C": "11110110",
+        "D": "11010110"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "AND preserves the first four bits here and clears the low four."
+    },
+    {
+      "id": "ccna-exam-v2-11-07",
+      "category": "subnetting",
+      "subtopic": "Address assembly",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A header lists the four address octets as 11001011 00000000 01110001 00010011. Which IPv4 address is encoded?",
+      "options": {
+        "A": "203.0.113.17",
+        "B": "203.0.113.19",
+        "C": "202.0.113.19",
+        "D": "203.0.114.19"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Converting each octet independently yields 203, 0, 113 and 19."
+    },
+    {
+      "id": "ccna-exam-v2-11-08",
+      "category": "subnetting",
+      "subtopic": "Network bits",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A host uses 192.0.2.173/28. Which binary octet is last in its network address?",
+      "options": {
+        "A": "10101111",
+        "B": "10110000",
+        "C": "10101101",
+        "D": "10100000"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "173 is 10101101. A /28 keeps the first four bits of the final octet and clears the rest."
+    },
+    {
+      "id": "ccna-exam-v2-11-09",
+      "category": "subnetting",
+      "subtopic": "Host bits",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "For 198.51.100.109/27, which five-bit value is the host portion?",
+      "options": {
+        "A": "01101",
+        "B": "11101",
+        "C": "10110",
+        "D": "11010"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "109 is 01101101 in binary. A /27 leaves the rightmost five bits for hosts."
+    },
+    {
+      "id": "ccna-exam-v2-11-10",
+      "category": "subnetting",
+      "subtopic": "Prefix comparison",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Two final octets are 01110010 and 01111111 within the same /24. What is the most specific prefix containing both?",
+      "options": {
+        "A": "/27",
+        "B": "/30",
+        "C": "/28",
+        "D": "/29"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Their first four bits match and their fifth bits differ, so the first 28 address bits match."
+    }
+  ]
+}

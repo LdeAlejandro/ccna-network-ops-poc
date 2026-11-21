@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-osi-and-tcp-ip",
+  "version": 1,
+  "topic": "OSI and TCP/IP",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-06-01",
+      "category": "networking_theory",
+      "subtopic": "Physical layer",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "At which OSI layer are bits represented as electrical, radio or optical signals?",
+      "options": {
+        "A": "Physical",
+        "B": "Network",
+        "C": "Transport",
+        "D": "Data link"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The physical layer defines transmission over the medium."
+    },
+    {
+      "id": "ccna-exam-v2-06-02",
+      "category": "networking_theory",
+      "subtopic": "Data link layer",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which OSI layer handles Ethernet frame delivery on a local link?",
+      "options": {
+        "A": "Session",
+        "B": "Network",
+        "C": "Presentation",
+        "D": "Data link"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Ethernet framing and MAC addressing are data-link functions."
+    },
+    {
+      "id": "ccna-exam-v2-06-03",
+      "category": "networking_theory",
+      "subtopic": "Network layer",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "A laptop moves to a different subnet and receives a new IPv4 address while retaining its Ethernet MAC. Which layer owns the changed address?",
+      "options": {
+        "A": "Transport",
+        "B": "Data link",
+        "C": "Network",
+        "D": "Physical"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The IPv4 address belongs to Layer 3. The Ethernet MAC belongs to Layer 2."
+    },
+    {
+      "id": "ccna-exam-v2-06-04",
+      "category": "networking_theory",
+      "subtopic": "Transport layer",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "What is the conventional name of the transport-layer PDU for TCP?",
+      "options": {
+        "A": "Bit",
+        "B": "Segment",
+        "C": "Ethernet header",
+        "D": "Frame"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "TCP encapsulates bytes in segments, which IP then carries in packets."
+    },
+    {
+      "id": "ccna-exam-v2-06-05",
+      "category": "networking_theory",
+      "subtopic": "OSI upper layers",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which ordering starts immediately above OSI transport and moves upward?",
+      "options": {
+        "A": "Session, presentation, application",
+        "B": "Presentation, session, application",
+        "C": "Application, presentation, session",
+        "D": "Data link, network, session"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The layers above transport are session (5), presentation (6) and application (7)."
+    },
+    {
+      "id": "ccna-exam-v2-06-06",
+      "category": "networking_theory",
+      "subtopic": "Model mapping",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which OSI layers are broadly grouped into the TCP/IP application layer?",
+      "options": {
+        "A": "Physical and data link",
+        "B": "Session, presentation and application",
+        "C": "Data link, network and session",
+        "D": "Network and transport"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "TCP/IP groups these upper-layer functions into its application layer."
+    },
+    {
+      "id": "ccna-exam-v2-06-07",
+      "category": "networking_theory",
+      "subtopic": "Encapsulation",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "How is a TCP segment carried across an IPv4 Ethernet link?",
+      "options": {
+        "A": "The segment and IP packet are separate Ethernet headers",
+        "B": "The IP packet is inside a TCP segment inside a frame",
+        "C": "The segment is inside an IP packet inside an Ethernet frame",
+        "D": "The Ethernet frame is inside a TCP segment inside an IP packet"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "IP carries the segment and Ethernet carries the resulting IP packet."
+    },
+    {
+      "id": "ccna-exam-v2-06-08",
+      "category": "networking_theory",
+      "subtopic": "Decapsulation",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "After a host accepts an Ethernet frame carrying IPv4, which information identifies TCP as the next protocol?",
+      "options": {
+        "A": "The Ethernet FCS",
+        "B": "The IPv4 Protocol field",
+        "C": "The TCP window field",
+        "D": "The Ethernet source MAC"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "EtherType identifies IPv4, then the IPv4 Protocol field identifies its payload as TCP."
+    },
+    {
+      "id": "ccna-exam-v2-06-09",
+      "category": "networking_theory",
+      "subtopic": "Hop-by-hop framing",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A router forwards an IPv4 packet between Ethernet links without NAT. Which field ordinarily changes to name the next hop on the second link?",
+      "options": {
+        "A": "The IPv4 destination address",
+        "B": "The TCP destination port",
+        "C": "The Ethernet destination MAC",
+        "D": "The TCP acknowledgment number"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The router builds a fresh link-layer frame appropriate for the outgoing link."
+    },
+    {
+      "id": "ccna-exam-v2-06-10",
+      "category": "networking_theory",
+      "subtopic": "Layered evidence",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A client receives a valid Ethernet frame and its IPv4 payload, but a TCP connection attempt to the listed port receives a reset. Which layer reports the reset?",
+      "options": {
+        "A": "Network",
+        "B": "Presentation",
+        "C": "Data link",
+        "D": "Transport"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "TCP flags, including RST, are interpreted at the transport layer even when lower-layer delivery succeeds."
+    }
+  ]
+}

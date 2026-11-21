@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-tcp-and-udp",
+  "version": 1,
+  "topic": "TCP and UDP",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-07-01",
+      "category": "networking_theory",
+      "subtopic": "Transport ports",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "What identifies the intended server application endpoint in an initial TCP segment?",
+      "options": {
+        "A": "TTL",
+        "B": "Receive window",
+        "C": "Destination port",
+        "D": "Source MAC"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The server listens at the destination transport port."
+    },
+    {
+      "id": "ccna-exam-v2-07-02",
+      "category": "networking_theory",
+      "subtopic": "Handshake",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which exchange normally establishes a TCP connection?",
+      "options": {
+        "A": "ACK, SYN, FIN",
+        "B": "SYN, FIN, SYN-ACK",
+        "C": "SYN, SYN-ACK, ACK",
+        "D": "RST, ACK, SYN"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Both peers synchronize initial sequence numbers and acknowledge the other peer's SYN."
+    },
+    {
+      "id": "ccna-exam-v2-07-03",
+      "category": "networking_theory",
+      "subtopic": "UDP header",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which field exists in the UDP header?",
+      "options": {
+        "A": "Receive window",
+        "B": "Sequence number",
+        "C": "Acknowledgment number",
+        "D": "Length"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "UDP carries source port, destination port, length and checksum fields."
+    },
+    {
+      "id": "ccna-exam-v2-07-04",
+      "category": "networking_theory",
+      "subtopic": "Multiplexing",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Two TCP connections share a server address and destination port. How can the server distinguish them?",
+      "options": {
+        "A": "Their source addresses or source ports differ",
+        "B": "They must have different destination MACs",
+        "C": "Each connection uses a different IP protocol number",
+        "D": "Each connection requires a different TTL"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The two endpoint addresses and ports identify a TCP connection."
+    },
+    {
+      "id": "ccna-exam-v2-07-05",
+      "category": "networking_theory",
+      "subtopic": "Acknowledgments",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "What does a cumulative TCP ACK of 520 indicate for ordinary byte transfer?",
+      "options": {
+        "A": "Bytes through 519 have been received in order",
+        "B": "The server listened on TCP port 520",
+        "C": "Byte 520 is the last byte received in order",
+        "D": "The receiver has a 520-byte window"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The acknowledgment number is the next byte position expected."
+    },
+    {
+      "id": "ccna-exam-v2-07-06",
+      "category": "networking_theory",
+      "subtopic": "Retransmission",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A TCP segment is lost and its retransmission timer expires. What does the sending TCP normally do?",
+      "options": {
+        "A": "Retransmits the outstanding data",
+        "B": "Reopens the session with UDP",
+        "C": "Discards all previously acknowledged bytes at the receiver",
+        "D": "Changes the destination port"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "TCP uses retransmission to recover missing data."
+    },
+    {
+      "id": "ccna-exam-v2-07-07",
+      "category": "networking_theory",
+      "subtopic": "Receive window",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which TCP header field advertises how much receive space the peer should account for when sending?",
+      "options": {
+        "A": "Source port",
+        "B": "Urgent pointer",
+        "C": "Window",
+        "D": "Data offset"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The advertised window limits how much additional sequence space the sender may use."
+    },
+    {
+      "id": "ccna-exam-v2-07-08",
+      "category": "networking_theory",
+      "subtopic": "Sequence calculation",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A TCP segment beginning at sequence 700 carries 40 bytes in order with no SYN or FIN. What cumulative ACK is expected if no later data has arrived?",
+      "options": {
+        "A": "739",
+        "B": "700",
+        "C": "741",
+        "D": "740"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The data occupy sequence numbers 700 through 739, so the next expected byte is 740."
+    },
+    {
+      "id": "ccna-exam-v2-07-09",
+      "category": "networking_theory",
+      "subtopic": "Flow control",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A receiver temporarily advertises a zero window. What is the immediate implication for ordinary new data?",
+      "options": {
+        "A": "The sender switches the connection to UDP",
+        "B": "The receiver must send a reset",
+        "C": "The sender pauses new data until the window opens",
+        "D": "The sender sends another full receive buffer"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Zero receive space stops ordinary new data. TCP uses window probes so the sender can detect reopening."
+    },
+    {
+      "id": "ccna-exam-v2-07-10",
+      "category": "networking_theory",
+      "subtopic": "Header length",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "What does TCP Data Offset specify?",
+      "options": {
+        "A": "The TCP header length in 32-bit words",
+        "B": "The receiver's available bytes",
+        "C": "The sequence number of the first unacknowledged byte",
+        "D": "The IPv4 header length in octets"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Data Offset tells a receiver where the TCP payload begins, including space for TCP options."
+    }
+  ]
+}

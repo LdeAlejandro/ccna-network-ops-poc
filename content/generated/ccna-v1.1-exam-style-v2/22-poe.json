@@ -1,0 +1,188 @@
+{
+  "pack_id": "ccna-exam-v2-poe",
+  "version": 1,
+  "topic": "PoE",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-22-01",
+      "category": "networking_theory",
+      "subtopic": "Powered device",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "In a PoE installation, which device is the powered device when an AP is attached to a PoE switch?",
+      "options": {
+        "A": "The frame's destination host",
+        "B": "The PoE switch",
+        "C": "The access point",
+        "D": "The copper patch panel"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The access point consumes power, while the switch supplies it."
+    },
+    {
+      "id": "ccna-exam-v2-22-02",
+      "category": "networking_theory",
+      "subtopic": "Combined transport",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "What can a standards-compatible PoE switch supply on the AP's copper Ethernet cable?",
+      "options": {
+        "A": "Ethernet data only",
+        "B": "Electrical power and Ethernet data",
+        "C": "Electrical power only",
+        "D": "Optical signaling and electrical power"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "PoE combines DC power delivery and Ethernet communications on the supported copper cable."
+    },
+    {
+      "id": "ccna-exam-v2-22-03",
+      "category": "networking_theory",
+      "subtopic": "Injector placement",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A non-PoE switch must connect to a PoE-powered camera. Where does a compatible midspan injector go?",
+      "options": {
+        "A": "In parallel with the camera outside its data path",
+        "B": "On the switch's console port",
+        "C": "Between the switch and its upstream router",
+        "D": "In line between the switch and camera"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The injector accepts data on the upstream side and supplies data plus power toward the camera."
+    },
+    {
+      "id": "ccna-exam-v2-22-04",
+      "category": "networking_theory",
+      "subtopic": "Uplink versus powered port",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "After recabling, a camera has no power. The injector's PoE output is connected to a non-PoE switch, and the camera is connected to its data-only input. How should the engineer reconnect the cables?",
+      "options": {
+        "A": "Connect both devices to data in through a splitter",
+        "B": "Move the injector to the switch's upstream uplink",
+        "C": "Connect the camera to PoE out and the switch to data in",
+        "D": "Leave the switch on PoE out and enable full duplex"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The power output has to face the powered camera. The data-only input connects to the non-PoE switch."
+    },
+    {
+      "id": "ccna-exam-v2-22-05",
+      "category": "networking_theory",
+      "subtopic": "Budget",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A switch allows 60 W of PoE allocation and has already reserved 50 W. A new device requires a 15 W allocation. What explains a power denial?",
+      "options": {
+        "A": "The device requires less power than the remaining budget",
+        "B": "The existing reservations free 50 W",
+        "C": "The remaining 10 W guarantees the device can draw 15 W",
+        "D": "Only 10 W of allocation remains"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The switch cannot reserve 15 W from a budget with only 10 W available."
+    },
+    {
+      "id": "ccna-exam-v2-22-06",
+      "category": "networking_theory",
+      "subtopic": "Per-port limits",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A PoE switch has ample aggregate budget but its port cannot deliver the AP's specified power. What determines whether that port is suitable?",
+      "options": {
+        "A": "The AP's management subnet mask",
+        "B": "Only the link's negotiated data rate",
+        "C": "Only the total chassis power budget",
+        "D": "The port's supported PoE capability and power limit"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Both the port's supply capability and the available system budget must meet the device's requirements."
+    },
+    {
+      "id": "ccna-exam-v2-22-07",
+      "category": "networking_theory",
+      "subtopic": "Power continuity",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A camera, its non-PoE switch and a separate injector must stay usable during a brief utility outage. The switch is already on UPS power. What additional connection protects the camera’s power path?",
+      "options": {
+        "A": "Connect the injector data input to a passive patch panel",
+        "B": "Move the camera data cable to a second non-PoE switch port",
+        "C": "Connect the injector power input to the UPS",
+        "D": "Configure the switch port to keep its DHCP lease"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The separately powered injector must stay energized for the camera to keep receiving power."
+    },
+    {
+      "id": "ccna-exam-v2-22-08",
+      "category": "networking_theory",
+      "subtopic": "Power versus forwarding",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A powered AP lights up but the switch reports no Ethernet link. Which conclusion is justified?",
+      "options": {
+        "A": "The uplink routing table has a connected AP route",
+        "B": "Power delivery alone does not establish Ethernet forwarding",
+        "C": "The AP has received and acknowledged a DHCP lease",
+        "D": "The switch has learned the AP's MAC address"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The power and data functions have distinct status. Investigate the data path and link state."
+    },
+    {
+      "id": "ccna-exam-v2-22-09",
+      "category": "networking_theory",
+      "subtopic": "Power deployment",
+      "difficulty": 2,
+      "type": "multiple_choice",
+      "question": "Select TWO. A camera requires standards-compatible PoE. Which deployments can supply power while connecting the camera to the wired LAN?",
+      "options": {
+        "A": "Connect it through a passive patch panel to a non-PoE switch",
+        "B": "Connect it directly to a non-PoE switch using a crossover cable",
+        "C": "Use a compatible midspan injector with a non-PoE switch",
+        "D": "Connect it directly to a compatible PoE switch port"
+      },
+      "correct_answers": [
+        "C",
+        "D"
+      ],
+      "explanation": "An injector or a PoE switch can supply power. Cabling and patch panels only carry whatever the upstream device supplies."
+    },
+    {
+      "id": "ccna-exam-v2-22-10",
+      "category": "networking_theory",
+      "subtopic": "Power fault isolation",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "An AP functions from a known-good compatible injector and the same cable, but a PoE switch denies power. Its log reports insufficient budget. Which corrective action addresses the reported constraint?",
+      "options": {
+        "A": "Free enough system PoE allocation or move the AP to a compatible source with capacity",
+        "B": "Set full duplex on the switch's uplink",
+        "C": "Change the AP's default gateway to the switch management address",
+        "D": "Clear the AP's ARP entry on the router"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Testing with independent power isolates the report from basic AP failure. The switch must have enough available power allocation."
+    }
+  ]
+}

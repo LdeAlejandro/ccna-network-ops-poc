@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CCNA Network Ops question pack",
+  "type": "object",
+  "required": ["pack_id", "version", "topic", "questions"],
+  "properties": {
+    "pack_id": {"type": "string", "maxLength": 80, "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"},
+    "version": {"type": "integer", "minimum": 1},
+    "topic": {"type": "string", "minLength": 1, "maxLength": 70},
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/question"}
+    }
+  },
+  "$defs": {
+    "question": {
+      "type": "object",
+      "required": ["id", "category", "subtopic", "difficulty", "type", "question", "options", "correct_answers", "explanation"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1, "maxLength": 100},
+        "category": {"enum": ["networking_theory", "ios_commands", "ios_output", "troubleshooting", "subnetting"]},
+        "subtopic": {"type": "string", "minLength": 1, "maxLength": 100},
+        "difficulty": {"type": "integer", "minimum": 1, "maximum": 5},
+        "type": {"enum": ["single_choice", "multiple_choice"]},
+        "question": {"type": "string", "minLength": 1, "maxLength": 4000},
+        "options": {
+          "type": "object",
+          "required": ["A", "B"],
+          "propertyNames": {"enum": ["A", "B", "C", "D"]},
+          "dependentRequired": {"D": ["C"]},
+          "additionalProperties": {"type": "string", "minLength": 1, "maxLength": 1000}
+        },
+        "correct_answers": {
+          "type": "array",
+          "items": {"enum": ["A", "B", "C", "D"]},
+          "uniqueItems": true
+        },
+        "explanation": {"type": "string", "minLength": 1, "maxLength": 6000},
+        "snippet": {"type": "string", "minLength": 1, "maxLength": 6000}
+      },
+      "if": {"properties": {"type": {"const": "single_choice"}}},
+      "then": {"properties": {"correct_answers": {"minItems": 1, "maxItems": 1}}},
+      "else": {"properties": {"correct_answers": {"minItems": 2, "maxItems": 4}}}
+    }
+  }
+}

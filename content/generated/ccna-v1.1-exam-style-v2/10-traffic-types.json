@@ -1,0 +1,188 @@
+{
+  "pack_id": "ccna-exam-v2-traffic-types",
+  "version": 1,
+  "topic": "Traffic types",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-10-01",
+      "category": "networking_theory",
+      "subtopic": "Unicast",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "A workstation opens an SSH session to one router's individual IPv4 address. Which delivery type is it?",
+      "options": {
+        "A": "Loopback",
+        "B": "Unicast",
+        "C": "Broadcast",
+        "D": "Multicast"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Unicast targets one addressed endpoint."
+    },
+    {
+      "id": "ccna-exam-v2-10-02",
+      "category": "networking_theory",
+      "subtopic": "Limited broadcast",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which destination is the IPv4 limited broadcast address?",
+      "options": {
+        "A": "0.0.0.0",
+        "B": "127.0.0.1",
+        "C": "255.255.255.255",
+        "D": "224.0.0.1"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Limited broadcast targets the local broadcast domain and routers do not forward it."
+    },
+    {
+      "id": "ccna-exam-v2-10-03",
+      "category": "networking_theory",
+      "subtopic": "Multicast",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which delivery type addresses a group of interested receivers?",
+      "options": {
+        "A": "Multicast",
+        "B": "Limited broadcast",
+        "C": "Loopback",
+        "D": "Directed unicast"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Multicast addressing represents a group rather than a particular receiver."
+    },
+    {
+      "id": "ccna-exam-v2-10-04",
+      "category": "networking_theory",
+      "subtopic": "Broadcast identification",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A frame capture shows destination ff:ff:ff:ff:ff:ff and EtherType 0x0806. What is the delivery scope of that frame?",
+      "options": {
+        "A": "One learned destination switch port",
+        "B": "The local Ethernet broadcast domain",
+        "C": "Only stations subscribed to a multicast group",
+        "D": "Every routed subnet that has an ARP entry"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The all-ones destination MAC makes this ARP frame a link-layer broadcast."
+    },
+    {
+      "id": "ccna-exam-v2-10-05",
+      "category": "networking_theory",
+      "subtopic": "Directed broadcast",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "For IPv4 subnet 198.51.100.64/26, which address is its directed broadcast?",
+      "options": {
+        "A": "198.51.100.64",
+        "B": "198.51.100.127",
+        "C": "198.51.100.126",
+        "D": "198.51.100.128"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "A /26 block spans 64 addresses. The all-ones host portion makes .127 the subnet broadcast."
+    },
+    {
+      "id": "ccna-exam-v2-10-06",
+      "category": "networking_theory",
+      "subtopic": "Multicast addresses",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which destination falls in the IPv4 multicast address range?",
+      "options": {
+        "A": "192.0.2.8",
+        "B": "198.51.100.8",
+        "C": "239.8.8.8",
+        "D": "127.8.8.8"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "IPv4 multicast addresses occupy 224.0.0.0 through 239.255.255.255."
+    },
+    {
+      "id": "ccna-exam-v2-10-07",
+      "category": "networking_theory",
+      "subtopic": "Traffic efficiency",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A video sender has multiple interested receivers and multicast forwarding is available. What can multicast save on a shared upstream link?",
+      "options": {
+        "A": "It removes the need for IP addresses",
+        "B": "It sends one independent upstream copy per receiver",
+        "C": "It can carry a single copy before traffic branches",
+        "D": "It changes every receiver into a broadcast source"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Multicast forwarding can replicate the packet at branching points instead of carrying each receiver's copy upstream."
+    },
+    {
+      "id": "ccna-exam-v2-10-08",
+      "category": "networking_theory",
+      "subtopic": "Broadcast scope",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A DHCP client initially sends a limited broadcast on one LAN. What lets a server on another subnet handle it?",
+      "options": {
+        "A": "A DHCP relay configured for that LAN",
+        "B": "An Ethernet FCS recalculation alone",
+        "C": "A static ARP entry for the server on the client",
+        "D": "A larger TCP receive window"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "A relay receives the local discovery and forwards DHCP information to the remote server."
+    },
+    {
+      "id": "ccna-exam-v2-10-09",
+      "category": "networking_theory",
+      "subtopic": "Delivery classification",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Refer to the three destination addresses in the exhibit. Which order classifies their traffic types?",
+      "options": {
+        "A": "Unicast, broadcast, multicast",
+        "B": "Multicast, unicast, broadcast",
+        "C": "Broadcast, multicast, unicast",
+        "D": "Unicast, multicast, broadcast"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "192.0.2.88 can identify one endpoint, 239.10.10.10 is a group, and the all-ones address is limited broadcast.",
+      "snippet": "Illustrative excerpt\n1  192.0.2.88\n2  239.10.10.10\n3  255.255.255.255"
+    },
+    {
+      "id": "ccna-exam-v2-10-10",
+      "category": "networking_theory",
+      "subtopic": "Subnet boundaries",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Two interfaces each face their own IPv4 LAN. One LAN sends ordinary Ethernet broadcasts. What additional behavior is needed for an application to convey its broadcast-discovered information across the router?",
+      "options": {
+        "A": "A common Ethernet link speed across both LANs",
+        "B": "Matching frame checksums on both interfaces",
+        "C": "A shared Ethernet destination field in both hosts' routing tables",
+        "D": "An explicitly supported relay or application mechanism"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Ordinary local broadcasts stop at the router. A service-specific relay can carry selected information across the boundary."
+    }
+  ]
+}

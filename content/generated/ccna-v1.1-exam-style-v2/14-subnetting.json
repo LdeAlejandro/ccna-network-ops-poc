@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-subnetting",
+  "version": 1,
+  "topic": "Subnetting",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-14-01",
+      "category": "subnetting",
+      "subtopic": "Block size",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "What is the address block size of a /28?",
+      "options": {
+        "A": "32",
+        "B": "28",
+        "C": "16",
+        "D": "14"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Four host bits give 16 total addresses, including the network and broadcast."
+    },
+    {
+      "id": "ccna-exam-v2-14-02",
+      "category": "subnetting",
+      "subtopic": "Borrowed bits",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "How many bits are borrowed when splitting a /24 into /27 subnets?",
+      "options": {
+        "A": "3",
+        "B": "8",
+        "C": "5",
+        "D": "27"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The subnet prefix adds three bits to the parent prefix."
+    },
+    {
+      "id": "ccna-exam-v2-14-03",
+      "category": "subnetting",
+      "subtopic": "Child count",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "How many /24s fit in a /20?",
+      "options": {
+        "A": "16",
+        "B": "8",
+        "C": "32",
+        "D": "256"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Four extra prefix bits allow 16 child prefixes."
+    },
+    {
+      "id": "ccna-exam-v2-14-04",
+      "category": "subnetting",
+      "subtopic": "Usable addresses",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "How many ordinary IPv4 host addresses fit in a /25 LAN?",
+      "options": {
+        "A": "126",
+        "B": "254",
+        "C": "124",
+        "D": "128"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Seven host bits give 128 addresses. Two are reserved for network and broadcast."
+    },
+    {
+      "id": "ccna-exam-v2-14-05",
+      "category": "subnetting",
+      "subtopic": "First usable",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A gateway uses the first usable IPv4 address on 198.51.100.144/28. Which address should the worksheet show?",
+      "options": {
+        "A": "198.51.100.159",
+        "B": "198.51.100.144",
+        "C": "198.51.100.146",
+        "D": "198.51.100.145"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The subnet starts at .144, so .145 is the first host."
+    },
+    {
+      "id": "ccna-exam-v2-14-06",
+      "category": "subnetting",
+      "subtopic": "Last usable",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A link is assigned 203.0.113.200/30. Which is its last usable host?",
+      "options": {
+        "A": "203.0.113.202",
+        "B": "203.0.113.203",
+        "C": "203.0.113.201",
+        "D": "203.0.113.204"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The four addresses are .200–.203, with .201 and .202 usable."
+    },
+    {
+      "id": "ccna-exam-v2-14-07",
+      "category": "subnetting",
+      "subtopic": "Third-octet network",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which is the network address of 172.18.171.8/21?",
+      "options": {
+        "A": "172.18.176.0",
+        "B": "172.18.168.0",
+        "C": "172.18.160.0",
+        "D": "172.18.171.0"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "A /21 has third-octet boundaries every eight. 171 lies in the block beginning at 168."
+    },
+    {
+      "id": "ccna-exam-v2-14-08",
+      "category": "subnetting",
+      "subtopic": "Usable range",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Which is the complete usable range for 10.31.195.74/19?",
+      "options": {
+        "A": "10.31.192.1–10.31.207.254",
+        "B": "10.31.192.0–10.31.223.255",
+        "C": "10.31.195.1–10.31.195.254",
+        "D": "10.31.192.1–10.31.223.254"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The third octet advances in increments of 32. The block 192–223 loses its two endpoint addresses for hosts."
+    },
+    {
+      "id": "ccna-exam-v2-14-09",
+      "category": "subnetting",
+      "subtopic": "Sizing equal subnets",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A /24 must provide at least six equal subnets, each supporting 25 usable hosts. Which prefix meets both constraints?",
+      "options": {
+        "A": "/27",
+        "B": "/29",
+        "C": "/26",
+        "D": "/28"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "A /27 provides eight subnets with 30 usable hosts each. /26 gives too few subnets and /28 gives too few hosts."
+    },
+    {
+      "id": "ccna-exam-v2-14-10",
+      "category": "subnetting",
+      "subtopic": "Boundary conflict",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Which assignment collides with the directed broadcast of 192.0.2.110/29?",
+      "options": {
+        "A": "192.0.2.110",
+        "B": "192.0.2.104",
+        "C": "192.0.2.112",
+        "D": "192.0.2.111"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The .104/29 block ends at .111, its broadcast. .104 is the network address."
+    }
+  ]
+}

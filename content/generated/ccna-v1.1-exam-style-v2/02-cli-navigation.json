@@ -1,0 +1,188 @@
+{
+  "pack_id": "ccna-exam-v2-cli-navigation",
+  "version": 1,
+  "topic": "CLI navigation",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-02-01",
+      "category": "ios_commands",
+      "subtopic": "User EXEC",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which prompt indicates user EXEC on a device named Edge?",
+      "options": {
+        "A": "Edge(config-if)#",
+        "B": "Edge(config)#",
+        "C": "Edge>",
+        "D": "Edge#"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The greater-than sign marks ordinary user EXEC in this IOS prompt."
+    },
+    {
+      "id": "ccna-exam-v2-02-02",
+      "category": "ios_commands",
+      "subtopic": "Privilege",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which command changes Edge> to Edge# after successful authentication?",
+      "options": {
+        "A": "disable",
+        "B": "enable",
+        "C": "configure terminal",
+        "D": "end"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "enable enters privileged EXEC from user EXEC."
+    },
+    {
+      "id": "ccna-exam-v2-02-03",
+      "category": "ios_commands",
+      "subtopic": "Global configuration",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "At Edge#, which command opens global configuration mode?",
+      "options": {
+        "A": "configure terminal",
+        "B": "exit",
+        "C": "interface GigabitEthernet0/0",
+        "D": "enable"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "configure terminal enters the global configuration context from privileged EXEC."
+    },
+    {
+      "id": "ccna-exam-v2-02-04",
+      "category": "ios_commands",
+      "subtopic": "Interface context",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "At Edge(config)#, which command selects an existing routed port for configuration?",
+      "options": {
+        "A": "interface GigabitEthernet0/0",
+        "B": "configure terminal",
+        "C": "show interfaces GigabitEthernet0/0",
+        "D": "do show ip interface brief"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The interface command enters the selected port's configuration context."
+    },
+    {
+      "id": "ccna-exam-v2-02-05",
+      "category": "ios_commands",
+      "subtopic": "Returning one level",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "At Edge(config-if)#, which command returns to Edge(config)#?",
+      "options": {
+        "A": "disable",
+        "B": "enable",
+        "C": "exit",
+        "D": "end"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "exit steps back one level from interface configuration."
+    },
+    {
+      "id": "ccna-exam-v2-02-06",
+      "category": "ios_commands",
+      "subtopic": "Returning to EXEC",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which command leaves Edge(config-if)# and goes directly to Edge#?",
+      "options": {
+        "A": "exit",
+        "B": "end",
+        "C": "disable",
+        "D": "do show version"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "end returns to privileged EXEC from nested configuration modes."
+    },
+    {
+      "id": "ccna-exam-v2-02-07",
+      "category": "ios_commands",
+      "subtopic": "EXEC from configuration",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which command displays the active configuration from Edge(config-if)# without leaving that mode?",
+      "options": {
+        "A": "show running-config",
+        "B": "do show running-config",
+        "C": "end show running-config",
+        "D": "do configure terminal"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "do allows an EXEC command to run from a configuration context."
+    },
+    {
+      "id": "ccna-exam-v2-02-08",
+      "category": "ios_commands",
+      "subtopic": "Privilege reduction",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "You want a console at Edge# to stay connected with ordinary user EXEC privileges. Which command fits?",
+      "options": {
+        "A": "exit",
+        "B": "disable",
+        "C": "configure terminal",
+        "D": "end"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "disable lowers the privilege level. exit at the EXEC level can close the session."
+    },
+    {
+      "id": "ccna-exam-v2-02-09",
+      "category": "ios_commands",
+      "subtopic": "Navigating back",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A worksheet says to run hostname Core from interface configuration, then stay in global configuration. Which sequence works?",
+      "options": {
+        "A": "exit, then hostname Core",
+        "B": "disable, then hostname Core",
+        "C": "end, then hostname Core",
+        "D": "do hostname Core"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "exit reaches global configuration, where IOS accepts hostname."
+    },
+    {
+      "id": "ccna-exam-v2-02-10",
+      "category": "ios_commands",
+      "subtopic": "Configuration context",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Refer to the configuration prompt. Which command changes the current port's description directly from this prompt?",
+      "options": {
+        "A": "interface description Transit to R2",
+        "B": "do description Transit to R2",
+        "C": "description Transit to R2",
+        "D": "hostname Transit-to-R2"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The config-if prompt provides the context for the description subcommand.",
+      "snippet": "Illustrative excerpt\nR1(config-if)#"
+    }
+  ]
+}

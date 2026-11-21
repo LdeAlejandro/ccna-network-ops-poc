@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-switching-and-arp",
+  "version": 1,
+  "topic": "Switching and ARP",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-19-01",
+      "category": "networking_theory",
+      "subtopic": "MAC learning",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which field does a switch use to associate an incoming port with a station?",
+      "options": {
+        "A": "Source IPv4",
+        "B": "Source MAC",
+        "C": "Destination MAC",
+        "D": "Destination IPv4"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "A source MAC provides evidence that the station is reachable via the ingress port."
+    },
+    {
+      "id": "ccna-exam-v2-19-02",
+      "category": "networking_theory",
+      "subtopic": "ARP purpose",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "What does an IPv4 host learn from a successful ARP exchange for an on-link peer?",
+      "options": {
+        "A": "The peer's TCP port",
+        "B": "The peer's MAC address",
+        "C": "The local subnet mask",
+        "D": "The switch's FCS algorithm"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "ARP resolves an on-link IPv4 address to a link-layer address."
+    },
+    {
+      "id": "ccna-exam-v2-19-03",
+      "category": "networking_theory",
+      "subtopic": "Unknown unicast",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A switch receives a unicast frame whose destination MAC is absent from the table. What happens under ordinary forwarding?",
+      "options": {
+        "A": "Flood every VLAN on the switch",
+        "B": "Send it back out the incoming port only",
+        "C": "Flood out other forwarding ports in the same VLAN",
+        "D": "Drop it until it receives an ARP reply"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Unknown unicast flooding is scoped to the frame's VLAN and excludes ingress."
+    },
+    {
+      "id": "ccna-exam-v2-19-04",
+      "category": "networking_theory",
+      "subtopic": "Known destination",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A frame enters Gi1/0/1. The entry for its destination in the same VLAN points to Gi1/0/8. Which action follows?",
+      "options": {
+        "A": "Forward on Gi1/0/8",
+        "B": "Flood the VLAN",
+        "C": "Drop because the source port differs",
+        "D": "Forward back on Gi1/0/1"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Known unicast is forwarded to the port associated with the destination MAC."
+    },
+    {
+      "id": "ccna-exam-v2-19-05",
+      "category": "networking_theory",
+      "subtopic": "Same-port filtering",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A frame arrives on Gi1/0/9 and its destination MAC is already learned on Gi1/0/9. What does the switch do?",
+      "options": {
+        "A": "Flood it on all other ports",
+        "B": "Filter it instead of sending it back out Gi1/0/9",
+        "C": "Send it back to the same port",
+        "D": "Replace the destination MAC and forward"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The destination is on the ingress segment, so no forwarding to another port is needed."
+    },
+    {
+      "id": "ccna-exam-v2-19-06",
+      "category": "networking_theory",
+      "subtopic": "Aging",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "What happens to an idle dynamic MAC-table entry after its aging interval expires?",
+      "options": {
+        "A": "It is removed and may be learned again on subsequent traffic",
+        "B": "It becomes a static entry",
+        "C": "The port is administratively disabled",
+        "D": "Its VLAN membership changes to the native VLAN"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Dynamic forwarding associations age out when no qualifying source traffic refreshes them."
+    },
+    {
+      "id": "ccna-exam-v2-19-07",
+      "category": "networking_theory",
+      "subtopic": "Clearing dynamic entries",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which Catalyst IOS command clears dynamic MAC-table entries without removing the maintained device configuration?",
+      "options": {
+        "A": "erase startup-config",
+        "B": "clear arp-cache",
+        "C": "clear mac address-table dynamic",
+        "D": "show mac address-table dynamic"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Dynamic forwarding entries are held independently of both ARP and the startup configuration."
+    },
+    {
+      "id": "ccna-exam-v2-19-08",
+      "category": "networking_theory",
+      "subtopic": "Next-hop ARP",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A workstation has no cached neighbor entry and sends traffic to a remote subnet through 192.0.2.1. Which IPv4 address appears as its ARP target?",
+      "options": {
+        "A": "The remote host's IPv4 address",
+        "B": "The local subnet broadcast address",
+        "C": "The local switch management address",
+        "D": "192.0.2.1"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The gateway is the Ethernet next hop. The remote address remains the IP packet's destination."
+    },
+    {
+      "id": "ccna-exam-v2-19-09",
+      "category": "networking_theory",
+      "subtopic": "MAC movement",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A host moves to another switch port in the same VLAN. What updates its dynamic forwarding entry before the old entry ages out?",
+      "options": {
+        "A": "A ping to another VLAN using some other host's MAC",
+        "B": "A read of the current ARP table",
+        "C": "A source frame from its MAC on the new port",
+        "D": "A destination frame sent to its MAC on the old port"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Ordinary source learning updates the association when the switch sees the MAC on its new port."
+    },
+    {
+      "id": "ccna-exam-v2-19-10",
+      "category": "networking_theory",
+      "subtopic": "Tables in troubleshooting",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Two IPv4 hosts share a LAN. ARP resolves the neighbor correctly, but an engineer needs the physical switch port for that MAC. Which table supplies it?",
+      "options": {
+        "A": "Router IPv4 routing table",
+        "B": "DHCP lease table",
+        "C": "Host ARP cache",
+        "D": "Switch MAC address table"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "ARP supplies the IP-to-MAC relation. The switch table supplies the VLAN and port for a learned MAC."
+    }
+  ]
+}

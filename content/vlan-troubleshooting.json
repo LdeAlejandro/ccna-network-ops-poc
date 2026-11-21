@@ -1,0 +1,25 @@
+{
+  "pack_id": "vlan-troubleshooting",
+  "version": 1,
+  "topic": "VLANs",
+  "questions": [
+    {
+      "id": "vlan-001",
+      "category": "troubleshooting",
+      "subtopic": "Inter-VLAN routing",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Two hosts on different IPv4 subnets in different VLANs must communicate. Their switch only forwards at Layer 2 and has no uplink to a router. What is required?",
+      "options": {
+        "A": "Connect both hosts to access ports in their current VLANs.",
+        "B": "Provide inter-VLAN routing via a router or Layer 3 switch.",
+        "C": "Disable VLAN tagging on every switch port.",
+        "D": "Configure the same MAC address on both hosts."
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "A Layer 3 gateway must route between the two subnets. VLAN separation is not removed by configuring access ports."
+    }
+  ]
+}

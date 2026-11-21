@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-hubs-and-duplex",
+  "version": 1,
+  "topic": "Hubs and duplex",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-20-01",
+      "category": "networking_theory",
+      "subtopic": "Hub behavior",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "An Ethernet hub receives a signal on one port. Where is the signal repeated?",
+      "options": {
+        "A": "Only on a port in a matching IP prefix",
+        "B": "Only on the port learned for the destination",
+        "C": "Only on a designated gateway port",
+        "D": "On its other ports"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "A hub is a multiport repeater and has no MAC forwarding table."
+    },
+    {
+      "id": "ccna-exam-v2-20-02",
+      "category": "networking_theory",
+      "subtopic": "Full duplex",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which behavior is permitted by matching full-duplex Ethernet endpoints?",
+      "options": {
+        "A": "Alternating transmission under a shared collision domain",
+        "B": "Transmission only after a collision backoff",
+        "C": "Simultaneous transmission and reception",
+        "D": "Transmission only when the opposite endpoint is powered off"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "A full-duplex point-to-point link permits both directions simultaneously."
+    },
+    {
+      "id": "ccna-exam-v2-20-03",
+      "category": "networking_theory",
+      "subtopic": "Shared collision domain",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Four workstations attach to one half-duplex Ethernet hub. How many shared collision domains do they occupy?",
+      "options": {
+        "A": "Five",
+        "B": "One",
+        "C": "Two",
+        "D": "Four"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The hub repeats signals across its ports, so the stations share one collision domain."
+    },
+    {
+      "id": "ccna-exam-v2-20-04",
+      "category": "networking_theory",
+      "subtopic": "CSMA/CD",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "What does a half-duplex Ethernet station do after detecting a collision?",
+      "options": {
+        "A": "Changes its IP address and retries",
+        "B": "Stops the attempt and waits a backoff before retrying",
+        "C": "Starts a TCP retransmission immediately at the MAC layer",
+        "D": "Continues sending the original frame uninterrupted"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "CSMA/CD uses collision handling and a randomized backoff to retry medium access."
+    },
+    {
+      "id": "ccna-exam-v2-20-05",
+      "category": "networking_theory",
+      "subtopic": "Switch migration",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A hub is replaced by a switch with a full-duplex link to each capable host. What changes for Ethernet contention?",
+      "options": {
+        "A": "All hosts still contend for the hub's collision domain",
+        "B": "Broadcast forwarding requires half duplex",
+        "C": "The hosts no longer contend for one shared half-duplex medium",
+        "D": "The switch must run CSMA/CD between all ports"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Each host gets a dedicated full-duplex link, removing shared-medium collisions."
+    },
+    {
+      "id": "ccna-exam-v2-20-06",
+      "category": "networking_theory",
+      "subtopic": "Mixed media segments",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Two old hubs connect to separate switch ports in half duplex. How many collision domains do those hubs and their attached stations create?",
+      "options": {
+        "A": "Two",
+        "B": "One per hub port",
+        "C": "Three",
+        "D": "One"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The switch separates contention on the two hub-facing segments."
+    },
+    {
+      "id": "ccna-exam-v2-20-07",
+      "category": "networking_theory",
+      "subtopic": "Duplex mismatch",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "One end of a legacy link is forced to full duplex and the other reports half duplex. Under simultaneous traffic, which fault should be investigated first?",
+      "options": {
+        "A": "Wrong IPv4 prefix length",
+        "B": "Duplex mismatch",
+        "C": "Short MAC-table aging time",
+        "D": "Duplicate gateway route"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The half-duplex end follows collision rules while the full-duplex end transmits independently."
+    },
+    {
+      "id": "ccna-exam-v2-20-08",
+      "category": "networking_theory",
+      "subtopic": "Interpreting counters",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "An illustrative switch output reports half duplex and increasing late collisions. Which pair of physical-layer checks is most relevant?",
+      "options": {
+        "A": "Gateway distance and DHCP lease duration",
+        "B": "Peer subnet mask and DNS server",
+        "C": "Remote ARP cache and TCP window",
+        "D": "Peer duplex and excessive segment length"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Duplex mismatch and excessive propagation delay can produce late collisions."
+    },
+    {
+      "id": "ccna-exam-v2-20-09",
+      "category": "networking_theory",
+      "subtopic": "Counter baseline",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "An interface now operates in full duplex. Why should an engineer compare collision counter readings over time before diagnosing a fault?",
+      "options": {
+        "A": "Collisions and IPv4 discards share a required counter",
+        "B": "A single snapshot identifies the peer duplex exactly",
+        "C": "Existing counters can predate the current mode",
+        "D": "Full duplex adds one collision per receive frame"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Historical counts alone do not show the fault is currently occurring."
+    },
+    {
+      "id": "ccna-exam-v2-20-10",
+      "category": "networking_theory",
+      "subtopic": "Duplex coexistence",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A switch port connects to a hub while a separate port connects to a workstation. Which statement describes their duplex settings?",
+      "options": {
+        "A": "The workstation must use the same duplex as every hub station",
+        "B": "The hub-facing link uses half duplex and the independent workstation link can use full duplex",
+        "C": "Both links must use full duplex because the switch supports it",
+        "D": "The switch must use half duplex on both ports"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Duplex is set or negotiated per link. A shared hub requires half-duplex Ethernet."
+    }
+  ]
+}

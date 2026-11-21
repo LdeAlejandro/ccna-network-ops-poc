@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-cli-help-and-editing",
+  "version": 1,
+  "topic": "CLI help and editing",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-03-01",
+      "category": "ios_commands",
+      "subtopic": "Word help",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which input lists keywords that start with sh at the current prompt?",
+      "options": {
+        "A": "? sh",
+        "B": "sh ?",
+        "C": "sh then Enter",
+        "D": "sh?"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "A question mark immediately after a partial token requests completions for that token."
+    },
+    {
+      "id": "ccna-exam-v2-03-02",
+      "category": "ios_commands",
+      "subtopic": "Tab completion",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "What does Tab do after a uniquely recognized partial IOS keyword?",
+      "options": {
+        "A": "Completes the keyword",
+        "B": "Clears command history",
+        "C": "Returns to user EXEC",
+        "D": "Runs the command"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Tab expands an unambiguous keyword without submitting the command."
+    },
+    {
+      "id": "ccna-exam-v2-03-03",
+      "category": "ios_commands",
+      "subtopic": "History recall",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which key typically recalls the previous IOS CLI command?",
+      "options": {
+        "A": "Down arrow",
+        "B": "End",
+        "C": "Up arrow",
+        "D": "Tab"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Up arrow moves toward older history entries."
+    },
+    {
+      "id": "ccna-exam-v2-03-04",
+      "category": "ios_commands",
+      "subtopic": "Argument help",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "You entered show ip followed by a space. Which key lists valid next tokens?",
+      "options": {
+        "A": "Enter",
+        "B": "Tab",
+        "C": "?",
+        "D": "Backspace"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "After a space, ? lists arguments or keywords valid at that position."
+    },
+    {
+      "id": "ccna-exam-v2-03-05",
+      "category": "ios_commands",
+      "subtopic": "Abbreviation",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "When can an IOS keyword be shortened?",
+      "options": {
+        "A": "Only in configuration mode",
+        "B": "Only if it has no arguments",
+        "C": "Whenever it is at least two characters long",
+        "D": "When the leading characters uniquely identify it in that context"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "IOS resolves unique prefixes against the valid keywords for the current context."
+    },
+    {
+      "id": "ccna-exam-v2-03-06",
+      "category": "ios_commands",
+      "subtopic": "Editing shortcut",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which IOS editing shortcut moves the cursor to the start of the line?",
+      "options": {
+        "A": "Ctrl+E",
+        "B": "Ctrl+P",
+        "C": "Ctrl+A",
+        "D": "Ctrl+N"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Ctrl+A moves to the beginning, while Ctrl+E moves to the end."
+    },
+    {
+      "id": "ccna-exam-v2-03-07",
+      "category": "ios_commands",
+      "subtopic": "Ambiguous command",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "IOS reports an ambiguous command for a shortened token. What should you do?",
+      "options": {
+        "A": "Add identifying letters or inspect possible matches with ?",
+        "B": "Use the same token at a lower privilege level",
+        "C": "Add a destination address first",
+        "D": "Reload to reset the parser"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "An ambiguous token matches multiple keywords in the current context."
+    },
+    {
+      "id": "ccna-exam-v2-03-08",
+      "category": "ios_commands",
+      "subtopic": "Incomplete command",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Illustrative output says % Incomplete command. What is the best next step for a recognized command prefix?",
+      "options": {
+        "A": "Press Enter twice",
+        "B": "Append a space and ? to inspect required continuations",
+        "C": "Delete the first character from the command",
+        "D": "Use end to clear interface counters"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The parser recognized the input so far and expects further arguments or keywords."
+    },
+    {
+      "id": "ccna-exam-v2-03-09",
+      "category": "ios_commands",
+      "subtopic": "Invalid input",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "An illustrative IOS error puts a caret under part of your command. What does it mark?",
+      "options": {
+        "A": "The approximate position of a dropped packet",
+        "B": "Where the parser detected invalid input",
+        "C": "Where the last saved configuration differs",
+        "D": "The beginning of an interface description"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Inspect the token or command context at the reported parser position."
+    },
+    {
+      "id": "ccna-exam-v2-03-10",
+      "category": "ios_commands",
+      "subtopic": "End of command",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "After entering a command and a space, the engineer presses ? and sees <cr> among the choices. What does that entry indicate?",
+      "options": {
+        "A": "An argument named cr is required",
+        "B": "The current keyword is ambiguous",
+        "C": "The current command can be submitted as entered",
+        "D": "The command must be used in a different mode"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The carriage-return entry means the parser accepts the input without another argument."
+    }
+  ]
+}

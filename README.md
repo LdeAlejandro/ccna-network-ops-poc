@@ -1,18 +1,12 @@
 # CCNA Network Ops
 
-CCNA Network Ops is a retro cyberpunk terminal RPG proof of concept for CCNA certification study. It shows how a network-operations dashboard could organize missions, progress, and reviews in a keyboard-driven Linux TUI.
+CCNA Network Ops is a retro cyberpunk terminal RPG for CCNA certification practice. The **1.0 release candidate** includes six missions, adaptive practice, scheduled review, and 261 bundled questions across the 26 study areas and a VLAN scenario.
 
-![CCNA Network Ops in Konsole, showing the Neon Rose theme, operator portrait, mission checklist, review queue, and gear cards](design/screenshots/composition-neon-rose-140x45.png)
+![Neon Rose dashboard at 140 by 45 in Unicode portrait mode](design/screenshots/rc-dashboard.png)
 
-*Neon Rose at 140 × 45 in Konsole with Sixel rendering.*
+[Mission briefing](design/screenshots/rc-mission-briefing.png) · [Mission quiz](design/screenshots/rc-mission-quiz.png) · [Mission results](design/screenshots/rc-mission-summary.png)
 
-## Features
-
-- A mission checklist and network topology, recent progress, a review queue, studied topics, and equipment cards.
-- A sample operator profile with XP and two portrait stages.
-- Five themes with live switching and a saved theme preference.
-- Responsive panel layouts, with a paged view at narrow sizes.
-- Sixel portraits on compatible terminals and a true-color Unicode fallback.
+The dashboard tracks the operator level, XP, mission progress, studied topics, scheduled reviews, and cosmetic gear. It has five saved themes, keyboard navigation, and Sixel portraits with a true-color Unicode fallback.
 
 ## Requirements
 
@@ -42,6 +36,40 @@ The default launch probes the terminal for Sixel support and falls back to Unico
 python3 ops.py --avatar text
 ```
 
+## Study modes
+
+The default launch registers the bundled packs. Existing imports and progress carry forward. To launch with only the sources already in your study database, pass `--no-bundled`.
+
+- **Mission (M).** Choose an operation with the arrow keys and press **Enter** for its briefing. Press **Enter** to start or resume. Each operation uses a fixed set of five or six certification-style questions and requires at least 80% accuracy. Press **N** after the final answer to see accuracy, XP and missed topics. Press **H** in the mission list to reopen the selected operation’s latest run. One mission can be in progress at a time, and finished missions can be replayed. The first pass awards the briefing’s bonus.
+- **Practice (X).** Start or resume adaptive practice from bundled and imported packs. The scheduler favors due reviews, balances categories, and considers weaker topics.
+- **Review (R).** Work through scheduled questions due today or earlier. Review shares the same question history as Practice and Missions and saves its own current question.
+
+| Mission | Focus | Questions | First-pass bonus |
+| --- | --- | ---: | ---: |
+| Console Recovery | Platforms, CLI, configuration and output filters | 5 | 60 XP |
+| Session Trace | OSI, transport, ports, IPv4 and traffic types | 5 | 80 XP |
+| Subnet Ops | IPv4 masks, binary, CIDR, VLSM and special prefixes | 6 | 100 XP |
+| The VLAN Breach | Inter-VLAN routing, Ethernet, switching and ARP | 5 | 80 XP |
+| Ethernet Triage | Cabling, duplex, PoE, device roles and IOS interfaces | 5 | 80 XP |
+| Static Route Recovery | Static routing, NAT and reachability diagnostics | 5 | 100 XP |
+
+Select alternatives with **A–D** and submit with **Enter**. Feedback shows the answer and its explanation, XP earned and the next review date. Use **N** to advance. Completed missions unlock cosmetic gear at one and three distinct passes. The [question bank report](content/generated/ccna-v1.1-exam-style-v2/QUESTION_BANK_REPORT.md) lists the bundled exam-style packs and their coverage.
+
+### Feed
+
+To import an additional question pack from the terminal, run `python3 ops.py --feed path/to/pack.json`. Press **F** for the local library and **T** to switch to its inbox. Copy a `.json`, `.md`, or `.txt` file into `${XDG_DATA_HOME:-$HOME/.local/share}/ccna-network-ops/inbox/`. Use the arrow keys and **Enter** to import it. Switch back to the library to open an imported source or read its note. Longer entries and questions support **Page Up** and **Page Down**.
+
+Markdown and text notes need a first line such as `Topic: Ethernet` and may have a second line such as `Subtopic: MAC learning`. You can also pass the topic explicitly:
+
+```sh
+python3 ops.py --feed my-notes.md --topic "Ethernet" --subtopic "MAC learning"
+python3 ops.py --activate "Routing"
+```
+
+Notes and explicit activation introduce topics without creating exercises. Only validated packs supply quiz questions. Feed imports leave the current question and its pending selections intact.
+
+Use the [question-pack schema](question-pack.schema.json) and a starter pack as a template. Use English text, difficulty 1–5, two to four distinct options labeled consecutively from A, an explanation, and globally unique question IDs. Use one correct key for `single_choice` and two or more for `multiple_choice`. An optional `snippet` field displays IOS output or configuration as text. The importer checks the schema rules, answer-key membership, identifiers, duplicate content keys and unsafe control characters. It checks structure and consistency. Pack authors review the technical correctness of their questions and explanations. A duplicate import is rejected with the existing history intact.
+
 ## Keyboard navigation
 
 | Key | Action |
@@ -49,12 +77,29 @@ python3 ops.py --avatar text
 | Tab / ↓ | Focus the next panel |
 | Shift+Tab / ↑ | Focus the previous panel |
 | E | Switch the portrait stage |
+| M / X / R | Open Missions / Practice / Review |
+| F | Open the local Feed |
+| Enter on Mission | Open the mission list |
+| H in mission list | Show the selected mission’s latest run |
+| Enter on Progress, Review, or Topics | Open the full dashboard panel details |
 | S | Open theme settings |
 | 1–5 | Select a theme in settings |
-| Esc | Return from settings |
+| Esc | Go back |
 | Q / Ctrl+C | Quit |
 
 In the compact layout, panel focus also pages through the dashboard.
+
+| Quiz key | Action |
+| --- | --- |
+| ↑ / ↓ | Move through alternatives |
+| A–D | Pick a single answer or toggle a multiple-answer option |
+| Space | Toggle the highlighted multiple-answer option |
+| Enter | Submit the answer |
+| N | Advance after feedback or view final mission results |
+| Esc / Q | Return to the dashboard with the current question saved |
+| Page Up / Page Down | Scroll long prompts, snippets, and feedback |
+
+In Feed, **Q** or **Esc** backs out of the current view. **Ctrl+C** exits the application from any screen.
 
 ## Themes
 
@@ -66,20 +111,32 @@ In the compact layout, panel focus also pages through the dashboard.
 
 The selected theme is saved under `${XDG_CONFIG_HOME:-$HOME/.config}/ccna-network-ops/theme`.
 
-## Proof-of-concept scope
+## Progress, adaptation, and reviews
 
-Missions, XP, gear, and review entries use sample data. The portrait stages are manually selectable. The theme is the only persistent application setting. The project is independent of Cisco and is an interface prototype for study workflows.
+- A topic becomes **Introduced** on import or explicit activation and **Practiced** after the first attempt. **Mastered** requires at least 80% topic accuracy and at least three distinct questions whose latest attempts were correct.
+- The operator starts at level 7 with 640 XP toward the next 1,000-point threshold, as in the original dashboard. The first correct answer to a question awards `20 × difficulty` XP. Repeated correct answers still count toward accuracy and reviews. Reaching level 8 unlocks the evolved portrait as the default.
+- The scheduler considers unseen questions and questions due today or earlier. It prioritizes due reviews, balances eligible categories against the long-run targets, then favors weaker topics and missed questions. It avoids immediately repeating a question when another eligible choice exists.
+- Default weights are 35% networking theory, 20% IOS commands, and 15% each for IOS output, troubleshooting, and subnetting. When a category has no eligible questions, its weight is redistributed proportionally among the eligible categories. To override the targets, put a JSON object with positive integer weights for all five category IDs in `${XDG_CONFIG_HOME:-$HOME/.config}/ccna-network-ops/category-weights.json`.
+- Correct answers schedule reviews at 1, 3, 7, 14, then 30 days. Further correct answers stay at 30 days. An incorrect answer resets the sequence and schedules review in one day. Dates use UTC.
+- Study data lives in `${XDG_DATA_HOME:-$HOME/.local/share}/ccna-network-ops/learning.sqlite3`. The database saves each mode’s active question, selections and exercise number, plus mission runs and completion bonuses. Submitting an answer records the attempt and updates its review date in one transaction. A final mission answer also records the result and any bonus in that transaction. The app upgrades existing study databases in place and keeps the saved theme in its configuration file.
 
-The Rook portraits were generated for this project with OpenAI image generation and prepared as indexed pixel art.
+## Scope and roadmap
 
-## Development roadmap
+Study is local and selection-based. IOS output and topologies are study examples. The project is independent of Cisco. The release defers typed command grading, live network labs, packet simulation, multiplayer, cloud services, external AI integration, and coverage of objectives beyond the supplied syllabus. The Rook portraits were generated for this project with OpenAI image generation and prepared as indexed pixel art.
 
-- Add interactive mission and practice flows around the dashboard.
-- Track study results and use them to schedule reviews.
-- Test rendering and input across more Linux terminal emulators.
-
-Run the local smoke test before changing layout, navigation, theme persistence, or avatar rendering:
+## Verification
 
 ```sh
+python3 -m unittest
 python3 verify.py
+python3 content/generated/ccna-v1.1-exam-style-v2/validate_bank.py
+```
+
+The Linux pseudoterminal suite checks 140×45, 110×35, 80×24 and 50×18 layouts, theme and portrait behavior, Feed, Practice, mission briefing and completion, resume across processes, and due Review. The engine tests check schema validation, scoring, review scheduling, database migration, and one-time mission rewards.
+
+To try the release candidate with temporary progress and theme files, run from the project directory:
+
+```sh
+test_profile=$(mktemp -d)
+XDG_DATA_HOME="$test_profile" XDG_CONFIG_HOME="$test_profile" python3 ops.py
 ```

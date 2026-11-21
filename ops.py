@@ -1,6 +1,11 @@
 """Run with python3 ops.py in an interactive UTF-8 terminal."""
 
 import argparse
+from contextlib import closing
+import json
+import sqlite3
+import textwrap
+import unicodedata
 from functools import lru_cache
 from itertools import groupby
 import os
@@ -14,11 +19,23 @@ import tty
 
 from avatar import half_blocks, portrait_palette, sixel
 from lettering import masthead
-from model import MISSION_DETAILS, PANELS, THEMES, XP, XP_GOAL
+from learning import Learning, LearningError, MISSION, PRACTICE, REVIEW
+from missions import MISSIONS, MISSIONS_BY_ID, load_bundled
+from model import GEAR, THEMES, XP, XP_GOAL
 
 ESC = "\x1b["
 DEFAULT_CONFIG = Path(os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config")
 CONFIG = DEFAULT_CONFIG / "ccna-network-ops" / "theme"
+DATA = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share") / "ccna-network-ops"
+
+
+def cell_text(text):
+    """Keep imported text inside the renderer's one-codepoint-per-cell layout."""
+    return "".join(
+        char if char in "\n\t" or (not unicodedata.category(char).startswith(("C", "M"))
+                                      and unicodedata.east_asian_width(char) not in ("W", "F"))
+        else "?" for char in text.replace("\r\n", "\n").replace("\r", "\n")
+    )
 
 
 @lru_cache(maxsize=256)
@@ -28,15 +45,22 @@ def color(hex_value, background=False):
 
 
 class Dashboard:
-    def __init__(self, preference):
+    def __init__(self, preference, learning, inbox):
         self.preference = preference
+        self.learning = learning
+        self.inbox = inbox
+        self.mode = self.source = self.reveal = None
+        self.scroll = self.feed_cursor = 0
+        self.page_size = 1
+        self.inbox_view = False
+        self.mission_cursor = 0
         self.theme_index = 1
         try:
             name = preference.read_text().strip()
             self.theme_index = next(i for i, theme in enumerate(THEMES) if theme.name == name)
         except (OSError, UnicodeError, StopIteration):
             pass
-        self.stage = self.focus = self.offset = 0
+        self.focus = self.offset = 0
         self.settings = False
         self.notice = ""
 
@@ -50,7 +74,17 @@ class Dashboard:
             self.notice = "Theme applied for this session"
 
     def key(self, key):
-        if self.settings:
+        if len(key) == 1 and key.isascii():
+            key = key.lower()
+        try:
+            self.route_key(key)
+        except (LearningError, OSError, sqlite3.Error) as error:
+            self.notice = str(error)
+
+    def route_key(self, key):
+        if self.mode:
+            self.mode_key(key)
+        elif self.settings:
             if key in "12345" and len(key) == 1:
                 self.choose(int(key) - 1)
             elif key in ("s", "ESC"):
@@ -58,12 +92,356 @@ class Dashboard:
         elif key == "s":
             self.settings = True
             self.notice = ""
+        elif key == "x":
+            self.open_quiz()
+        elif key == "m" or (key == "ENTER" and self.focus == 1):
+            self.open_missions()
+        elif key == "r":
+            self.open_quiz(REVIEW)
+        elif key == "ENTER" and self.focus in (2, 3, 4):
+            self.mode = "progress"
+            self.notice = ""
+            self.scroll = 0
+            self.reveal = None
+        elif key == "f":
+            self.mode = "feed"
+            self.source = None
+            self.notice = ""
+            self.scroll = self.feed_cursor = 0
+            self.reveal = None
         elif key == "e":
-            self.stage = 1 - self.stage
+            self.learning.toggle_avatar(self.learning.earned_xp())
         elif key in ("DOWN", "TAB", "UP"):
             step = -1 if key == "UP" else 1
             self.focus = (self.focus + step) % 6
             self.offset = max(0, self.focus - 2)
+
+    @property
+    def quiz_slot(self):
+        return {"quiz": PRACTICE, "review": REVIEW, "mission_quiz": MISSION}.get(self.mode)
+
+    def show_mode(self, mode):
+        self.mode = mode
+        self.notice = ""
+        self.scroll = 0
+        self.reveal = None
+
+    def open_quiz(self, slot=PRACTICE):
+        self.show_mode("review" if slot == REVIEW else "quiz")
+        self.learning.start(review=slot == REVIEW)
+
+    def open_missions(self):
+        current = self.learning.mission_run()
+        if current and not current["finished"]:
+            self.mission_cursor = next(i for i, m in enumerate(MISSIONS) if m.id == current["mission"])
+        self.show_mode("missions")
+        self.reveal = self.mission_cursor
+
+    def mission_key(self, key):
+        mission = MISSIONS[self.mission_cursor]
+        run = self.learning.mission_run()
+        if self.mode == "missions":
+            if key in ("UP", "DOWN", "TAB"):
+                self.mission_cursor = (self.mission_cursor + (-1 if key == "UP" else 1)) % len(MISSIONS)
+                self.reveal = self.mission_cursor
+            elif key == "ENTER":
+                self.show_mode("briefing")
+            elif key == "h":
+                previous = self.learning.mission_run(mission.id)
+                if previous:
+                    self.show_mode("mission_result")
+                else:
+                    self.notice = "No attempts for this operation yet."
+        elif self.mode == "briefing" and key == "ENTER":
+            if not run or run["finished"]:
+                self.learning.start_mission(mission.id)
+            elif run["mission"] != mission.id:
+                self.notice = f"Resume {MISSIONS_BY_ID[run['mission']].name} first."
+                return
+            self.show_mode("mission_quiz")
+        elif self.mode == "mission_result" and key == "ENTER":
+            self.show_mode(None)
+
+    def feed_items(self):
+        if not self.inbox_view:
+            return self.learning.sources()
+        return sorted(path for path in self.inbox.iterdir()
+                      if path.is_file() and not path.is_symlink()
+                      and path.suffix.lower() in (".json", ".md", ".txt"))
+
+    def mode_key(self, key):
+        if key in ("ESC", "q"):
+            if self.mode == "feed" and self.source:
+                self.source = None
+                self.scroll = 0
+            elif self.mode in ("briefing", "mission_result") and key == "ESC":
+                self.show_mode("missions")
+                self.reveal = self.mission_cursor
+            else:
+                self.show_mode(None)
+            return
+        if key in ("PAGEUP", "PAGEDOWN"):
+            self.scroll = max(0, self.scroll + (-self.page_size if key == "PAGEUP" else self.page_size))
+            self.reveal = None
+            return
+        if self.mode in ("missions", "briefing", "mission_result"):
+            self.mission_key(key)
+            return
+        if self.mode == "progress":
+            return
+        if self.mode == "feed":
+            if self.source:
+                return
+            if key == "t":
+                self.inbox_view = not self.inbox_view
+                self.feed_cursor = self.scroll = 0
+                self.notice = ""
+                return
+            items = self.feed_items()
+            if not items:
+                return
+            if key in ("UP", "DOWN"):
+                self.feed_cursor = (self.feed_cursor + (-1 if key == "UP" else 1)) % len(items)
+                self.reveal = self.feed_cursor
+            elif key == "ENTER":
+                item = items[min(self.feed_cursor, len(items) - 1)]
+                if self.inbox_view:
+                    self.learning.ingest(item)
+                    self.notice = f"Imported {item.name}"
+                else:
+                    self.source = item
+                    self.scroll = 0
+                    self.reveal = None
+            return
+
+        slot = self.quiz_slot
+        if key == "n":
+            session = self.learning.session(slot)
+            if session is None or session["correct"] is not None:
+                if slot == MISSION:
+                    if not self.learning.advance_mission():
+                        self.show_mode("mission_result")
+                        return
+                elif not self.learning.start(advance=True, review=slot == REVIEW):
+                    self.notice = ("No more reviews due today." if slot == REVIEW
+                                   else "No new or due questions. Return on a review date.")
+                    return
+                self.notice = ""
+                self.scroll = 0
+                self.reveal = None
+        elif key == "ENTER":
+            result = self.learning.submit(slot)
+            if result and result["correct"] is not None:
+                self.notice = ""
+                self.reveal = "feedback"
+        elif key in ("UP", "DOWN", " ", "a", "b", "c", "d"):
+            self.learning.select(key.upper(), slot)
+            session = self.learning.session(slot)
+            if session and session["correct"] is None:
+                self.notice = ""
+                self.reveal = session["cursor"]
+
+    def learning_frame(self, put, panel, body, footer, cols, rows, theme):
+        width = min(cols - 2, 112)
+        x = (cols - width) // 2
+        lines = []
+        anchor = None
+
+        def add(value="", ink=None, wrap=True):
+            value = cell_text(value)
+            for line in value.expandtabs(4).split("\n"):
+                chunks = (textwrap.wrap(line, width - 4, replace_whitespace=False)
+                          if wrap else [line[i:i + width - 4] for i in range(0, len(line), width - 4)])
+                lines.extend((piece, ink) for piece in chunks or [""])
+
+        slot = self.quiz_slot
+        if slot:
+            title = {PRACTICE: "QUIZ MODE / PRACTICE", REVIEW: "REVIEW MODE", MISSION: "MISSION QUIZ"}[slot]
+            session = self.learning.session(slot)
+            run = self.learning.mission_run() if slot == MISSION else None
+            if run:
+                mission = MISSIONS_BY_ID[run["mission"]]
+                stage = run["answered"] + int(session["correct"] is None)
+                title += (f" / {mission.id} / QUESTION {stage} OF {len(run['questions'])}" if cols >= 58
+                          else f" / {mission.id} / {stage} OF {len(run['questions'])}")
+                add(mission.name, theme.accent)
+                add(f"Objective · {mission.objective}", theme.muted)
+            if session:
+                q = session["data"]
+                submitted = session["correct"] is not None
+                multiple = q["type"] == "multiple_choice"
+                if not run:
+                    title += f"  /  EXERCISE {session['number']:03d}"
+                add(f"{q['topic']} / {q['subtopic']}  |  Difficulty {q['difficulty']}/5", theme.secondary)
+                add("Select all that apply" if multiple else "Select one answer", theme.muted)
+                add(q["question"], theme.text)
+                if q["snippet"]:
+                    add(q["snippet"], theme.secondary, wrap=False)
+                add()
+                for index, (key, option) in enumerate(q["options"].items()):
+                    selected = key in session["selected"]
+                    correct = submitted and key in q["correct_answers"]
+                    mark = "✓" if correct else "×" if submitted and selected else "●" if selected else "○"
+                    pointer = "▸" if session["cursor"] == index else " "
+                    if self.reveal == index:
+                        anchor = len(lines)
+                    add(f"{pointer} {mark} {key}. {option}", theme.accent if correct or selected else theme.text)
+                if submitted:
+                    add()
+                    if self.reveal == "feedback":
+                        self.scroll = len(lines)
+                    verdict = "CORRECT" if session["correct"] else "INCORRECT"
+                    add(f"{verdict}  |  +{session['xp']} XP  |  Review {session['next_review']}", theme.accent)
+                    add(f"Correct: {', '.join(q['correct_answers'])}", theme.secondary)
+                    add(q["explanation"])
+            else:
+                submitted = False
+                add("No reviews are due today." if slot == REVIEW else
+                    "No new or due questions. Import a pack in Feed or return on a review date.",
+                    theme.secondary)
+            next_label = "Results" if run and run["finished"] else "Next"
+            if not session:
+                commands = (("Esc", "Back"),)
+            elif submitted:
+                commands = (("N", next_label), ("Esc", "Back"))
+            else:
+                commands = (("↑↓", "Move"), ("A–D", "Pick"), ("Enter", "Submit"), ("Esc", "Back"))
+            if submitted:
+                hint = "Feedback saved  /  N opens mission results" if next_label == "Results" else "Feedback saved"
+            elif session and multiple:
+                hint = "Space toggles the highlighted option"
+            else:
+                hint = "Enter submits the highlighted answer" if session else ""
+        elif self.mode in ("missions", "briefing", "mission_result"):
+            mission = MISSIONS[self.mission_cursor]
+            run = self.learning.mission_run(mission.id)
+            if self.mode == "missions":
+                title = "MISSION SELECT"
+                for i, entry in enumerate(MISSIONS):
+                    if self.reveal == i:
+                        anchor = len(lines)
+                    current = self.learning.mission_run(entry.id)
+                    if current and current["finished"]:
+                        status = "Completed" if current["correct"] >= current["passing_score"] else "Failed"
+                    elif current:
+                        status = f"{current['answered']}/{len(current['questions'])} answered"
+                    else:
+                        status = "Available" if self.learning.mission_available(entry) else "Requires bundled packs"
+                    selected = i == self.mission_cursor
+                    add(f"{'▸' if selected else ' '} {entry.id}  {entry.name}  /  {status}",
+                        theme.accent if selected else theme.text)
+                commands = (("↑↓", "Move"), ("Enter", "Briefing"), ("H", "Last run"), ("Esc", "Back"))
+                hint = "Choose an operation"
+            elif self.mode == "briefing":
+                title = f"MISSION BRIEFING / {mission.id}"
+                add(mission.name, theme.accent)
+                add(mission.briefing)
+                add(f"Objective · {mission.objective}", theme.secondary)
+                add(f"Focus · {mission.focus}", theme.muted)
+                add(f"{len(mission.questions)} questions  /  Difficulty {mission.difficulty}/5")
+                add(f"Pass with {mission.passing_score} correct  /  First completion +{mission.reward} XP")
+                if run and not run["finished"]:
+                    add(f"Progress · {run['answered']}/{len(run['questions'])} answered", theme.accent)
+                active = self.learning.mission_run()
+                hint = ""
+                if active and not active["finished"] and active["mission"] != mission.id:
+                    hint = f"Resume {MISSIONS_BY_ID[active['mission']].name} first."
+                elif not self.learning.mission_available(mission):
+                    hint = "The bundled packs are required."
+                commands = (("Esc", "Back"),)
+                if not hint:
+                    commands = (("Enter", "Resume" if run and not run["finished"] else "Start mission"),) + commands
+            else:
+                title = f"MISSION SUMMARY / {mission.id}"
+                add(mission.name, theme.accent)
+                total = len(run["questions"])
+                correct = run["correct"]
+                verdict = ("COMPLETED" if correct >= run["passing_score"] else "FAILED") if run["finished"] else "IN PROGRESS"
+                add(f"{verdict}  /  {run['answered']}/{total} answered", theme.accent)
+                accuracy = f"{100 * correct // run['answered']}%" if run["answered"] else "—"
+                add(f"Accuracy {accuracy}  /  {correct} correct  /  +{run['xp']} XP")
+                add(f"Mission bonus +{run['bonus']} XP", theme.secondary)
+                if run["weak"]:
+                    add("Review · " + ", ".join(run["weak"]))
+                    add("Missed questions enter the review schedule.", theme.muted)
+                commands = (("Enter", "Dashboard"), ("Esc", "Missions"))
+                hint = ""
+        elif self.mode == "progress":
+            summary = self.learning.summary()
+            commands = (("Pg↑↓", "Scroll"), ("Esc", "Back"))
+            hint = "Local learning record"
+            if self.focus == 2:
+                title = "EXERCISE HISTORY"
+                for attempt in reversed(self.learning.history()):
+                    result = "Correct" if attempt["correct"] else "Incorrect"
+                    add(f"#{attempt['number']:03d}  {attempt['answered']}  {result}  +{attempt['xp']} XP")
+                    add(f"{attempt['topic']} / {attempt['question']}  |  Review {attempt['next_review']}", theme.muted)
+                if not summary["answered"]:
+                    add("No answers recorded.")
+            elif self.focus == 3:
+                title = "REVIEW SCHEDULE"
+                reviews = self.learning.reviews()
+                today = self.learning.today().isoformat()
+                for row in reviews:
+                    status = "Due now" if row["due"] <= today else row["due"]
+                    add(f"{status}  |  {row['topic']}  ({row['pending']} questions)")
+                if not reviews:
+                    add("No scheduled reviews.")
+            else:
+                title = "TOPIC PERFORMANCE"
+                for name, (state, correct, total) in summary["topics"].items():
+                    score = f"  |  {correct}/{total} correct ({correct * 100 // total}%)" if total else ""
+                    add(f"{name}  |  {state}{score}")
+                if not summary["topics"]:
+                    add("No topics introduced. Import material in Feed.")
+        else:
+            title = "FEED MODE / " + ("INBOX" if self.inbox_view else "LIBRARY")
+            if self.source:
+                source = self.source
+                add(source["filename"], theme.accent)
+                add(source["id"], theme.muted)
+                add(f'{source["topic"]}  |  Imported {source["imported"]}', theme.secondary)
+                add("Subtopics: " + (", ".join(json.loads(source["subtopics"])) or "None"))
+                add(f'{source["question_count"]} validated questions')
+                add()
+                if source["note"]:
+                    add(source["note"])
+                commands = (("Pg↑↓", "Scroll"), ("Esc", "Back"))
+            else:
+                items = self.feed_items()
+                if not items:
+                    add("No files in the inbox." if self.inbox_view else "No sources imported yet.", theme.secondary)
+                    add("Copy .json, .md or .txt files into the local study inbox, then use T.")
+                    add(str(self.inbox), theme.muted)
+                    add("Notes need a Topic: header. Notes never create quiz questions.")
+                for i, item in enumerate(items):
+                    selected = i == self.feed_cursor
+                    if self.reveal == i:
+                        anchor = len(lines)
+                    label = item.name if self.inbox_view else f"{item['filename']}  /  {item['topic']}  /  {item['question_count']} questions"
+                    add(("▸ " if selected else "  ") + label, theme.accent if selected else None)
+                commands = (("↑↓", "Move"), ("T", "Switch"), ("Enter", "Import" if self.inbox_view else "Open"), ("Esc", "Back"))
+            hint = "Local study sources"
+
+        height = min(rows - 8, max(10, len(lines) + 5))
+        visible = height - 5
+        self.page_size = max(1, visible - 1)
+        if anchor is not None:
+            if anchor < self.scroll:
+                self.scroll = anchor
+            elif anchor >= self.scroll + visible:
+                self.scroll = anchor - visible + 1
+        self.reveal = None
+        self.scroll = min(self.scroll, max(0, len(lines) - visible))
+        panel(x, 6, width, height, title, active=True)
+        for row, (text, ink) in enumerate(lines[self.scroll:self.scroll + visible], 7):
+            body(x, row, width, text, ink)
+        if len(lines) > visible:
+            hint = f"Pg↑/Pg↓ scroll  |  {self.scroll + 1}–{self.scroll + visible} / {len(lines)}"
+        body(x, height + 2, width, hint, theme.muted)
+        body(x, height + 3, width, cell_text(self.notice), theme.accent)
+        label = {PRACTICE: "Practice", REVIEW: "Review", MISSION: "Mission"}.get(slot)
+        footer(commands, label or self.mode.replace("_", " ").capitalize())
 
     def frame(self, cols, rows, pixels=None):
         t = THEMES[self.theme_index]
@@ -185,6 +563,46 @@ class Dashboard:
             footer((("1–5", "Select theme"), ("Esc", "Back"), ("Q", "Quit")))
             return "".join(frame)
 
+        if self.mode:
+            self.learning_frame(put, panel, body, footer, cols, rows, t)
+            return "".join(frame)
+
+        summary = self.learning.summary()
+        earned = summary["xp"]
+        level = self.learning.level(earned)
+        stage = self.learning.avatar_stage(earned)
+        xp = (XP + earned) % XP_GOAL
+        topics = tuple(f"{cell_text(name)}: {state}" + (f"  {right}/{total}" if total else "")
+                       for name, (state, right, total) in summary["topics"].items())
+        answered = summary["answered"]
+        correct = summary["correct"]
+        accuracy = f"{correct * 100 // answered}%" if answered else "—"
+        pending = self.learning.reviews()
+        today = self.learning.today().isoformat()
+        reviews = tuple(f"{'Due now' if row['due'] <= today else row['due']}  {cell_text(row['topic'])} ({row['pending']})"
+                        for row in pending)
+        latest = self.learning.mission_run()
+        completed = self.learning.completed_missions()
+        gear_unlocked = tuple(completed >= threshold for _, _, threshold in GEAR)
+        mission = MISSIONS_BY_ID[latest["mission"]] if latest else MISSIONS[self.mission_cursor]
+        if latest:
+            status = ("Completed" if latest["correct"] >= latest["passing_score"] else "Failed"
+                      ) if latest["finished"] else "In progress"
+            status += f"  /  {latest['answered']}/{len(latest['questions'])} answered"
+        else:
+            status = "Ready to start" if self.learning.mission_available(mission) else "Bundled packs required"
+        mission_lines = (f"{mission.id} / {mission.name}", mission.objective, status)
+        panels = (
+            ("CURRENT MISSION", mission_lines),
+            ("RECENT PROGRESS", (f"Exercises {answered}   Accuracy {accuracy}",
+                                 f"Correct {correct}   Incorrect {answered - correct}",
+                                 f"Streak {summary['streak']}   +{earned:,} XP")),
+            ("NEXT REVIEW", reviews or ("No reviews scheduled",)),
+            ("STUDIED TOPICS", topics),
+            ("GEAR", tuple(name if unlocked else f"{name} (Locked)"
+                           for (name, _, _), unlocked in zip(GEAR, gear_unlocked))),
+        )
+
         # Draw the study windows first. The portrait is independent of focus and panel paging.
         y0, end = 6, rows - 2
         left = 1
@@ -193,21 +611,14 @@ class Dashboard:
         right_w = cols - right - 1
 
         def study(index, x, y, width, height):
-            title, lines = PANELS[index]
+            title, lines = panels[index]
             panel(x, y, width, height, title, active=self.focus == index + 1)
             for i, line in enumerate(lines[:height - 2]):
-                prefix = "☑ " if index == 3 else "▪ " if index in (1, 4) else ""
+                prefix = "▪ " if index in (1, 4) else ""
                 body(x, y + i + 1, width, prefix + line,
                      t.accent if index == 0 and i == 0 else t.text)
                 if index == 0 and i == 0:
                     put(x + 2, y + 1, line[:width - 4], t.accent, row_bg(y + 1), bold=True)
-                if index == 3:
-                    row = y + i + 1
-                    put(x + 2, row, "☑", t.accent, row_bg(row))
-                    if width >= 33:
-                        put(x + width - 11, row, " STUDIED ", t.background, t.secondary, bold=True)
-            if index == 3 and height >= 6:
-                body(x, y + height - 2, width, f"{len(lines):02d} TOPICS STUDIED", t.muted)
 
         if compact:
             count = min(5, (end - y0) // 5)
@@ -217,9 +628,6 @@ class Dashboard:
             for i in range(first, first + count):
                 y = y0 + (i - first) * 5
                 study(i, right, y, right_w, 5)
-                if i == 1 and right_w >= 24:
-                    done, total = map(int, PANELS[1][1][0].rsplit("  ", 1)[1].split("/"))
-                    meter(right + 2, y + 3, total, done)
             last = y0 + count * 5
             if last < end:
                 body(right, last, right_w, f"{first + 1}–{first + count} / 5   ↑↓", t.muted)
@@ -239,104 +647,33 @@ class Dashboard:
             mission_gap = 2 if rows >= 39 else 1
             mid_y = gear_y - mid_h - gear_gap
             mission_h = mid_y - y0 - mission_gap
-            panel(right, y0, right_w, mission_h, PANELS[0][0], active=self.focus == 1)
-            panel(right, mid_y, mid_w, mid_h, PANELS[1][0], active=self.focus == 2)
-            panel(review_x, mid_y, review_w, mid_h, PANELS[2][0], active=self.focus == 3)
-            panel(right, gear_y, right_w, gear_h, PANELS[4][0], active=self.focus == 5)
-
-            mission_title, description, objectives = PANELS[0][1]
-            code, title_text = mission_title.split(" / ", 1)
-            headline_y = y0 + 1
-            put(right + 2, headline_y, f" {code} ", t.background, t.accent)
-            divider_x = right + right_w - 34
-            briefing_w = divider_x - right
-            put(right + 8, headline_y, f" {title_text.upper()} ".ljust(briefing_w - 10),
-                t.accent, t.shadow, bold=True)
-            body(right, headline_y + 1, briefing_w, description)
-            for dy in range(1, mission_h - 1):
-                put(divider_x, y0 + dy, "│", t.shadow, scan)
-
-            checklist = (
-                ("Review VLAN fundamentals", True),
-                ("Identify the switch uplinks", True),
-                ("Set the uplink to trunk mode", False),
-                ("Verify the trunk link", False),
-            )
-            full_brief = mission_h >= 10
-            if full_brief:
-                checklist_y = headline_y + (2 if mission_h == 10 else 3)
-                body(right, checklist_y, briefing_w, "OBJECTIVE CHECKLIST", t.secondary)
-                for i, (label, done) in enumerate(checklist):
-                    row = checklist_y + 1 + i
-                    put(right + 2, row, "☑" if done else "□", t.accent if done else t.secondary, row_bg(row))
-                    body(right + 2, row, briefing_w - 2, label, t.muted if done else t.text)
+            panel(right, gear_y, right_w, gear_h, panels[4][0], active=self.focus == 5)
+            if mission_h >= 9:
+                panel(right, y0, right_w, mission_h, panels[0][0], active=self.focus == 1)
+                detail_x = right + right_w - 30
+                brief_w = detail_x - right
+                put(right + 2, y0 + 1, f" {mission.id} ", t.background, t.accent, bold=True)
+                put(right + 8, y0 + 1, mission.name, t.accent, row_bg(y0 + 1), bold=True)
+                for i, line in enumerate(textwrap.wrap(mission.briefing, brief_w - 4)[:mission_h - 7], 3):
+                    body(right, y0 + i, brief_w, line)
+                body(right, y0 + mission_h - 3, brief_w, mission.objective, t.secondary)
+                body(right, y0 + mission_h - 2, brief_w, status, t.accent)
+                for i in range(1, mission_h - 1):
+                    put(detail_x, y0 + i, "│", t.shadow, row_bg(y0 + i))
+                body(detail_x, y0 + 1, 30, "MISSION DETAILS", t.secondary)
+                body(detail_x, y0 + 3, 30, f"Difficulty {mission.difficulty}/5")
+                body(detail_x, y0 + 4, 30, f"Questions  {len(mission.questions)}")
+                body(detail_x, y0 + 5, 30, f"First pass +{mission.reward} XP")
+                if latest:
+                    meter(detail_x + 2, y0 + mission_h - 2, len(latest["questions"]), latest["answered"])
             else:
-                body(right, headline_y + 3, briefing_w, objectives, t.secondary)
-                body(right, headline_y + 4, briefing_w, "☑ ☑ □ □", t.accent)
-
-            map_rows = (
-                "         ┏━↕━┓",
-                "     ┌━━━┻━━━┻━━━┐",
-                "  ┏━━┻━━┓     ┏━━┻━━┓",
-                "  ┗▪▪▪▪▪┛     ┗▪▪▪▪▪┛",
-                "    SW1         SW2",
-            )
-            stats_x = divider_x + 2
-            if mission_h >= 14:
-                put(stats_x, y0 + 1, "  MISSION DETAILS  ", t.background, t.secondary, bold=True)
-                for dy, (label, value) in enumerate(MISSION_DETAILS, 2):
-                    put(stats_x, y0 + dy, label, t.muted, row_bg(y0 + dy))
-                    put(stats_x + 13, y0 + dy, value, t.accent, row_bg(y0 + dy), bold=True)
-                map_y = y0 + 7
-                put(stats_x, map_y - 1, "802.1Q TOPOLOGY ━━━━━━━━━━━━━", t.secondary, row_bg(map_y - 1))
-            elif mission_h >= 10:
-                mission_type, difficulty, reward, focus = (value for _, value in MISSION_DETAILS)
-                put(stats_x, y0 + 2, f" {mission_type} ", t.background, t.secondary, bold=True)
-                put(stats_x + 17, y0 + 2, f" DIFF {difficulty.replace(' ', '')}",
-                    t.accent, row_bg(y0 + 2), bold=True)
-                put(stats_x, y0 + 3, focus, t.secondary, row_bg(y0 + 3))
-                put(stats_x + 18, y0 + 3, reward, t.accent, row_bg(y0 + 3), bold=True)
-                map_y = y0 + 4
-                map_rows = (
-                    "         ┌─↕─┐",
-                    "     ┌━━━┻━━━┻━━━┐",
-                    "  ▣ SW1         SW2 ▣",
-                )
-            else:
-                map_y = y0 + 1
-            for i, line in enumerate(map_rows):
-                put(stats_x + 3, map_y + i, line, t.accent if i == 1 else t.secondary, row_bg(map_y + i))
-            if full_brief:
-                completed = sum(done for _, done in checklist)
-                if mission_h >= 14:
-                    status_y = min(y0 + mission_h - 3, checklist_y + 6)
-                    body(right, status_y, briefing_w, f"OBJECTIVES  {completed:02d}/{len(checklist):02d}  COMPLETE", t.secondary)
-                    meter(right + 2, status_y + 1, 14, 14 * completed // len(checklist))
-                else:
-                    status_y = min(y0 + mission_h - 2, map_y + 5)
-                    put(stats_x, status_y, f" OBJECTIVES  {completed:02d}/{len(checklist):02d} ", t.text, t.shadow, bold=True)
-
-            drill_label, drill_score = PANELS[1][1][0].rsplit("  ", 1)
-            done, total = map(int, drill_score.split("/"))
-            basic_label, basic_status = PANELS[1][1][1].rsplit("  ", 1)
-            progress_y = mid_y + 1
-            put(right + 2, progress_y, f"▸ {drill_label.upper()}", t.text, row_bg(progress_y), bold=True)
-            put(right + mid_w - 10, progress_y, f" {done} / {total} ", t.background, t.accent, bold=True)
-            meter(right + 4, progress_y + 1, total, done)
-            body(right + 2, progress_y + 2, mid_w - 2, f"{total - done} DRILLS REMAIN", t.muted)
-            completion_y = mid_y + min(mid_h - 2, 6)
-            put(right + 2, completion_y, f"☑ {basic_label.upper()}", t.text, row_bg(completion_y), bold=True)
-            put(right + mid_w - 11, completion_y, f" {basic_status.upper()} ", t.background, t.secondary, bold=True)
-
-            review_entries = tuple(line.split(maxsplit=1) for line in PANELS[2][1])
-            put(review_x + 2, mid_y + 1, "REVIEW QUEUE", t.secondary, row_bg(mid_y + 1), bold=True)
-            put(review_x + review_w - 12, mid_y + 1, f" {len(review_entries):02d} TOPICS ",
-                t.background, t.secondary, bold=True)
-            for i, (when, topic) in enumerate(review_entries):
-                row = mid_y + 2 + i * (3 if mid_h >= 9 else 2)
-                put(review_x + 2, row, when.upper().center(10), t.background,
-                    t.accent if i == 0 else t.secondary, bold=True)
-                put(review_x + 13, row, topic[:review_w - 15], t.text, row_bg(row), bold=True)
+                study(0, right, y0, right_w, mission_h)
+            study(1, right, mid_y, mid_w, mid_h)
+            study(2, review_x, mid_y, review_w, mid_h)
+            for i, attempt in enumerate(summary["recent"][:max(0, mid_h - 5)], 4):
+                outcome = "Correct" if attempt["correct"] else "Incorrect"
+                body(right, mid_y + i, mid_w,
+                     f"#{attempt['number']:03d}  {outcome}  +{attempt['xp']} XP", t.muted)
 
             icons = (
                 ("▀▄       ", "  ▀▀▀▄   ", "      ▀▄ "),
@@ -345,8 +682,11 @@ class Dashboard:
             )
             tile_w = (right_w - 4) // 3
             active = self.focus == 5
-            equipment_roles = ("SERIAL ACCESS", "LAYER 2", "FRAME INSPECTION")
-            for i, (name, icon, role) in enumerate(zip(PANELS[4][1], icons, equipment_roles)):
+            for i, ((name, role, threshold), icon) in enumerate(zip(GEAR, icons)):
+                unlocked = gear_unlocked[i]
+                if not unlocked:
+                    role = f"PASS {threshold} MISSION" + ("S" if threshold != 1 else "")
+                ink = (t.accent if active else t.text) if unlocked else t.muted
                 x = right + 2 + i * tile_w
                 width = tile_w - 1
                 border = t.accent if active else t.secondary
@@ -360,10 +700,13 @@ class Dashboard:
                     put(icon_x, gear_y + dy, line, t.secondary, card_bg)
                 if side_by_side:
                     label_x = x + 12
-                    put(label_x, gear_y + 3, name.upper(), t.accent if active else t.text, card_bg, bold=True)
+                    put(label_x, gear_y + 3, name.upper(), ink, card_bg, bold=True)
                     put(label_x, gear_y + 5, role, t.muted, card_bg)
                 else:
-                    put(x + 1, gear_y + 5, name.upper().center(width - 2), t.accent if active else t.text, card_bg, bold=True)
+                    label = name.upper()
+                    if not unlocked and gear_h == 7:
+                        label = f"□ {label}"[:width - 2]
+                    put(x + 1, gear_y + 5, label.center(width - 2), ink, card_bg, bold=True)
                     if gear_h == 8:
                         put(x + 1, gear_y + 6, role.center(width - 2), t.muted, card_bg)
 
@@ -372,11 +715,11 @@ class Dashboard:
         portrait_rows = profile_end - portrait_y - 5
         portrait_columns = profile_w - 2
         palette = portrait_palette(t)
-        image = sixel(self.stage, palette, pixels, portrait_columns, portrait_rows) if pixels else ""
+        image = sixel(stage, palette, pixels, portrait_columns, portrait_rows) if pixels else ""
         if image:
             frame.extend((f"{ESC}{portrait_y + 1};{left + gutter + 2}H", image))
         else:
-            for y, pairs in enumerate(half_blocks(self.stage, portrait_columns, portrait_rows), portrait_y):
+            for y, pairs in enumerate(half_blocks(stage, portrait_columns, portrait_rows), portrait_y):
                 x = left + 1 + (portrait_columns - len(pairs)) // 2
                 for (top, bottom), cells in groupby(pairs):
                     length = sum(1 for _ in cells)
@@ -386,20 +729,30 @@ class Dashboard:
         stats_y = profile_end - 5
         if profile_w >= 25:
             put(left + 1, stats_y, " ▸ ROOK".ljust(profile_w - 2), t.background, t.secondary, bold=True)
-            put(left + profile_w - 11, stats_y, " LEVEL 07 ", t.background, t.accent, bold=True)
+            put(left + profile_w - 11, stats_y, f" LEVEL {level:02d} ", t.background, t.accent, bold=True)
         else:
-            put(left + 1, stats_y, " ROOK / LV 07"[:profile_w - 2], t.background, t.secondary, bold=True)
-        body(left, stats_y + 1, profile_w, f"Evolution {self.stage + 1} / 2", t.secondary)
-        body(left, stats_y + 2, profile_w, f"XP {XP:,}/{XP_GOAL:,}", t.text)
+            put(left + 1, stats_y, f" ROOK / LV {level:02d}"[:profile_w - 2], t.background, t.secondary, bold=True)
+        body(left, stats_y + 1, profile_w, f"Evolution {stage + 1} / 2", t.secondary)
+        body(left, stats_y + 2, profile_w, f"XP {xp:,}/{XP_GOAL:,}", t.text)
         segments = min(16, (profile_w - 3) // 2)
-        meter(left + 2, stats_y + 3, segments, XP * segments // XP_GOAL)
+        meter(left + 2, stats_y + 3, segments, xp * segments // XP_GOAL)
         if profile_w >= 38:
             put(left + profile_w - 5, stats_y + 3, "▰▰", t.secondary, row_bg(stats_y + 3))
         if not compact and profile_w >= 34:
-            put(left + profile_w - 6, stats_y + 2, f"{XP * 100 // XP_GOAL:>2}%", t.accent, t.panel)
+            put(left + profile_w - 6, stats_y + 2, f"{xp * 100 // XP_GOAL:>2}%", t.accent, t.panel)
         focus = ("Operator", "Mission", "Progress", "Review", "Topics", "Gear")[self.focus]
-        panel_key = "Tab/↑↓" if cols >= 56 else "Tab"
-        footer(((panel_key, "Panels"), ("E", "Avatar"), ("S", "Settings"), ("Q", "Quit")), focus)
+        if self.focus in (1, 2, 3, 4):
+            focus += "  /  Enter details"
+        commands = (("M", "Missions"), ("X", "Practice"), ("R", "Review"), ("F", "Feed"),
+                    ("S", "Theme"), ("Q", "Quit"))
+        if cols >= 95:
+            commands += (("Tab/↑↓", "Panels"), ("E", "Avatar"))
+        elif cols >= 68:
+            focus += "  /  Tab Panels  E Avatar"
+        else:
+            commands = (("M", "Missions"), ("X", "Practice"), ("R", "Review"), ("S", "Theme"), ("Q", "Quit"))
+            focus += "  /  F Feed  E Avatar  Tab Panels"
+        footer(commands, focus)
         return "".join(frame)
 
 
@@ -433,7 +786,8 @@ def run(app, avatar_mode):
         sys.stdout.flush()
 
     keys = {b"\x1b[A": "UP", b"\x1b[B": "DOWN", b"\x1bOA": "UP", b"\x1bOB": "DOWN",
-            b"\x1b[Z": "UP", b"\t": "TAB", b"\x1b": "ESC"}
+            b"\x1b[Z": "UP", b"\t": "TAB", b"\x1b": "ESC",
+            b"\r": "ENTER", b"\n": "ENTER", b"\x1b[5~": "PAGEUP", b"\x1b[6~": "PAGEDOWN"}
     try:
         tty.setraw(fd)
         write(ESC + "?1049h" + ESC + "?25l")
@@ -466,7 +820,7 @@ def run(app, avatar_mode):
                 else:
                     token = pending[:1]
                 pending = pending[len(token):]
-                if token in (b"q", b"\x03"):
+                if token == b"\x03" or (token.lower() == b"q" and not app.mode):
                     return
                 app.key(keys.get(token, token.decode("ascii", errors="replace")))
             previous = None
@@ -477,9 +831,35 @@ def run(app, avatar_mode):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--version", action="version", version="CCNA Network Ops 1.0.0rc1")
     parser.add_argument("--avatar", choices=("text", "sixel"), default="sixel",
                         help="probe for Sixel by default, or force Unicode with text")
+    actions = parser.add_mutually_exclusive_group()
+    actions.add_argument("--feed", type=Path, metavar="FILE", help="import a local question pack or note")
+    actions.add_argument("--activate", metavar="TOPIC", help="introduce a named topic without adding questions")
+    parser.add_argument("--topic", help="topic for a Markdown or text note")
+    parser.add_argument("--subtopic", help="optional subtopic for a note")
+    parser.add_argument("--no-bundled", action="store_true", help="launch using only the study database")
     args = parser.parse_args()
-    if not (sys.stdin.isatty() and sys.stdout.isatty()):
+    if (args.topic is not None or args.subtopic is not None) and args.feed is None:
+        parser.error("--topic and --subtopic require --feed")
+    if not (args.feed or args.activate or (sys.stdin.isatty() and sys.stdout.isatty())):
         parser.error("an interactive terminal is required")
-    run(Dashboard(CONFIG), args.avatar)
+    try:
+        weights_file = CONFIG.with_name("category-weights.json")
+        weights = json.loads(weights_file.read_text()) if weights_file.exists() else None
+        with closing(Learning(DATA / "learning.sqlite3", weights)) as learning:
+            if args.feed:
+                learning.ingest(args.feed, args.topic, args.subtopic)
+                print(f"Imported {cell_text(args.feed.name)}")
+            elif args.activate:
+                learning.activate(args.activate)
+                print(f"Introduced {cell_text(args.activate)}")
+            else:
+                if not args.no_bundled:
+                    load_bundled(learning)
+                inbox = DATA / "inbox"
+                inbox.mkdir(exist_ok=True)
+                run(Dashboard(CONFIG, learning, inbox), args.avatar)
+    except (LearningError, OSError, ValueError, sqlite3.Error) as error:
+        parser.exit(1, f"Study data: {cell_text(str(error))}\n")

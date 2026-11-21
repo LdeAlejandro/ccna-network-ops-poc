@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-address-classes-and-special-addresses",
+  "version": 1,
+  "topic": "Address classes and special addresses",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-13-01",
+      "category": "subnetting",
+      "subtopic": "Class A",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which leading bit identified historical Class A addressing?",
+      "options": {
+        "A": "110",
+        "B": "1110",
+        "C": "10",
+        "D": "0"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The first bit of a historical Class A address was zero."
+    },
+    {
+      "id": "ccna-exam-v2-13-02",
+      "category": "subnetting",
+      "subtopic": "Class B",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Before CIDR, which default mask was associated with an address beginning 150.20?",
+      "options": {
+        "A": "255.0.0.0",
+        "B": "255.255.0.0",
+        "C": "255.255.255.240",
+        "D": "255.255.255.0"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "First octet 150 falls into the old Class B range, whose default was /16."
+    },
+    {
+      "id": "ccna-exam-v2-13-03",
+      "category": "subnetting",
+      "subtopic": "Class C",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "An archival addressing plan labels 198.18.4.0 as Class C. Which default prefix did that classification imply?",
+      "options": {
+        "A": "/8",
+        "B": "/20",
+        "C": "/16",
+        "D": "/24"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Historical Class C uses leading bits 110 and a /24 classful boundary."
+    },
+    {
+      "id": "ccna-exam-v2-13-04",
+      "category": "subnetting",
+      "subtopic": "Class D",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A legacy reference labels 233.1.1.1 as Class D. What was this range used for?",
+      "options": {
+        "A": "Loopback interfaces",
+        "B": "Ordinary unicast networks with a /24 mask",
+        "C": "Multicast groups",
+        "D": "Limited broadcast on the local LAN"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Class D addresses have leading bits 1110 and identify multicast groups."
+    },
+    {
+      "id": "ccna-exam-v2-13-05",
+      "category": "subnetting",
+      "subtopic": "Class E",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which leading pattern identifies the historical Class E block?",
+      "options": {
+        "A": "10",
+        "B": "1110",
+        "C": "110",
+        "D": "1111"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The 240.0.0.0/4 range starts with 1111 and was historically reserved. It contains special cases such as limited broadcast."
+    },
+    {
+      "id": "ccna-exam-v2-13-06",
+      "category": "subnetting",
+      "subtopic": "Loopback block",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A test program binds to 127.5.4.3. What is the intended address scope?",
+      "options": {
+        "A": "The directly attached LAN",
+        "B": "A private subnet routable across a site",
+        "C": "The local host",
+        "D": "An IPv4 multicast group"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "IPv4 loopback covers 127.0.0.0/8."
+    },
+    {
+      "id": "ccna-exam-v2-13-07",
+      "category": "subnetting",
+      "subtopic": "Network identifier",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which address identifies the subnet containing 203.0.113.183/26?",
+      "options": {
+        "A": "203.0.113.191",
+        "B": "203.0.113.128",
+        "C": "203.0.113.183",
+        "D": "203.0.113.192"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "A /26 block containing .183 starts at .128, where all six host bits are zero."
+    },
+    {
+      "id": "ccna-exam-v2-13-08",
+      "category": "subnetting",
+      "subtopic": "CIDR interpretation",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A routing table explicitly lists 192.0.2.0/26. Which statement describes the prefix?",
+      "options": {
+        "A": "It excludes the lower half of the /24",
+        "B": "It represents precisely 26 addresses",
+        "C": "It represents the .0 through .63 address block",
+        "D": "It represents all addresses in 192.0.2.0/24 by historical class"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Modern forwarding uses the supplied prefix, whose six host bits describe 64 addresses."
+    },
+    {
+      "id": "ccna-exam-v2-13-09",
+      "category": "subnetting",
+      "subtopic": "Directed broadcast",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Which address is reserved as directed broadcast within 172.22.112.0/20?",
+      "options": {
+        "A": "172.22.128.0",
+        "B": "172.22.112.255",
+        "C": "172.22.127.254",
+        "D": "172.22.127.255"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The third octet spans 112–127, and all host bits are ones at 172.22.127.255."
+    },
+    {
+      "id": "ccna-exam-v2-13-10",
+      "category": "subnetting",
+      "subtopic": "Classful versus private",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A legacy Class A network includes first octet 11. Which fact decides whether 11.20.1.1 is RFC 1918 private today?",
+      "options": {
+        "A": "Whether its current mask is longer than /8",
+        "B": "Whether the address falls in one of the listed RFC 1918 prefixes",
+        "C": "Whether the address historically had a /8 mask",
+        "D": "Whether its first octet is less than 127"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Private status follows specific ranges. 11.20.1.1 falls outside all three."
+    }
+  ]
+}

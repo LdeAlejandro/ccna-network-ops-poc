@@ -1,0 +1,188 @@
+{
+  "pack_id": "ccna-exam-v2-configurations-and-backups",
+  "version": 1,
+  "topic": "Configurations and backups",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-04-01",
+      "category": "ios_commands",
+      "subtopic": "Device name",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which global configuration command changes the device's CLI name to Branch?",
+      "options": {
+        "A": "ip host Branch",
+        "B": "name-server Branch",
+        "C": "description Branch",
+        "D": "hostname Branch"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "hostname changes the device name shown in the prompt."
+    },
+    {
+      "id": "ccna-exam-v2-04-02",
+      "category": "ios_commands",
+      "subtopic": "Active configuration",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which command displays the configuration currently in use?",
+      "options": {
+        "A": "show version",
+        "B": "show running-config",
+        "C": "show startup-config",
+        "D": "show flash:"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Running-config is the active configuration and can include changes missing from the saved copy."
+    },
+    {
+      "id": "ccna-exam-v2-04-03",
+      "category": "ios_commands",
+      "subtopic": "Save direction",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which command saves the running configuration for the next normal boot?",
+      "options": {
+        "A": "copy running-config startup-config",
+        "B": "copy flash: running-config",
+        "C": "copy running-config tftp:",
+        "D": "copy startup-config running-config"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The first argument is the source. startup-config is the saved destination."
+    },
+    {
+      "id": "ccna-exam-v2-04-04",
+      "category": "ios_commands",
+      "subtopic": "Local name table",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which IOS global command makes edge-lab resolve locally to 192.0.2.44?",
+      "options": {
+        "A": "ip host edge-lab 192.0.2.44",
+        "B": "ip name-server edge-lab 192.0.2.44",
+        "C": "hostname edge-lab 192.0.2.44",
+        "D": "ip address edge-lab 192.0.2.44"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "ip host maps a name to an address in the device's local host table."
+    },
+    {
+      "id": "ccna-exam-v2-04-05",
+      "category": "ios_commands",
+      "subtopic": "Reload",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "On a normal boot that loads startup-config, what happens to an unsaved interface description after a reload when you decline to save?",
+      "options": {
+        "A": "The running description becomes the new startup value",
+        "B": "The startup configuration is erased",
+        "C": "The saved description returns, or the description is absent if none was saved",
+        "D": "The port's IP address always changes to DHCP"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The unsaved active change is lost when the device reloads from the saved configuration."
+    },
+    {
+      "id": "ccna-exam-v2-04-06",
+      "category": "ios_commands",
+      "subtopic": "Flash backup",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "On an IOS device with writable flash:, which command copies the active configuration into a local file named branch.cfg?",
+      "options": {
+        "A": "copy running-config flash:branch.cfg",
+        "B": "show flash:branch.cfg",
+        "C": "copy startup-config tftp:",
+        "D": "copy flash:branch.cfg running-config"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The copy source is the active configuration and the destination is a named file on flash."
+    },
+    {
+      "id": "ccna-exam-v2-04-07",
+      "category": "ios_commands",
+      "subtopic": "TFTP backup",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Which command sends the saved configuration to an available TFTP server?",
+      "options": {
+        "A": "copy startup-config tftp:",
+        "B": "copy running-config startup-config",
+        "C": "copy tftp: startup-config",
+        "D": "copy startup-config flash:branch.cfg"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The saved file is the source and TFTP is the destination. IOS prompts for transfer details."
+    },
+    {
+      "id": "ccna-exam-v2-04-08",
+      "category": "ios_commands",
+      "subtopic": "Restore behavior",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "What should you expect when copying a configuration file from TFTP into IOS running-config?",
+      "options": {
+        "A": "The router reboots before reading the commands",
+        "B": "Its commands are merged into the active configuration",
+        "C": "The file is stored exclusively in startup-config",
+        "D": "The old configuration is automatically erased first"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Copying into running-config applies commands to the existing configuration. Extra settings can remain."
+    },
+    {
+      "id": "ccna-exam-v2-04-09",
+      "category": "ios_commands",
+      "subtopic": "Backup selection",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A tested interface change is active but unsaved. Which source should a backup capture to preserve that exact current state?",
+      "options": {
+        "A": "running-config",
+        "B": "The ARP table",
+        "C": "startup-config",
+        "D": "The IOS image file"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The active running configuration includes the recent change."
+    },
+    {
+      "id": "ccna-exam-v2-04-10",
+      "category": "ios_commands",
+      "subtopic": "Comparing configuration copies",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Refer to the illustrative extracts. The router will reload normally without saving. Which name should appear afterward?",
+      "options": {
+        "A": "Warehouse-East-Startup",
+        "B": "Warehouse",
+        "C": "Router",
+        "D": "Warehouse-East"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The router loads the saved configuration, whose hostname is Warehouse.",
+      "snippet": "Illustrative excerpt\nRunning: hostname Warehouse-East\nStartup: hostname Warehouse"
+    }
+  ]
+}

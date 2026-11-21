@@ -1,0 +1,188 @@
+{
+  "pack_id": "ccna-exam-v2-basic-troubleshooting",
+  "version": 1,
+  "topic": "Basic troubleshooting",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-26-01",
+      "category": "troubleshooting",
+      "subtopic": "Ping mechanism",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which response does IPv4 ping normally count as success?",
+      "options": {
+        "A": "ICMP Time Exceeded",
+        "B": "TCP SYN-ACK",
+        "C": "ICMP Echo Reply",
+        "D": "ARP Reply"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "An ICMP Echo Reply answers the request for the probed destination."
+    },
+    {
+      "id": "ccna-exam-v2-26-02",
+      "category": "troubleshooting",
+      "subtopic": "Interface check",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which IOS command provides a quick check of both state columns before diagnosing a routing failure?",
+      "options": {
+        "A": "show ip interface brief",
+        "B": "show hosts",
+        "C": "show startup-config",
+        "D": "show ip route static"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The brief status table shows interface and line protocol state together."
+    },
+    {
+      "id": "ccna-exam-v2-26-03",
+      "category": "troubleshooting",
+      "subtopic": "Success evidence",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "An IOS ping reports !!!!! for five probes to a server. Which conclusion follows?",
+      "options": {
+        "A": "The path used the same routers in both directions",
+        "B": "The server's switch port operates at the same duplex as the source",
+        "C": "All five probes received replies",
+        "D": "The server's HTTPS service accepted five connections"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Successful ping supports ICMP reachability at the time of testing."
+    },
+    {
+      "id": "ccna-exam-v2-26-04",
+      "category": "troubleshooting",
+      "subtopic": "Timeout interpretation",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "An illustrative IOS ping displays ..... while other traffic succeeds. What does the dot establish for each probe?",
+      "options": {
+        "A": "Each request was dropped by the first hop",
+        "B": "No reply arrived within its timeout",
+        "C": "The remote host definitely powered off",
+        "D": "The default gateway is absent from the routing table"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Timeouts alone do not identify the failing hop or cause."
+    },
+    {
+      "id": "ccna-exam-v2-26-05",
+      "category": "troubleshooting",
+      "subtopic": "Port tracing exhibit",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Refer to the illustrative table. Which port should be inspected for host 001a.2b03.04c5 in VLAN 20?",
+      "options": {
+        "A": "The router's Gi0/0",
+        "B": "Gi1/0/7",
+        "C": "Gi1/0/21",
+        "D": "Gi1/0/3"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Use both VLAN and destination MAC in the table to select the learned port.",
+      "snippet": "Illustrative excerpt\nVlan    Mac Address       Type        Ports\n  10    001a.2b03.04c5    DYNAMIC     Gi1/0/3\n  20    001a.2b03.04c5    DYNAMIC     Gi1/0/7\n  20    001a.2b03.04c6    DYNAMIC     Gi1/0/21"
+    },
+    {
+      "id": "ccna-exam-v2-26-06",
+      "category": "troubleshooting",
+      "subtopic": "Local versus remote",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A host can ping a peer on its own /24, but cannot ping any off-subnet destination. Which local configuration should be checked next for those off-subnet packets?",
+      "options": {
+        "A": "Host's TCP destination port",
+        "B": "The switch's hostname",
+        "C": "The peer's Ethernet FCS",
+        "D": "IPv4 default gateway"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Local peer communication can succeed without a gateway. Remote forwarding normally uses it."
+    },
+    {
+      "id": "ccna-exam-v2-26-07",
+      "category": "troubleshooting",
+      "subtopic": "Checking the routing decision",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which IOS command asks for the route lookup result for IPv4 destination 203.0.113.78?",
+      "options": {
+        "A": "show ip route 203.0.113.78",
+        "B": "show arp 203.0.113.78",
+        "C": "show mac address-table dynamic",
+        "D": "show ip interface brief"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The address-specific routing lookup displays forwarding prefix information, unlike neighbor and Layer 2 tables."
+    },
+    {
+      "id": "ccna-exam-v2-26-08",
+      "category": "troubleshooting",
+      "subtopic": "Separating faults",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A host can ping its local gateway and a remote server by IPv4 address. It cannot access the server by name, and the resolver times out. Which dependency should be checked next?",
+      "options": {
+        "A": "Reachability and configuration of the DNS resolver",
+        "B": "The route to the local subnet's directed broadcast",
+        "C": "Duplex on every hop along the remote server path",
+        "D": "The MAC aging interval on the remote access switch"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The contrasting results and resolver timeout point to name resolution as the next check."
+    },
+    {
+      "id": "ccna-exam-v2-26-09",
+      "category": "troubleshooting",
+      "subtopic": "Source-specific testing",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A router can ping a remote router using its transit address, but workstations on its LAN cannot reach that remote router. Which test checks whether replies can return to the LAN prefix?",
+      "options": {
+        "A": "Ping the local router's transit address from itself",
+        "B": "Ping the remote router with the source set to the local LAN interface address",
+        "C": "Ping the remote router again using the transit address",
+        "D": "Ping the local LAN's broadcast address"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Choosing the LAN interface address exercises the return path toward the LAN prefix."
+    },
+    {
+      "id": "ccna-exam-v2-26-10",
+      "category": "troubleshooting",
+      "subtopic": "Correlation across tables",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "The host's ARP cache maps the gateway IP to 00:1a:2b:00:00:09. The switch has that MAC in VLAN 30 on Gi1/0/24. Which next inspection traces the physical gateway path?",
+      "options": {
+        "A": "Clear the routing table before examining the port",
+        "B": "Change the local host's DNS server",
+        "C": "Inspect the port associated with the remote server's IP in the ARP cache",
+        "D": "Inspect Gi1/0/24 in the VLAN 30 path"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "ARP identifies the next-hop MAC. The matching VLAN MAC entry identifies the switch port toward it."
+    }
+  ]
+}

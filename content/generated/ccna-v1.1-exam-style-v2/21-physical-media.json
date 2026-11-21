@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-physical-media",
+  "version": 1,
+  "topic": "Physical media",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-21-01",
+      "category": "networking_theory",
+      "subtopic": "Copper connector",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which plug is commonly called RJ-45 in twisted-pair Ethernet installations?",
+      "options": {
+        "A": "8P8C modular plug",
+        "B": "SC simplex plug",
+        "C": "BNC plug",
+        "D": "LC duplex plug"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "8P8C describes the modular plug's eight positions and contacts. RJ-45 is common Ethernet shorthand."
+    },
+    {
+      "id": "ccna-exam-v2-21-02",
+      "category": "networking_theory",
+      "subtopic": "Fiber connectors",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which pair names common fiber Ethernet connector styles?",
+      "options": {
+        "A": "F-type and BNC",
+        "B": "8P8C and BNC",
+        "C": "LC and SC",
+        "D": "USB-C and 8P8C"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "LC and SC are optical connector families used on Ethernet links."
+    },
+    {
+      "id": "ccna-exam-v2-21-03",
+      "category": "networking_theory",
+      "subtopic": "Straight-through wiring",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A legacy PC and switch use fixed complementary MDI and MDI-X 100BASE-TX ports. Which cable is appropriate?",
+      "options": {
+        "A": "Crossover",
+        "B": "Straight-through",
+        "C": "Multimode fiber patch cord",
+        "D": "Rollover"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Complementary transmit and receive pair assignments line up through a straight-through cable."
+    },
+    {
+      "id": "ccna-exam-v2-21-04",
+      "category": "networking_theory",
+      "subtopic": "Crossover wiring",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Two fixed MDI-X 100BASE-TX switch ports are directly connected with Auto MDI-X disabled. Which cable is needed?",
+      "options": {
+        "A": "Single-mode LC patch cable",
+        "B": "Console rollover",
+        "C": "Straight-through",
+        "D": "Crossover"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The crossover swaps transmit and receive pair positions between like ports."
+    },
+    {
+      "id": "ccna-exam-v2-21-05",
+      "category": "networking_theory",
+      "subtopic": "Auto MDI-X",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "What does Auto MDI-X adjust when a supported copper Ethernet link is brought up?",
+      "options": {
+        "A": "The VLAN identifier in the Ethernet header",
+        "B": "The port's transmit and receive pair assignment",
+        "C": "The speed of light in the cable",
+        "D": "The strand type of an optic"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Auto MDI-X resolves wiring orientation so either appropriate straight-through or crossover cabling can work."
+    },
+    {
+      "id": "ccna-exam-v2-21-06",
+      "category": "networking_theory",
+      "subtopic": "Cable category",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which UTP category is the conventional choice for a full 100 m 10GBASE-T channel from the options shown?",
+      "options": {
+        "A": "Cat 3",
+        "B": "Cat 5",
+        "C": "Cat 6A",
+        "D": "Cat 5e"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Cat 6A is specified for 10GBASE-T over the full channel length under the standard installation limits."
+    },
+    {
+      "id": "ccna-exam-v2-21-07",
+      "category": "networking_theory",
+      "subtopic": "Optic and fiber pairing",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A link is specified for 10GBASE-SR at both ends. Which installed medium suits those optics?",
+      "options": {
+        "A": "Cat 6A twisted pair",
+        "B": "A console crossover cable",
+        "C": "Single-mode fiber chosen solely because it has LC connectors",
+        "D": "Compatible multimode fiber"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "SR optics are designed for multimode fiber. Connector shape alone does not determine optical compatibility."
+    },
+    {
+      "id": "ccna-exam-v2-21-08",
+      "category": "networking_theory",
+      "subtopic": "Long-distance campus link",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Two buildings are 2 km apart. Which option meets that distance when standard optics and compliant media are used?",
+      "options": {
+        "A": "10GBASE-T over Cat 6A",
+        "B": "10GBASE-SR over OM3 multimode fiber",
+        "C": "10GBASE-LR over single-mode fiber",
+        "D": "1000BASE-T over Cat 5e"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Single-mode 10GBASE-LR supports kilometer-scale links. The other listed choices have shorter rated reach."
+    },
+    {
+      "id": "ccna-exam-v2-21-09",
+      "category": "networking_theory",
+      "subtopic": "Duplex fiber polarity",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A new two-strand LC link has the correct fiber and compatible optics. Both transmitters work, but light from each transmitter reaches the peer transmitter position. Which change addresses the link fault?",
+      "options": {
+        "A": "Replace both duplex LC plugs with the same orientation",
+        "B": "Swap the strands at both ends",
+        "C": "Force both interfaces to half duplex",
+        "D": "Correct the strand polarity at one end"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Each transmitter must reach the peer receiver. Swapping both ends would recreate the original pairing."
+    },
+    {
+      "id": "ccna-exam-v2-21-10",
+      "category": "networking_theory",
+      "subtopic": "Copper interference",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A short UTP link crosses an environment with severe electromagnetic interference. Which change addresses that issue without relying on shielding or rerouting?",
+      "options": {
+        "A": "Swap between two straight-through UTP patch cords",
+        "B": "Use a supported optical Ethernet link",
+        "C": "Switch from matching full duplex to half duplex",
+        "D": "Increase the DHCP lease time"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Optical fiber transports light rather than electrical signals and is immune to electromagnetic interference in the data path."
+    }
+  ]
+}

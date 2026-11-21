@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-ipv4",
+  "version": 1,
+  "topic": "IPv4",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-09-01",
+      "category": "networking_theory",
+      "subtopic": "Address size",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "How many bits are in an IPv4 address?",
+      "options": {
+        "A": "128",
+        "B": "16",
+        "C": "48",
+        "D": "32"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "IPv4 addresses consist of four 8-bit octets."
+    },
+    {
+      "id": "ccna-exam-v2-09-02",
+      "category": "networking_theory",
+      "subtopic": "Octets",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which decimal value cannot appear as an IPv4 address octet?",
+      "options": {
+        "A": "0",
+        "B": "128",
+        "C": "255",
+        "D": "256"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Eight bits encode 0 to 255 inclusive."
+    },
+    {
+      "id": "ccna-exam-v2-09-03",
+      "category": "networking_theory",
+      "subtopic": "TTL",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "A packet leaves a host with IPv4 TTL 64 and passes three forwarding routers. Each subtracts one. What TTL arrives at the destination?",
+      "options": {
+        "A": "60",
+        "B": "64",
+        "C": "62",
+        "D": "61"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The packet's TTL decreases by one per forwarding router in this scenario. 64 minus three gives 61."
+    },
+    {
+      "id": "ccna-exam-v2-09-04",
+      "category": "networking_theory",
+      "subtopic": "Protocol field",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which IPv4 header field indicates that the payload is ICMP?",
+      "options": {
+        "A": "Total Length",
+        "B": "Identification",
+        "C": "Protocol",
+        "D": "Time to Live"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The Protocol field identifies the encapsulated protocol. ICMP is protocol number 1."
+    },
+    {
+      "id": "ccna-exam-v2-09-05",
+      "category": "networking_theory",
+      "subtopic": "Length fields",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A capture shows IPv4 Total Length 84 and IHL 5. How many bytes follow the IPv4 header inside the datagram?",
+      "options": {
+        "A": "104",
+        "B": "64",
+        "C": "79",
+        "D": "84"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "IHL counts 32-bit words, so five words form a 20-byte header. Subtract the header from the total length to get 64 bytes."
+    },
+    {
+      "id": "ccna-exam-v2-09-06",
+      "category": "networking_theory",
+      "subtopic": "Address assignment",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A host formerly obtained its address, prefix and router through DHCP. After conversion to static settings it reaches local peers, but it has no route to remote networks. Which missing setting explains the behavior?",
+      "options": {
+        "A": "The default gateway",
+        "B": "The DHCP lease time",
+        "C": "The local DNS suffix",
+        "D": "The interface MAC address"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "A usable static address and mask allow on-link communication. A default gateway supplies a next hop for other destinations."
+    },
+    {
+      "id": "ccna-exam-v2-09-07",
+      "category": "networking_theory",
+      "subtopic": "DHCP settings",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Besides an address, which useful pair can an IPv4 DHCP server supply to a client?",
+      "options": {
+        "A": "Source MAC and Ethernet FCS",
+        "B": "Switch port duplex and fiber connector",
+        "C": "TCP acknowledgment number and receive window",
+        "D": "Subnet mask and default gateway"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "DHCP options can supply the client mask and default-router information."
+    },
+    {
+      "id": "ccna-exam-v2-09-08",
+      "category": "networking_theory",
+      "subtopic": "Header checksum",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Why is the IPv4 header checksum updated by a forwarding router even when the payload stays the same?",
+      "options": {
+        "A": "The destination IP is replaced with the gateway IP",
+        "B": "Forwarding changes a header field such as TTL",
+        "C": "The TCP ports always change at each hop",
+        "D": "The checksum covers the Ethernet source address"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The checksum protects the IPv4 header, so a TTL change requires an update."
+    },
+    {
+      "id": "ccna-exam-v2-09-09",
+      "category": "networking_theory",
+      "subtopic": "TTL failure",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A router receives an IPv4 packet with TTL 1 that would otherwise be forwarded. What normally occurs?",
+      "options": {
+        "A": "The packet is forwarded unchanged as a broadcast",
+        "B": "The packet is discarded and the router may send ICMP Time Exceeded",
+        "C": "The router sends a TCP reset to the destination",
+        "D": "The router forwards it with TTL 255"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Forwarding would exhaust TTL, so the packet is dropped. ICMP Time Exceeded can report this condition."
+    },
+    {
+      "id": "ccna-exam-v2-09-10",
+      "category": "networking_theory",
+      "subtopic": "DHCP troubleshooting",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A workstation was switched from static settings to DHCP and no lease was obtained. Which first check directly tests whether the intended address source exists on that network?",
+      "options": {
+        "A": "Check whether the address in the old manual entry is in DNS",
+        "B": "Verify that a DHCP service or relay is available for the LAN",
+        "C": "Compare the manual gateway with the switch's MAC aging timer",
+        "D": "Inspect the peer's TCP receive window"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "A DHCP client needs a reachable DHCP service, directly or through a relay."
+    }
+  ]
+}

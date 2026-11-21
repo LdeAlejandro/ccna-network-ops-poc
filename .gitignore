@@ -45,3 +45,7 @@ dist/
 /design/review.md
 /design/screenshots/*
 !/design/screenshots/composition-neon-rose-140x45.png
+!/design/screenshots/rc-dashboard.png
+!/design/screenshots/rc-mission-briefing.png
+!/design/screenshots/rc-mission-quiz.png
+!/design/screenshots/rc-mission-summary.png

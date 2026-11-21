@@ -1,0 +1,194 @@
+{
+  "pack_id": "ccna-exam-v2-ios-interfaces",
+  "version": 1,
+  "topic": "IOS interfaces",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-24-01",
+      "category": "ios_output",
+      "subtopic": "Address method",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Refer to the exhibit. Which interface obtained its IPv4 address through DHCP?",
+      "options": {
+        "A": "GigabitEthernet0/0",
+        "B": "GigabitEthernet0/1",
+        "C": "Neither interface",
+        "D": "Both interfaces"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The Method column shows DHCP for Gi0/1 and manual configuration for Gi0/0.",
+      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status Protocol\nGigabitEthernet0/0     192.0.2.1       YES manual up     up\nGigabitEthernet0/1     198.51.100.18   YES DHCP   up     up"
+    },
+    {
+      "id": "ccna-exam-v2-24-02",
+      "category": "ios_output",
+      "subtopic": "Interface activation",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which command enables a routed port from interface configuration mode after a previous shutdown?",
+      "options": {
+        "A": "clear counters",
+        "B": "shutdown",
+        "C": "no shutdown",
+        "D": "no ip address"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "no shutdown removes the administrative disable flag. Physical link still depends on the medium and peer."
+    },
+    {
+      "id": "ccna-exam-v2-24-03",
+      "category": "ios_output",
+      "subtopic": "IPv4 syntax",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "From IOS routed-interface configuration mode, which command assigns 192.0.2.129/25?",
+      "options": {
+        "A": "ip address 192.0.2.129 0.0.0.127",
+        "B": "ip address 192.0.2.129 255.255.255.128",
+        "C": "ip address 192.0.2.129 255.255.255.0",
+        "D": "ip address 192.0.2.128 255.255.255.128"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "IOS expects a dotted-decimal subnet mask. The address .128 is the network ID in this /25."
+    },
+    {
+      "id": "ccna-exam-v2-24-04",
+      "category": "ios_output",
+      "subtopic": "Administrative state",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Refer to the exhibit. Which action removes the explicit administrative barrier on Gi0/0?",
+      "options": {
+        "A": "Change the IPv4 subnet mask to /32",
+        "B": "Clear the interface counters",
+        "C": "Enter shutdown under Gi0/0",
+        "D": "Enter no shutdown under Gi0/0"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Administratively down indicates the port was disabled through configuration.",
+      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0     192.0.2.129     YES manual administratively down down"
+    },
+    {
+      "id": "ccna-exam-v2-24-05",
+      "category": "ios_output",
+      "subtopic": "Operational down",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Refer to the exhibit. Which check is most directly relevant to the displayed state?",
+      "options": {
+        "A": "Clear the switch's ARP cache",
+        "B": "Check cable seating and the peer port's link state",
+        "C": "Check the IPv4 DNS resolver",
+        "D": "Change the static route's destination prefix"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "Down/down without the administrative qualifier usually points to lack of link on this Ethernet port.",
+      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/1     192.0.2.1       YES manual down                  down"
+    },
+    {
+      "id": "ccna-exam-v2-24-06",
+      "category": "ios_output",
+      "subtopic": "Line protocol",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Refer to the illustrative serial-interface exhibit. Which conclusion follows from the first line?",
+      "options": {
+        "A": "The interface is administratively disabled",
+        "B": "The route to the far network has been installed",
+        "C": "The interface status is up but its line protocol is down",
+        "D": "Both status and protocol are up"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The two values are separate. The first reports interface status and the second reports line protocol.",
+      "snippet": "Illustrative excerpt\nSerial0/0/0 is up, line protocol is down"
+    },
+    {
+      "id": "ccna-exam-v2-24-07",
+      "category": "ios_output",
+      "subtopic": "Detailed counters",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which command shows physical error counters and duplex for GigabitEthernet0/1 on a typical IOS Ethernet interface?",
+      "options": {
+        "A": "show interfaces GigabitEthernet0/1",
+        "B": "show running-config | include hostname",
+        "C": "show ip interface brief",
+        "D": "show ip route connected"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The detailed interface view includes operational settings and counters omitted by the brief address summary."
+    },
+    {
+      "id": "ccna-exam-v2-24-08",
+      "category": "ios_output",
+      "subtopic": "Unnumbered versus shutdown",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Refer to the exhibit. Which conclusion about this routed interface is supported?",
+      "options": {
+        "A": "The DHCP server has leased the address 0.0.0.0",
+        "B": "The port was shut down by configuration",
+        "C": "The connected IPv4 route is available for the configured /24",
+        "D": "The link and line protocol are up, but no IPv4 address is shown"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "An Ethernet link can operate without a configured IPv4 address. Unassigned describes the address column.",
+      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/2     unassigned      YES unset  up                    up"
+    },
+    {
+      "id": "ccna-exam-v2-24-09",
+      "category": "ios_output",
+      "subtopic": "Evidence limits",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Refer to the exhibit. A remote IPv4 application remains unreachable. Which statement is supported?",
+      "options": {
+        "A": "An administrative shutdown is proven",
+        "B": "The remote server has confirmed the return route",
+        "C": "The local router has a static route to every remote subnet",
+        "D": "The local port is operational, so remote reachability requires further checks"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Up/up is local interface evidence. It does not establish end-to-end routing or application reachability.",
+      "snippet": "Illustrative excerpt\nGigabitEthernet0/0 is up, line protocol is up"
+    },
+    {
+      "id": "ccna-exam-v2-24-10",
+      "category": "ios_output",
+      "subtopic": "Dual interface triage",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Refer to the exhibit. Which pair of actions distinguishes the two initial checks?",
+      "options": {
+        "A": "Replace both IPv4 masks before checking either port",
+        "B": "Change both ports to DHCP before inspecting their state",
+        "C": "Check Gi0/0's carrier path and Gi0/1's shutdown setting",
+        "D": "Check Gi0/0's shutdown setting and Gi0/1's carrier path"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Plain down and administratively down distinguish operational link loss from a configured shutdown.",
+      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0     192.0.2.9       YES manual down                  down\nGigabitEthernet0/1     198.51.100.1    YES manual administratively down down"
+    }
+  ]
+}

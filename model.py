@@ -1,4 +1,4 @@
-"""Mock dashboard data and shared visual tokens."""
+"""Dashboard gear and shared visual tokens."""
 
 from dataclasses import dataclass
 
@@ -25,17 +25,8 @@ THEMES = (
 )
 
 XP, XP_GOAL = 640, 1000
-MISSION_DETAILS = (
-    ("TYPE", "SWITCHING LAB"),
-    ("DIFFICULTY", "02 / 05"),
-    ("XP REWARD", "+400 XP"),
-    ("FOCUS", "VLAN TRUNKING"),
-)
-
-PANELS = (
-    ("CURRENT MISSION", ("M04 / VLANs and Trunking", "Configure an 802.1Q trunk", "Objectives completed  2 / 4")),
-    ("RECENT PROGRESS", ("Subnetting drills  8 / 10", "Switching basics  complete")),
-    ("NEXT REVIEW", ("Today     IPv4 subnet masks", "Tomorrow  Ethernet switching")),
-    ("STUDIED TOPICS", ("IPv4 addressing", "OSI and TCP/IP", "VLAN fundamentals")),
-    ("UNLOCKED GEAR", ("Console cable", "Access switch", "Packet analyzer")),
+GEAR = (
+    ("Console cable", "SERIAL ACCESS", 0),
+    ("Access switch", "LAYER 2", 1),
+    ("Packet analyzer", "FRAME INSPECTION", 3),
 )

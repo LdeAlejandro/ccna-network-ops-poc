@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-ethernet-and-mac",
+  "version": 1,
+  "topic": "Ethernet and MAC",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-18-01",
+      "category": "networking_theory",
+      "subtopic": "Address width",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "How many hexadecimal digits are needed to display a full Ethernet MAC address without separators?",
+      "options": {
+        "A": "8",
+        "B": "16",
+        "C": "24",
+        "D": "12"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "A MAC has 48 bits, and each hexadecimal digit represents four."
+    },
+    {
+      "id": "ccna-exam-v2-18-02",
+      "category": "networking_theory",
+      "subtopic": "FCS",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which Ethernet field lets a receiver detect a corrupted frame?",
+      "options": {
+        "A": "EtherType",
+        "B": "Source MAC",
+        "C": "Preamble",
+        "D": "FCS"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The FCS contains a CRC computed over the frame contents."
+    },
+    {
+      "id": "ccna-exam-v2-18-03",
+      "category": "networking_theory",
+      "subtopic": "IOS notation",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Which colon-separated address equals IOS notation 001a.2b03.04c5?",
+      "options": {
+        "A": "00:1a:2b:03:40:c5",
+        "B": "00:1a:2b:30:04:c5",
+        "C": "00:1a:2b:03:04:c5",
+        "D": "00:1a:b2:03:04:c5"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Keep the original digit order and regroup the digits into pairs."
+    },
+    {
+      "id": "ccna-exam-v2-18-04",
+      "category": "networking_theory",
+      "subtopic": "OUI",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "For a universally administered address assigned using a traditional 24-bit OUI, which part identifies the registered organization?",
+      "options": {
+        "A": "The final two octets",
+        "B": "The final three octets",
+        "C": "The first two octets",
+        "D": "The first three octets"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "A traditional OUI is the leading 24 bits. Later bits distinguish assigned interfaces."
+    },
+    {
+      "id": "ccna-exam-v2-18-05",
+      "category": "networking_theory",
+      "subtopic": "EtherType",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "An analyst sees EtherType 0x0800 in an untagged Ethernet II frame. What follows the EtherType field?",
+      "options": {
+        "A": "An IPv4 packet",
+        "B": "An ARP message",
+        "C": "An IPv6 packet",
+        "D": "The frame's FCS"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "EtherType 0x0800 identifies IPv4. ARP uses 0x0806 and IPv6 uses 0x86DD."
+    },
+    {
+      "id": "ccna-exam-v2-18-06",
+      "category": "networking_theory",
+      "subtopic": "Address ordering",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "The first six bytes after the Ethernet start frame delimiter are 00 1a 2b 00 00 01. What do they identify?",
+      "options": {
+        "A": "The destination MAC",
+        "B": "The source IPv4 address",
+        "C": "The source MAC",
+        "D": "The EtherType and length"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "In an Ethernet II frame the destination MAC comes first, followed by the source MAC and EtherType."
+    },
+    {
+      "id": "ccna-exam-v2-18-07",
+      "category": "networking_theory",
+      "subtopic": "Link rewrite",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A router receives an Ethernet frame and routes its IP packet back out a different Ethernet interface. Which MAC appears as the source of the new frame?",
+      "options": {
+        "A": "The router on its ingress interface",
+        "B": "The router out of its egress interface",
+        "C": "The original sending workstation",
+        "D": "The remote destination host"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The router builds a new Layer 2 frame on the outgoing link and uses that interface as the source."
+    },
+    {
+      "id": "ccna-exam-v2-18-08",
+      "category": "networking_theory",
+      "subtopic": "Locally administered address",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "An interface uses a locally administered MAC. Why can an OUI lookup fail to identify its hardware vendor?",
+      "options": {
+        "A": "The Ethernet frame uses only the last 24 bits of that address",
+        "B": "Switches replace the OUI with the incoming port number",
+        "C": "The prefix is software-selected and need not represent its vendor's assignment",
+        "D": "A universally administered MAC omits its organization bits"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Local administration allows an address to be set independently of the manufacturer's allocation."
+    },
+    {
+      "id": "ccna-exam-v2-18-09",
+      "category": "networking_theory",
+      "subtopic": "Corruption and recovery",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A receiver discards a frame after an FCS mismatch. Which mechanism can recover the missing application bytes when the payload used TCP?",
+      "options": {
+        "A": "An ICMP message that recreates the original frame",
+        "B": "ARP retransmission of the original byte stream",
+        "C": "An Ethernet FCS correction at the receiver",
+        "D": "TCP retransmission from the sender"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Ethernet FCS detects errors. A higher-layer reliable protocol such as TCP can resend lost data."
+    },
+    {
+      "id": "ccna-exam-v2-18-10",
+      "category": "networking_theory",
+      "subtopic": "Frames on a switched link",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "A frame arrives with destination 00:1a:2b:03:04:c5 and type 0x0806. Which field does an ordinary Layer 2 switch consult to select the egress port for a known unicast?",
+      "options": {
+        "A": "0x0806",
+        "B": "The first IPv4 address carried by ARP",
+        "C": "The frame checksum",
+        "D": "00:1a:2b:03:04:c5"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The MAC forwarding table uses the destination MAC in the VLAN. EtherType identifies the payload instead."
+    }
+  ]
+}

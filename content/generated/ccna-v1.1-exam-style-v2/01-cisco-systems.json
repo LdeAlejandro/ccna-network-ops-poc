@@ -1,0 +1,187 @@
+{
+  "pack_id": "ccna-exam-v2-cisco-systems",
+  "version": 1,
+  "topic": "Cisco systems",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-01-01",
+      "category": "networking_theory",
+      "subtopic": "IOS",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which operating system is associated with the classic Cisco 2811 ISR?",
+      "options": {
+        "A": "Cisco IOS",
+        "B": "IOS XR",
+        "C": "NX-OS",
+        "D": "CatOS"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The 2811 belongs to the classic ISR generation running Cisco IOS."
+    },
+    {
+      "id": "ccna-exam-v2-01-02",
+      "category": "networking_theory",
+      "subtopic": "IOS XE",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which family runs on a Catalyst 9300?",
+      "options": {
+        "A": "IOS XE",
+        "B": "IOS XR",
+        "C": "NX-OS",
+        "D": "CatOS"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Catalyst 9300 switches use IOS XE, which retains an IOS-style CLI."
+    },
+    {
+      "id": "ccna-exam-v2-01-03",
+      "category": "networking_theory",
+      "subtopic": "NX-OS",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which OS would you expect on a Nexus 9000 running in standalone NX-OS mode?",
+      "options": {
+        "A": "CatOS",
+        "B": "IOS XR",
+        "C": "Classic IOS",
+        "D": "NX-OS"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "Standalone Nexus 9000 software uses NX-OS."
+    },
+    {
+      "id": "ccna-exam-v2-01-04",
+      "category": "networking_theory",
+      "subtopic": "IOS XR",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "The inventory shows an ASR 9000 running IOS XR. A technician downloaded an IOS XE image for an ASR 1000. Which action is appropriate before upgrading?",
+      "options": {
+        "A": "Obtain an IOS XR image supported for the exact ASR 9000 model",
+        "B": "Use a Nexus image because the router is a modular platform",
+        "C": "Use the IOS XE image because both routers carry the ASR name",
+        "D": "Rename the IOS XE image to match the current boot image"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The recorded operating system and hardware determine image compatibility across the two product lines."
+    },
+    {
+      "id": "ccna-exam-v2-01-05",
+      "category": "networking_theory",
+      "subtopic": "CatOS",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "An archival Catalyst configuration uses commands such as set vlan. Which legacy operating system does this suggest?",
+      "options": {
+        "A": "NX-OS",
+        "B": "IOS XR",
+        "C": "CatOS",
+        "D": "IOS XE"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The set-based syntax is characteristic of CatOS on older Catalyst switches."
+    },
+    {
+      "id": "ccna-exam-v2-01-06",
+      "category": "networking_theory",
+      "subtopic": "IOS XE architecture",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "What architectural description fits IOS XE?",
+      "options": {
+        "A": "CatOS runs inside an IOS XR process",
+        "B": "The device boots directly into a single CatOS executable",
+        "C": "IOS control-plane functionality runs as a process on a Linux-based system",
+        "D": "NX-OS supplies the only configuration interface"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "IOS XE runs IOSd on a Linux-based architecture while retaining familiar IOS commands."
+    },
+    {
+      "id": "ccna-exam-v2-01-07",
+      "category": "networking_theory",
+      "subtopic": "Configuration models",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "On IOS XR, an engineer sees a pending interface description in the candidate configuration. A second session sees the old description in the running configuration. Which action should the engineer take?",
+      "options": {
+        "A": "Review and commit the candidate change",
+        "B": "Apply the equivalent NX-OS interface command",
+        "C": "Copy the running configuration to a remote backup",
+        "D": "Exit from the second session and reopen it"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "IOS XR applies the contents of the candidate configuration to running state at commit."
+    },
+    {
+      "id": "ccna-exam-v2-01-08",
+      "category": "networking_theory",
+      "subtopic": "Platform identification",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Two devices are branded ASR. What evidence should you use to choose their software command references?",
+      "options": {
+        "A": "The chassis brand alone",
+        "B": "The console cable type",
+        "C": "The exact hardware model and installed software release",
+        "D": "The management subnet size"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "Cisco uses the ASR name across distinct platforms that can run different operating systems."
+    },
+    {
+      "id": "ccna-exam-v2-01-09",
+      "category": "networking_theory",
+      "subtopic": "System identification",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Which command would you use first on an unfamiliar Cisco CLI to identify the software release for documentation lookup?",
+      "options": {
+        "A": "show ip route",
+        "B": "show interfaces",
+        "C": "show version",
+        "D": "show arp"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "The version display identifies installed software and typically includes platform information."
+    },
+    {
+      "id": "ccna-exam-v2-01-10",
+      "category": "networking_theory",
+      "subtopic": "Legacy migration",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "An older Catalyst chassis used CatOS for switching and a separate IOS routing module. What should an engineer do before migrating it to an IOS XE campus switch?",
+      "options": {
+        "A": "Load the routing module image as the switch startup configuration",
+        "B": "Translate the switching and routing settings to the target CLI",
+        "C": "Copy the CatOS configuration verbatim into IOS XE",
+        "D": "Convert every set command into an IOS XR commit"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The separate legacy configuration contexts and CatOS syntax must be translated and reviewed for the new platform."
+    }
+  ]
+}

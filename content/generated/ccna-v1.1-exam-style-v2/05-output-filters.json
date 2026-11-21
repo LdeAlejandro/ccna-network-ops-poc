@@ -1,0 +1,189 @@
+{
+  "pack_id": "ccna-exam-v2-output-filters",
+  "version": 1,
+  "topic": "Output filters",
+  "questions": [
+    {
+      "id": "ccna-exam-v2-05-01",
+      "category": "ios_output",
+      "subtopic": "Pipe syntax",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which symbol introduces an IOS show output modifier?",
+      "options": {
+        "A": "?",
+        "B": "|",
+        "C": "#",
+        "D": ">"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "The pipe separates the show command from the output modifier."
+    },
+    {
+      "id": "ccna-exam-v2-05-02",
+      "category": "ios_output",
+      "subtopic": "Include",
+      "difficulty": 1,
+      "type": "single_choice",
+      "question": "Which IOS suffix retains only lines containing Loopback?",
+      "options": {
+        "A": "| include ^interface",
+        "B": "| begin Loopback",
+        "C": "| include Loopback",
+        "D": "| exclude Loopback"
+      },
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": "include displays matching lines, and the pattern is case sensitive."
+    },
+    {
+      "id": "ccna-exam-v2-05-03",
+      "category": "ios_output",
+      "subtopic": "Begin",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "In an illustrative listing, the first matching line is followed by five lines with no match. What does begin display?",
+      "options": {
+        "A": "The first matching line and all five following lines",
+        "B": "Only the five following lines",
+        "C": "All lines before the first match",
+        "D": "The matching line alone"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "begin skips the preceding output and shows everything from the match onward."
+    },
+    {
+      "id": "ccna-exam-v2-05-04",
+      "category": "ios_output",
+      "subtopic": "Exclude",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "What does show interfaces | exclude protocol remove from the displayed listing?",
+      "options": {
+        "A": "Every line after the first match",
+        "B": "Every line containing the lowercase string protocol",
+        "C": "Every interface with a down protocol",
+        "D": "The entire interface section for each match"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "exclude operates line by line and drops each matching line."
+    },
+    {
+      "id": "ccna-exam-v2-05-05",
+      "category": "ios_output",
+      "subtopic": "Case sensitivity",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "An IOS line contains Description with an uppercase D. Why might include description omit it?",
+      "options": {
+        "A": "The pattern distinguishes uppercase from lowercase",
+        "B": "The description is saved exclusively in startup-config",
+        "C": "include accepts only port names",
+        "D": "include always drops leading capital letters"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "The lowercase search pattern does not match the uppercase D."
+    },
+    {
+      "id": "ccna-exam-v2-05-06",
+      "category": "ios_output",
+      "subtopic": "Output context",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "A description appears one line below its interface heading. Why can include Description make it harder to tell which port it belongs to?",
+      "options": {
+        "A": "IOS deletes the descriptions after printing them",
+        "B": "The separate heading is omitted unless it also matches",
+        "C": "The filter alphabetizes all headings",
+        "D": "The filter switches to startup-config"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "A line filter loses surrounding context when adjacent lines do not match."
+    },
+    {
+      "id": "ccna-exam-v2-05-07",
+      "category": "ios_output",
+      "subtopic": "Anchoring",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Which suffix keeps only lines that start at column one with interface, assuming standard IOS regex syntax?",
+      "options": {
+        "A": "| begin ^interface",
+        "B": "| include interface$",
+        "C": "| exclude ^interface",
+        "D": "| include ^interface"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The caret anchors the pattern to the beginning, and include keeps only matching lines."
+    },
+    {
+      "id": "ccna-exam-v2-05-08",
+      "category": "ios_output",
+      "subtopic": "Literal address matching",
+      "difficulty": 3,
+      "type": "single_choice",
+      "question": "Which IOS regex matches literal dots in the text 192.0.2.7?",
+      "options": {
+        "A": "192.*0.*2.*7",
+        "B": "192[.]0[.]2[.]7",
+        "C": "192[0][2][7]",
+        "D": "192.0.2.7"
+      },
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": "A bare dot matches any single character. A dot inside a character class matches a literal dot."
+    },
+    {
+      "id": "ccna-exam-v2-05-09",
+      "category": "ios_output",
+      "subtopic": "Filter result",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Refer to the exhibit. Which filter shows the two Gi interface records and omits the Loopback record and header?",
+      "options": {
+        "A": "| exclude ^GigabitEthernet",
+        "B": "| begin GigabitEthernet",
+        "C": "| include ^Interface",
+        "D": "| include ^GigabitEthernet"
+      },
+      "correct_answers": [
+        "D"
+      ],
+      "explanation": "The anchor and interface family name select both physical interface records by their first field.",
+      "snippet": "Illustrative excerpt\nInterface              IP-Address     OK? Method Status Protocol\nGigabitEthernet0/0     192.0.2.1      YES manual up     up\nLoopback0              192.0.2.200    YES manual up     up\nGigabitEthernet0/1     198.51.100.1   YES manual up     up"
+    },
+    {
+      "id": "ccna-exam-v2-05-10",
+      "category": "ios_output",
+      "subtopic": "Matching multiple status lines",
+      "difficulty": 2,
+      "type": "single_choice",
+      "question": "Refer to the exhibit. Which line is retained by show interfaces | include line protocol when applied to the excerpt?",
+      "options": {
+        "A": "GigabitEthernet0/0 is up, line protocol is up",
+        "B": "Hardware is Gigabit Ethernet",
+        "C": "5 minute input rate 1000 bits/sec",
+        "D": "Description: Branch WAN"
+      },
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": "Only the interface state line contains the requested contiguous text.",
+      "snippet": "Illustrative excerpt\nGigabitEthernet0/0 is up, line protocol is up\n  Hardware is Gigabit Ethernet\n  Description: Branch WAN\n  5 minute input rate 1000 bits/sec"
+    }
+  ]
+}
