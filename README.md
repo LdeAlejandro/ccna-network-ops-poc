@@ -6,7 +6,7 @@ CCNA Network Ops is a retro cyberpunk terminal RPG for CCNA certification practi
 
 [Mission briefing](design/screenshots/rc-mission-briefing.png) · [Mission quiz](design/screenshots/rc-mission-quiz.png) · [Mission results](design/screenshots/rc-mission-summary.png)
 
-The dashboard tracks the operator level, XP, mission progress, studied topics, scheduled reviews, and cosmetic gear. It has five saved themes, keyboard navigation, and Sixel portraits with a true-color Unicode fallback.
+The dashboard tracks the operator level, XP, mission progress, studied topics, scheduled reviews, and cosmetic gear. It has five saved themes, keyboard navigation, and Sixel portraits with a true-color Unicode fallback. While the dashboard is idle, a light runs through the network icons and the strip below the title. The focused panel’s corners and the footer arrow pulse gently. When the app opens, the visible dashboard panels type in their text in parallel, one character at a time per panel. Any key completes the reveal immediately.
 
 ## Requirements
 

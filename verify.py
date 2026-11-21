@@ -61,7 +61,9 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
         return frame
 
     def frame():
-        return receive(b"\x1b[0m")
+        rendered = receive(b"\x1b[0m")
+        clear = re.search(rb"\x1b\[38;2;[0-9;]+m\x1b\[48;2;[0-9;]+m\x1b\[2J", rendered)
+        return rendered[clear.start():] if clear else rendered
 
     def dashboard():
         rendered = frame()
@@ -80,7 +82,9 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
 
     def resize(rows, columns):
         tty.tcsetwinsize(master, (rows, columns))
-        check_bounds(dashboard(), rows, columns)
+        rendered = dashboard()
+        check_bounds(rendered, rows, columns)
+        return rendered
 
     try:
         if mode == "sixel":
@@ -171,7 +175,7 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
                 assert b"EXERCISE 001" in press(b"c")
                 assert b"OPERATOR" in press(b"\x1b")
             else:
-                assert b"Introduced" in frame()
+                assert b"STUDIED TOPICS" in frame()
                 initial = press(b"x")
                 assert b"EXERCISE 001 OF 3" in initial and "● C.".encode() in initial
                 assert b"Correct:" not in initial
@@ -208,15 +212,38 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
                     raster = re.match(rb'\x1bP0;1q"1;1;(\d+);(\d+)', image)
                     pixel_width, pixel_height = map(int, raster.groups())
                     assert pixel_width == (profile_width - 3) * 7
-                    after_image = rendered.split(image, 1)[1]
+                    before_image, after_image = rendered.split(image, 1)
+                    image_origin = re.search(rb"\x1b\[(\d+);\d+H$", before_image)
+                    start_row = int(image_origin[1])
                     rail = "▌".encode()
-                    for row in range(8, 8 + (pixel_height + 16) // 17):
+                    for row in range(start_row, start_row + (pixel_height + 16) // 17):
                         cursor = f"\x1b[{row};{profile_width + 1}H".encode()
                         assert re.search(re.escape(cursor) + rb'(?:\x1b\[[\d;]+m)+' + rail, after_image)
 
                 check_operator_rail(initial, 43)
+                caret_end = "▸\x1b[22m".encode()
+                idle = receive(caret_end)
+                next_idle = receive(caret_end)
+                assert idle != next_idle
+                assert b"CONSOLE RECOVERY" not in initial
+                letters = re.findall(rb"\x1b\[8;(\d+)H(?:\x1b\[[\d;]+m)+([A-Z])", idle)
+                assert [(col, letter) for col, letter in letters if 54 <= int(col) < 70][:4] == [(b"54", b"C"), (b"55", b"O"), (b"56", b"N"), (b"57", b"S")]
+                for row, column in ((24, 48), (24, 95), (39, 4), (37, 60), (32, 4)):
+                    assert f"\x1b[{row};{column}H".encode() in idle
+                for update in (idle, next_idle):
+                    assert not any(code in update for code in (b"\x1bP", b"\x1b[2J", b"XP"))
+
+                update = receive(caret_end)
+                assert b"\x1bP" not in update and b"\x1b[2J" not in update
+
+                os.write(master, b"x")
+                assert b"QUIZ MODE" in frame()
+                assert not buffer and not select.select([master], [], [], 1.1)[0]
+                os.write(master, b"\x1b")
+                dashboard()
+
                 images = {picture(initial)}
-                assert b"1/4 Equipped" in initial
+                assert b"1/4 Equipped" not in initial
                 for stage in range(1, len(STAGES) + 1):
                     os.write(master, b"e")
                     for operator in OPERATORS:
@@ -245,7 +272,7 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
                 check_bounds(initial, 45, 140)
 
             if mode == "text":
-                resize(35, 110)
+                assert b"A branch router rebooted" in resize(35, 110)
                 resize(24, 80)
                 os.write(master, b"\x1b[B\t\t\t")
                 assert "▸ STUDIED TOPICS".encode() in dashboard()

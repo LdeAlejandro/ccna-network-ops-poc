@@ -7,7 +7,7 @@ import sqlite3
 import textwrap
 import unicodedata
 from functools import lru_cache
-from itertools import groupby
+from itertools import groupby, zip_longest
 import os
 from pathlib import Path
 import re
@@ -24,6 +24,11 @@ from missions import MISSIONS, MISSIONS_BY_ID, load_bundled
 from model import GEAR, THEMES, XP, XP_GOAL
 
 ESC = "\x1b["
+SUBTITLE = " ▪  T E R M I N A L   R P G   /   C C N A   S T U D Y  ▪ "
+AMBIENT_INTERVAL = 0.18
+TYPE_INTERVAL = 0.011
+SWITCH_MARK = ("╱╱ ▄▄▄▄▄▄▄▄▄▄", "╱ ▄█▪▪▪▪▪▪▪▪█▄", "  ═▀▀▀▀▀▀▀▀▀▀═")
+TOPOLOGY_MARK = ("    ▄█▄   ╲╲", " ▄━━━┻━━━▄ ╲", " ▣   ▣   ▣")
 DEFAULT_CONFIG = Path(os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config")
 CONFIG = DEFAULT_CONFIG / "ccna-network-ops" / "theme"
 DATA = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share") / "ccna-network-ops"
@@ -42,6 +47,12 @@ def cell_text(text):
 def color(hex_value, background=False):
     rgb = ";".join(str(int(hex_value[i:i + 2], 16)) for i in (0, 2, 4))
     return f"{ESC}{48 if background else 38};2;{rgb}m"
+
+
+@lru_cache(maxsize=256)
+def mix_color(base, highlight, percent):
+    channels = zip(bytes.fromhex(base), bytes.fromhex(highlight))
+    return bytes((a * (100 - percent) + b * percent) // 100 for a, b in channels).hex()
 
 
 class Dashboard:
@@ -63,6 +74,9 @@ class Dashboard:
         self.focus = self.offset = 0
         self.settings = False
         self.preview_stage = self.preview_operator = None
+        self.ambient_layout = None
+        self.ambient_focus = None
+        self.boot_context = {}
         self.notice = ""
 
     def choose(self, index):
@@ -518,7 +532,87 @@ class Dashboard:
         label = {PRACTICE: "Practice", REVIEW: "Review", MISSION: "Mission"}.get(slot)
         footer(commands, label or self.mode.replace("_", " ").capitalize())
 
-    def frame(self, cols, rows, pixels=None):
+    def ambient_frame(self, tick):
+        """Update the dashboard decorations without repainting its content."""
+        if self.ambient_layout is None or self.mode or self.settings:
+            return ""
+        cols, rows, gutter = self.ambient_layout
+        theme = THEMES[self.theme_index]
+        if cols >= 76:
+            left_stop = (cols - len(SUBTITLE)) // 2
+            right_start = left_stop + len(SUBTITLE)
+        else:
+            left_stop = right_start = cols // 2
+        spans = (range(max(5, left_stop - 10), left_stop),
+                 range(right_start, min(right_start + 10, cols - 5)))
+        cycle = sum(map(len, spans)) + 10
+        phase = tick % cycle
+        signal = phase - 5
+        inks = (mix_color(theme.shadow, theme.secondary, 55),
+                mix_color(theme.shadow, theme.secondary, 29),
+                mix_color(theme.shadow, theme.secondary, 13))
+        output = []
+
+        def paint(x, y, glyph, foreground, background):
+            output.extend((f"{ESC}{y + 1};{x + gutter + 1}H", color(foreground), color(background, True), glyph))
+
+        if cols >= 120:
+            ports = [i for i, glyph in enumerate(SWITCH_MARK[1]) if glyph == "▪"]
+            for port, x in enumerate(ports, 1):
+                strength = 68 if phase == port else 30 if phase == port + 1 else 0
+                glyph = "■" if phase == port else "▪"
+                paint(3 + x, 2, glyph, mix_color(theme.secondary, theme.text, strength), theme.background)
+            for node, x in enumerate(i for i, glyph in enumerate(TOPOLOGY_MARK[2]) if glyph == "▣"):
+                distance = abs(phase - (17 + 2 * node))
+                strength = (72, 36)[distance] if distance < 2 else 0
+                paint(cols - 15 + x, 3, "▣", mix_color(theme.secondary, theme.text, strength), theme.background)
+
+        if self.ambient_focus:
+            x, y, width = self.ambient_focus
+            focus_glow = (0, 23, 44, 29, 13)
+            strength = focus_glow[phase] if phase < len(focus_glow) else 0
+            ink = mix_color(theme.accent, theme.text, strength)
+            paint(x, y, "▟", ink, theme.background)
+            paint(x + width - 1, y, "▙", ink, theme.background)
+
+        index = 0
+        for span in spans:
+            if not span:
+                continue
+            output.extend((f"{ESC}5;{span.start + gutter + 1}H", color(theme.panel, True)))
+            colors = (inks[signal - position] if 0 <= signal - position < len(inks) else theme.shadow
+                      for position in range(index, index + len(span)))
+            for ink, cells in groupby(colors):
+                output.extend((color(ink), "▂" * sum(1 for _ in cells)))
+            index += len(span)
+        fade = (0, 16, 30, 16, 0)
+        pulse = fade[phase - 5] if 5 <= phase < 5 + len(fade) else 0
+        output.extend((f"{ESC}{rows};{gutter + 3}H", color(mix_color(theme.accent, theme.shadow, pulse)),
+                       color(theme.panel, True), ESC + "1m▸" + ESC + "22m"))
+        return "".join(output)
+
+    def boot_frames(self):
+        """Reveal one character per box on each typing tick."""
+        if not self.boot_context:
+            return
+        _, _, gutter = self.ambient_layout
+        theme = THEMES[self.theme_index]
+
+        def type_section(lines):
+            for x, y, line, ink, paper, bold in lines:
+                style = color(ink) + color(paper, True) + (ESC + "1m" if bold else "")
+                end_style = ESC + "22m" if bold else ""
+                caret_ink = color(theme.background if paper == theme.secondary else theme.secondary)
+                for index, character in enumerate(line):
+                    caret = caret_ink + "▏" if index + 1 < len(line) else ""
+                    yield f"{ESC}{y + 1};{x + index + gutter + 1}H{style}{character}{caret}{end_style}"
+
+        for frame in zip_longest(*(type_section(lines) for lines in self.boot_context.values()), fillvalue=""):
+            yield "".join(frame)
+
+    def frame(self, cols, rows, pixels=None, *, boot=False):
+        self.ambient_layout = self.ambient_focus = None
+        self.boot_context = {}
         t = THEMES[self.theme_index]
         gutter = max(0, (cols - 148) // 2)
         cols -= 2 * gutter
@@ -551,6 +645,8 @@ class Dashboard:
             if width >= 25:
                 put(x, y, "▟", edge)
                 put(x + width - 1, y, "▙", edge)
+                if active:
+                    self.ambient_focus = (x, y, width)
             rail = edge if active or t.name in ("Cyber Emerald", "Neon Rose") else t.secondary
             for dy in range(1, height - 1):
                 put(x, y + dy, "▐", rail, t.panel)
@@ -564,6 +660,19 @@ class Dashboard:
 
         def body(x, y, width, value, ink=None):
             put(x + 2, y, value[:width - 4], ink, row_bg(y))
+
+        def type_text(section, x, y, value, ink=None, paper=None, bold=False):
+            if not boot:
+                put(x, y, value, ink, paper, bold)
+                return
+            text = value.strip()
+            if text:
+                x += len(value) - len(value.lstrip())
+                self.boot_context.setdefault(section, []).append(
+                    (x, y, text[:cols - x], ink or t.text, paper or row_bg(y), bold))
+
+        def context(section, x, y, width, value, ink=None, bold=False):
+            type_text(section, x + 2, y, value[:width - 4], ink, row_bg(y), bold)
 
         def meter(x, y, count, filled):
             for i in range(count):
@@ -613,14 +722,11 @@ class Dashboard:
                 ink, paper = (t.border, t.background) if green else (t.background, t.border)
                 put(wordmark_x - wing, row, " " * wing + line + " " * wing, ink, paper)
             if cols >= 120:
-                left_mark = ("╱╱ ▄▄▄▄▄▄▄▄▄▄", "╱ ▄█▪▪▪▪▪▪▪▪█▄", "  ═▀▀▀▀▀▀▀▀▀▀═")
-                right_mark = ("    ▄█▄   ╲╲", " ▄━━━┻━━━▄ ╲", " ▣   ▣   ▣")
-                for row, (switch, topology) in enumerate(zip(left_mark, right_mark), 1):
+                for row, (switch, topology) in enumerate(zip(SWITCH_MARK, TOPOLOGY_MARK), 1):
                     put(3, row, switch, t.secondary)
                     put(cols - 15, row, topology, t.secondary)
             strip(4)
-            subtitle = " ▪  T E R M I N A L   R P G   /   C C N A   S T U D Y  ▪ "
-            put((cols - len(subtitle)) // 2, 4, subtitle, t.text, t.shadow, bold=True)
+            put((cols - len(SUBTITLE)) // 2, 4, SUBTITLE, t.text, t.shadow, bold=True)
         else:
             put(1, 1, " " + title.ljust(cols - 3), t.background, t.border)
             strip(4)
@@ -678,7 +784,7 @@ class Dashboard:
                                  f"Correct {correct}   Incorrect {answered - correct}",
                                  f"Streak {summary['streak']}   +{earned:,} XP")),
             ("NEXT REVIEW", reviews or ("No reviews scheduled",)),
-            ("STUDIED TOPICS", topics),
+            ("STUDIED TOPICS", topics or ("No topics introduced.",)),
             ("GEAR", tuple(name if unlocked else f"{name} (Locked)"
                            for (name, _, _), unlocked in zip(GEAR, gear_unlocked))),
         )
@@ -695,10 +801,8 @@ class Dashboard:
             panel(x, y, width, height, title, active=self.focus == index + 1)
             for i, line in enumerate(lines[:height - 2]):
                 prefix = "▪ " if index in (1, 4) else ""
-                body(x, y + i + 1, width, prefix + line,
-                     t.accent if index == 0 and i == 0 else t.text)
-                if index == 0 and i == 0:
-                    put(x + 2, y + 1, line[:width - 4], t.accent, row_bg(y + 1), bold=True)
+                lead = index == 0 and i == 0
+                context(index, x, y + i + 1, width, prefix + line, t.accent if lead else t.text, bold=lead)
 
         if compact:
             count = min(5, (end - y0) // 5)
@@ -733,20 +837,20 @@ class Dashboard:
                 detail_x = right + right_w - 30
                 brief_w = detail_x - right
                 put(right + 2, y0 + 1, f" {mission.id} ", t.background, t.accent, bold=True)
-                put(right + 8, y0 + 1, mission.name, t.accent, row_bg(y0 + 1), bold=True)
+                type_text(0, right + 8, y0 + 1, mission.name, t.accent, row_bg(y0 + 1), bold=True)
                 for i, line in enumerate(textwrap.wrap(mission.briefing, brief_w - 4)[:mission_h - 7], 3):
-                    body(right, y0 + i, brief_w, line)
-                body(right, y0 + mission_h - 3, brief_w, mission.objective, t.secondary)
-                body(right, y0 + mission_h - 2, brief_w, status, t.accent)
+                    context(0, right, y0 + i, brief_w, line, t.text)
+                context(0, right, y0 + mission_h - 3, brief_w, mission.objective, t.secondary)
+                context(0, right, y0 + mission_h - 2, brief_w, status, t.accent)
                 for i in range(1, mission_h - 1):
                     put(detail_x, y0 + i, "│", t.shadow, row_bg(y0 + i))
-                body(detail_x, y0 + 1, 30, "MISSION DETAILS", t.secondary)
-                body(detail_x, y0 + 3, 30, f"Difficulty {mission.difficulty}/5")
-                body(detail_x, y0 + 4, 30, f"Questions  {len(mission.questions)}")
-                body(detail_x, y0 + 5, 30, f"First pass +{mission.reward} XP")
+                context("details", detail_x, y0 + 1, 30, "MISSION DETAILS", t.secondary)
+                context("details", detail_x, y0 + 3, 30, f"Difficulty {mission.difficulty}/5")
+                context("details", detail_x, y0 + 4, 30, f"Questions  {len(mission.questions)}")
+                context("details", detail_x, y0 + 5, 30, f"First pass +{mission.reward} XP")
                 total = len(latest["questions"]) if latest else len(mission.questions)
                 done = latest["answered"] if latest else 0
-                body(detail_x, y0 + mission_h - 3, 30, f"Progress {done}/{total}", t.secondary)
+                context("details", detail_x, y0 + mission_h - 3, 30, f"Progress {done}/{total}", t.secondary)
                 meter(detail_x + 2, y0 + mission_h - 2, total, done)
             else:
                 study(0, right, y0, right_w, mission_h)
@@ -754,7 +858,7 @@ class Dashboard:
             study(2, review_x, mid_y, review_w, mid_h)
             for i, attempt in enumerate(summary["recent"][:max(0, mid_h - 5)], 4):
                 outcome = "Correct" if attempt["correct"] else "Incorrect"
-                body(right, mid_y + i, mid_w,
+                context(1, right, mid_y + i, mid_w,
                      f"#{attempt['number']:03d}  {outcome}  +{attempt['xp']} XP", t.muted)
 
             icons = (
@@ -782,15 +886,15 @@ class Dashboard:
                     put(icon_x, gear_y + dy, line, t.secondary, card_bg)
                 if side_by_side:
                     label_x = x + 12
-                    put(label_x, gear_y + 3, name.upper(), ink, card_bg, bold=True)
-                    put(label_x, gear_y + 5, role, t.muted, card_bg)
+                    type_text(4, label_x, gear_y + 3, name.upper(), ink, card_bg, bold=True)
+                    type_text(4, label_x, gear_y + 5, role, t.muted, card_bg)
                 else:
                     label = name.upper()
                     if not unlocked and gear_h == 7:
                         label = f"□ {label}"[:width - 2]
-                    put(x + 1, gear_y + 5, label.center(width - 2), ink, card_bg, bold=True)
+                    type_text(4, x + 1, gear_y + 5, label.center(width - 2), ink, card_bg, bold=True)
                     if gear_h == 8:
-                        put(x + 1, gear_y + 6, role.center(width - 2), t.muted, card_bg)
+                        type_text(4, x + 1, gear_y + 6, role.center(width - 2), t.muted, card_bg)
 
         operator_rail = panel(left, y0, profile_w, profile_end - y0, "PREVIEW" if preview else "OPERATOR",
                              active=self.focus == 0)
@@ -814,16 +918,19 @@ class Dashboard:
 
         stats_y = profile_end - 5
         if profile_w >= 25:
-            put(left + 1, stats_y, f" ▸ {operator_name}".ljust(profile_w - 2), t.background, t.secondary, bold=True)
+            put(left + 1, stats_y, " " * portrait_columns, bg=t.secondary)
+            type_text("operator", left + 1, stats_y, f" ▸ {operator_name}", t.background, t.secondary, bold=True)
             put(left + profile_w - 11, stats_y, f" LEVEL {level:02d} ", t.background, t.accent, bold=True)
         else:
-            put(left + 1, stats_y, f" {operator_name} / LV {level:02d}"[:profile_w - 2], t.background, t.secondary, bold=True)
+            put(left + 1, stats_y, " " * portrait_columns, bg=t.secondary)
+            type_text("operator", left + 1, stats_y, f" {operator_name} / LV {level:02d}"[:portrait_columns],
+                      t.background, t.secondary, bold=True)
         if preview:
             state = "Locked" if stage > unlocked_stage else "Unlocked"
             progress = f"{stage + 1}/{len(STAGES)} {state} · {STAGES[stage]}"
         else:
             progress = f"{stage + 1}/{len(STAGES)} Equipped · {STAGES[stage]}"
-        body(left, stats_y + 1, profile_w, progress, t.secondary)
+        context("operator", left, stats_y + 1, profile_w, progress, t.secondary)
         body(left, stats_y + 2, profile_w, f"XP {xp:,}/{XP_GOAL:,}", t.text)
         segments = min(16, (profile_w - 3) // 2)
         meter(left + 2, stats_y + 3, segments, xp * segments // XP_GOAL)
@@ -846,6 +953,7 @@ class Dashboard:
         if preview:
             focus = "E Next  A Preview operator  Esc Exit"
         footer(commands, focus)
+        self.ambient_layout = (cols, rows, gutter)
         return "".join(frame)
 
 
@@ -886,13 +994,36 @@ def run(app, avatar_mode):
         write(ESC + "?1049h" + ESC + "?25l")
         pixels = probe(fd, write) if avatar_mode == "sixel" else None
         previous = None
+        boot = True
         pending = b""
         while True:
             size = os.get_terminal_size(fd)
             if size != previous:
-                write(app.frame(*size, pixels))
+                write(app.frame(*size, pixels, boot=boot))
+                boot = False
                 previous = size
-            if not select.select([fd], [], [], 0.1)[0]:
+                tick = 0
+                last_update = app.ambient_frame(tick)
+                next_tick = monotonic() + AMBIENT_INTERVAL if last_update else float("inf")
+                boot_frames = app.boot_frames()
+                next_letter = monotonic() + TYPE_INTERVAL if app.boot_context else float("inf")
+            now = monotonic()
+            if now >= next_tick:
+                tick += 1
+                update = app.ambient_frame(tick)
+                if update != last_update:
+                    write(update)
+                    last_update = update
+                next_tick = now + AMBIENT_INTERVAL
+            if now >= next_letter:
+                letter = next(boot_frames, None)
+                if letter is None:
+                    next_letter = float("inf")
+                else:
+                    write(letter)
+                    next_letter = now + TYPE_INTERVAL
+            timeout = min(0.1, max(0, min(next_tick, next_letter) - monotonic()))
+            if not select.select([fd], [], [], timeout)[0]:
                 continue
             data = os.read(fd, 256)
             if not data:
