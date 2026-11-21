@@ -24,3 +24,13 @@ The two baseline indexed assets are intact. Four rows of transparent vertical pa
 The contact sheet and terminal renders now show the restyled Relay. The preceding visual notes describe the first refinement pass. Rook's supplied portrait was the style reference for the revision. The built-in image generation tool used the original Relay screenshot as the subject reference and Rook's screenshot for the near-front pose, face scale, expressive eyes, flat peach shading, plum outlines, magenta hair accents, and high-collar uniform. The prompt retained Relay's swept undercut, angular jaw, strong brows, and headset, and requested a single transparent bust without interface elements. The resulting source is `../source/relay-rook-style.png`.
 
 Run `python3 -m design.avatar_refinement.build_relay` to rebuild the four Relay assets from the source with Pillow. The conversion uses nearest-neighbor sampling and the shared indexed palette. All four stages share the same face and hair. The headset, shoulder piping and collar insignia change with rank.
+
+## Equipment progression revision
+
+Rook's Uplink is the equipment reference. Vanguard and Sentinel now inherit its plate outlines, jacket, and cyan routing. Vanguard adds ventilation, headset detailing, and two collar marks. Sentinel adds small metal fasteners, brighter headset controls, and three warm collar marks.
+
+Relay's Uplink now introduces two shaded armor plates with dark edges, fasteners, and cyan routing. Vanguard and Sentinel keep the same plate shape and add connectors, localized highlights, and collar marks. The verified revision covers both operators at all four stages.
+
+## Shoulder alignment revision
+
+Relay uses the authored outer jacket and shoulder pixels from the corresponding Rook sprite at each of the four stages. The fitted section accounts for the existing four-row difference in renderer placement, so both operators' plates and jacket hems line up in display coordinates. Relay retains his own face, collar, headset and rank tabs. The revised evidence includes Mint Circuit Sixel views for all eight portraits and a compact Unicode view.

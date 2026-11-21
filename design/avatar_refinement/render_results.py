@@ -72,8 +72,7 @@ def render(raw, columns, rows, cell):
 
 
 def capture(name, raw):
-    if name[-1] in '14':
-        render(raw.decode(), 140, 45, (7, 17)).save(results / f'{name}-sixel.png')
+    render(raw.decode(), 140, 45, (7, 17)).save(results / f'{name}-sixel.png')
 
 
 def contact_sheet():

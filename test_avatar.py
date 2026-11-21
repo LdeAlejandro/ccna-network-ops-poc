@@ -30,6 +30,15 @@ class AvatarTest(TestCase):
             self.assertEqual(sprites[1], (baseline,) * 4)
             self.assertFalse(any(map(any, sprites[0][0])))
 
+    def test_shared_uniform_sits_at_the_same_height(self):
+        for stage, name in enumerate(avatar.STAGES):
+            with self.subTest(stage=name):
+                rook = avatar.portrait(stage, 0)
+                relay = avatar.portrait(stage, 1)
+                for rook_row, relay_row in zip(rook[88:103], relay[88:103]):
+                    self.assertEqual(rook_row[:34], relay_row[:34])
+                    self.assertEqual(rook_row[74:], relay_row[74:])
+
     def test_invalid_renderer_indices_and_theme_palette(self):
         self.assertEqual(avatar.portrait(-1, 1), avatar.portrait(0, 1))
         self.assertEqual(avatar.portrait(None, 99), avatar.portrait(0, 0))

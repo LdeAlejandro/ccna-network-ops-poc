@@ -29,27 +29,23 @@ def indexed_base():
     return rows
 
 
-def upgrade(base, stage):
+def fit_uniform(base, stage):
+    """Fit the shared operator jacket around Relay's own collar and zipper."""
     rows = [row.copy() for row in base]
-    # Build the shoulder plates along the baseline jacket's magenta piping.
-    for x in range(WIDTH):
-        stripe = [y for y in range(82, HEIGHT) if base[y][x] == "8"]
-        if not stripe:
-            continue
-        top, bottom = stripe[0], stripe[-1]
-        for y in range(top - 1, min(bottom + 2, HEIGHT)):
-            if base[y][x] != "0":
-                rows[y][x] = "c" if y < bottom else "a"
-        if len(stripe) >= 3:
-            rows[top][x] = "d"
-            if stage == 1 and (17 <= x <= 26 or 81 <= x <= 88):
-                rows[top + 1][x] = "p"
-            elif stage >= 2:
-                rows[top + 1][x] = "q" if stage == 2 else "l"
-                if bottom > top + 2:
-                    rows[bottom - 1][x] = "o"
+    reference = asset_path(0, stage).read_text().splitlines()
+    # Relay is placed four rows lower by the renderer. Align the shared
+    # shoulder pieces in display coordinates, including on the Field sprite.
+    for y in range(77, HEIGHT - 4):
+        jacket = reference[y + 4]
+        rows[y][:34] = jacket[:34]
+        rows[y][74:] = jacket[74:]
+    rows[98][34:74] = rows[97][34:74]
+    return rows
 
-    rows[44][35:38] = list("ppc" if stage == 1 else "qqp")
+
+def upgrade(rows, stage):
+    rows[43][35:38] = list("dcd")
+    rows[44][35:38] = list("pqc" if stage == 1 else "qqp")
     if stage >= 2:
         rows[45][35:38] = list("occ")
         rank = "pqq1pqq" if stage == 2 else "jkl1jkl1jkl"
@@ -59,13 +55,14 @@ def upgrade(base, stage):
         rows[y + 1][x:x + edge] = list("1" + rank + "1")
         rows[y + 2][x:x + edge] = list("1" + rank + "1")
         rows[y + 3][x:x + edge] = list("1" * edge)
-    return rows
 
 
 def main():
     base = indexed_base()
     for stage in range(4):
-        rows = upgrade(base, stage) if stage else base
+        rows = fit_uniform(base, stage)
+        if stage:
+            upgrade(rows, stage)
         asset_path(1, stage).write_text("".join("".join(row) + "\n" for row in rows))
 
 
