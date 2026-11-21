@@ -19,7 +19,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A hub is a multiport repeater and has no MAC forwarding table."
+      "explanation": "A hub is a multiport repeater and has no MAC forwarding table.",
+      "option_explanations": {
+        "A": "Hubs repeat physical signals without reading IP prefixes.",
+        "B": "A hub has no MAC learning table.",
+        "C": "A hub does not designate a gateway port.",
+        "D": "A hub is a multiport repeater and has no MAC forwarding table."
+      }
     },
     {
       "id": "ccna-exam-v2-20-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "A full-duplex point-to-point link permits both directions simultaneously."
+      "explanation": "A full-duplex point-to-point link permits both directions simultaneously.",
+      "option_explanations": {
+        "A": "Alternating access to a shared collision domain is a half-duplex behavior.",
+        "B": "Full-duplex links do not use collision backoff.",
+        "C": "A full-duplex point-to-point link permits both directions simultaneously.",
+        "D": "Full duplex requires working endpoints in both directions."
+      }
     },
     {
       "id": "ccna-exam-v2-20-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The hub repeats signals across its ports, so the stations share one collision domain."
+      "explanation": "The hub repeats signals across its ports, so the stations share one collision domain.",
+      "option_explanations": {
+        "A": "The hub does not add a separate collision domain of its own.",
+        "B": "The hub repeats signals across its ports, so the stations share one collision domain.",
+        "C": "The hub does not split the attached stations into two groups.",
+        "D": "The hub's individual ports do not isolate collisions."
+      }
     },
     {
       "id": "ccna-exam-v2-20-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "CSMA/CD uses collision handling and a randomized backoff to retry medium access."
+      "explanation": "CSMA/CD uses collision handling and a randomized backoff to retry medium access.",
+      "option_explanations": {
+        "A": "Collisions are resolved at Layer 2, without changing IP addresses.",
+        "B": "CSMA/CD uses collision handling and a randomized backoff to retry medium access.",
+        "C": "TCP recovery is end-to-end and not the Ethernet MAC's immediate collision procedure.",
+        "D": "After a collision the station aborts the attempt, rather than continuing uninterrupted."
+      }
     },
     {
       "id": "ccna-exam-v2-20-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Each host gets a dedicated full-duplex link, removing shared-medium collisions."
+      "explanation": "Each host gets a dedicated full-duplex link, removing shared-medium collisions.",
+      "option_explanations": {
+        "A": "Individual full-duplex links replace the shared hub medium.",
+        "B": "A switch can forward broadcasts over full-duplex links.",
+        "C": "Each host gets a dedicated full-duplex link, removing shared-medium collisions.",
+        "D": "Full-duplex links do not use CSMA/CD."
+      }
     },
     {
       "id": "ccna-exam-v2-20-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The switch separates contention on the two hub-facing segments."
+      "explanation": "The switch separates contention on the two hub-facing segments.",
+      "option_explanations": {
+        "A": "The switch separates contention on the two hub-facing segments.",
+        "B": "A hub repeats signals across its ports, so a single hub has one shared domain.",
+        "C": "The switch separates the two domains and does not add a third shared medium between them.",
+        "D": "The two hubs cannot propagate collisions to each other through the switch."
+      }
     },
     {
       "id": "ccna-exam-v2-20-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The half-duplex end follows collision rules while the full-duplex end transmits independently."
+      "explanation": "The half-duplex end follows collision rules while the full-duplex end transmits independently.",
+      "option_explanations": {
+        "A": "An IP mask error can affect routing, but cannot cause the two link ends to disagree on duplex.",
+        "B": "The half-duplex end follows collision rules while the full-duplex end transmits independently.",
+        "C": "MAC aging changes forwarding-table retention, not link access behavior.",
+        "D": "A route conflict is an IP-layer issue and does not explain a physical duplex discrepancy."
+      }
     },
     {
       "id": "ccna-exam-v2-20-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Duplex mismatch and excessive propagation delay can produce late collisions."
+      "explanation": "Duplex mismatch and excessive propagation delay can produce late collisions.",
+      "option_explanations": {
+        "A": "Those settings concern IP configuration rather than collision behavior.",
+        "B": "Subnet masks and DNS do not control contention on Ethernet.",
+        "C": "ARP and TCP do not determine when an Ethernet collision can occur.",
+        "D": "Duplex mismatch and excessive propagation delay can produce late collisions."
+      }
     },
     {
       "id": "ccna-exam-v2-20-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Historical counts alone do not show the fault is currently occurring."
+      "explanation": "Historical counts alone do not show the fault is currently occurring.",
+      "option_explanations": {
+        "A": "Link collisions and IPv4 discards are distinct events.",
+        "B": "A historical counter cannot prove the peer's current configuration.",
+        "C": "Historical counts alone do not show the fault is currently occurring.",
+        "D": "Collisions are not expected on a correctly operating full-duplex link."
+      }
     },
     {
       "id": "ccna-exam-v2-20-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Duplex is set or negotiated per link. A shared hub requires half-duplex Ethernet."
+      "explanation": "Duplex is set or negotiated per link. A shared hub requires half-duplex Ethernet.",
+      "option_explanations": {
+        "A": "Each switch link independently determines its duplex mode.",
+        "B": "Duplex is set or negotiated per link. A shared hub requires half-duplex Ethernet.",
+        "C": "A legacy hub requires a shared half-duplex medium.",
+        "D": "The hub's half-duplex requirement does not apply to a different switch port."
+      }
     }
   ]
 }

@@ -19,7 +19,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The first bit of a historical Class A address was zero."
+      "explanation": "The first bit of a historical Class A address was zero.",
+      "option_explanations": {
+        "A": "110 identified historical Class C.",
+        "B": "1110 identified historical Class D multicast.",
+        "C": "10 identified historical Class B.",
+        "D": "The first bit of a historical Class A address was zero."
+      }
     },
     {
       "id": "ccna-exam-v2-13-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "First octet 150 falls into the old Class B range, whose default was /16."
+      "explanation": "First octet 150 falls into the old Class B range, whose default was /16.",
+      "option_explanations": {
+        "A": "/8 was the default for Class A.",
+        "B": "First octet 150 falls into the old Class B range, whose default was /16.",
+        "C": "/28 is a subnet prefix, not the historical default for Class B.",
+        "D": "/24 was the historical default for Class C."
+      }
     },
     {
       "id": "ccna-exam-v2-13-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Historical Class C uses leading bits 110 and a /24 classful boundary."
+      "explanation": "Historical Class C uses leading bits 110 and a /24 classful boundary.",
+      "option_explanations": {
+        "A": "/8 belonged to historical Class A.",
+        "B": "/20 is a variable subnet prefix rather than a default class boundary.",
+        "C": "/16 belonged to historical Class B.",
+        "D": "Historical Class C uses leading bits 110 and a /24 classful boundary."
+      }
     },
     {
       "id": "ccna-exam-v2-13-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Class D addresses have leading bits 1110 and identify multicast groups."
+      "explanation": "Class D addresses have leading bits 1110 and identify multicast groups.",
+      "option_explanations": {
+        "A": "Loopback is 127.0.0.0/8.",
+        "B": "Class D identifies groups rather than ordinary classful unicast networks.",
+        "C": "Class D addresses have leading bits 1110 and identify multicast groups.",
+        "D": "Limited broadcast uses the all-ones IPv4 address."
+      }
     },
     {
       "id": "ccna-exam-v2-13-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The 240.0.0.0/4 range starts with 1111 and was historically reserved. It contains special cases such as limited broadcast."
+      "explanation": "The 240.0.0.0/4 range starts with 1111 and was historically reserved. It contains special cases such as limited broadcast.",
+      "option_explanations": {
+        "A": "10 is the Class B pattern.",
+        "B": "1110 is the Class D pattern.",
+        "C": "110 is the Class C pattern.",
+        "D": "The 240.0.0.0/4 range starts with 1111 and was historically reserved. It contains special cases such as limited broadcast."
+      }
     },
     {
       "id": "ccna-exam-v2-13-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "IPv4 loopback covers 127.0.0.0/8."
+      "explanation": "IPv4 loopback covers 127.0.0.0/8.",
+      "option_explanations": {
+        "A": "Traffic to a 127/8 address should remain local to the host.",
+        "B": "127/8 is loopback, not RFC 1918 space.",
+        "C": "IPv4 loopback covers 127.0.0.0/8.",
+        "D": "Multicast destinations belong to 224.0.0.0/4."
+      }
     },
     {
       "id": "ccna-exam-v2-13-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A /26 block containing .183 starts at .128, where all six host bits are zero."
+      "explanation": "A /26 block containing .183 starts at .128, where all six host bits are zero.",
+      "option_explanations": {
+        "A": ".191 is the broadcast at the end of the block.",
+        "B": "A /26 block containing .183 starts at .128, where all six host bits are zero.",
+        "C": ".183 is the given host address, not the block base.",
+        "D": ".192 starts the next /26."
+      }
     },
     {
       "id": "ccna-exam-v2-13-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Modern forwarding uses the supplied prefix, whose six host bits describe 64 addresses."
+      "explanation": "Modern forwarding uses the supplied prefix, whose six host bits describe 64 addresses.",
+      "option_explanations": {
+        "A": "The .0 block is within the lower half, spanning .0–.63.",
+        "B": "The prefix fixes 26 bits and leaves six, giving 64 addresses.",
+        "C": "Modern forwarding uses the supplied prefix, whose six host bits describe 64 addresses.",
+        "D": "An explicit /26 specifies a narrower CIDR block than /24."
+      }
     },
     {
       "id": "ccna-exam-v2-13-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The third octet spans 112–127, and all host bits are ones at 172.22.127.255."
+      "explanation": "The third octet spans 112–127, and all host bits are ones at 172.22.127.255.",
+      "option_explanations": {
+        "A": "Third octet 128 starts the next /20.",
+        "B": "112.255 is inside the block, before its last third octet.",
+        "C": "127.254 is the last usable host, one below broadcast.",
+        "D": "The third octet spans 112–127, and all host bits are ones at 172.22.127.255."
+      }
     },
     {
       "id": "ccna-exam-v2-13-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Private status follows specific ranges. 11.20.1.1 falls outside all three."
+      "explanation": "Private status follows specific ranges. 11.20.1.1 falls outside all three.",
+      "option_explanations": {
+        "A": "Changing a mask does not put an IP inside an RFC 1918 allocation.",
+        "B": "Private status follows specific ranges. 11.20.1.1 falls outside all three.",
+        "C": "Historical classful masks do not define modern private space.",
+        "D": "Many first octets below 127 are outside 10.0.0.0/8."
+      }
     }
   ]
 }

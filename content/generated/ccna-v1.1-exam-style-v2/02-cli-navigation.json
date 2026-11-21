@@ -19,7 +19,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The greater-than sign marks ordinary user EXEC in this IOS prompt."
+      "explanation": "The greater-than sign marks ordinary user EXEC in this IOS prompt.",
+      "option_explanations": {
+        "A": "(config-if)# is interface configuration mode.",
+        "B": "(config)# is global configuration mode.",
+        "C": "The greater-than sign marks ordinary user EXEC in this IOS prompt.",
+        "D": "A plain # indicates privileged EXEC here."
+      }
     },
     {
       "id": "ccna-exam-v2-02-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "enable enters privileged EXEC from user EXEC."
+      "explanation": "enable enters privileged EXEC from user EXEC.",
+      "option_explanations": {
+        "A": "disable goes from privileged EXEC toward user EXEC.",
+        "B": "enable enters privileged EXEC from user EXEC.",
+        "C": "configure terminal requires privileged EXEC and enters global configuration.",
+        "D": "end exits configuration mode and is not a privilege escalation command."
+      }
     },
     {
       "id": "ccna-exam-v2-02-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "configure terminal enters the global configuration context from privileged EXEC."
+      "explanation": "configure terminal enters the global configuration context from privileged EXEC.",
+      "option_explanations": {
+        "A": "configure terminal enters the global configuration context from privileged EXEC.",
+        "B": "exit leaves the EXEC session from this prompt.",
+        "C": "Select an interface after entering global configuration mode.",
+        "D": "At Edge# the session is already in privileged EXEC."
+      }
     },
     {
       "id": "ccna-exam-v2-02-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The interface command enters the selected port's configuration context."
+      "explanation": "The interface command enters the selected port's configuration context.",
+      "option_explanations": {
+        "A": "The interface command enters the selected port's configuration context.",
+        "B": "configure terminal is the transition from privileged EXEC, and global configuration is already active.",
+        "C": "show displays interface information rather than selecting it for editing.",
+        "D": "do executes an EXEC show command and leaves the configuration context unchanged."
+      }
     },
     {
       "id": "ccna-exam-v2-02-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "exit steps back one level from interface configuration."
+      "explanation": "exit steps back one level from interface configuration.",
+      "option_explanations": {
+        "A": "disable lowers EXEC privilege rather than backing out one configuration level.",
+        "B": "enable enters privileged EXEC from user EXEC.",
+        "C": "exit steps back one level from interface configuration.",
+        "D": "end jumps directly to privileged EXEC rather than global configuration."
+      }
     },
     {
       "id": "ccna-exam-v2-02-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "end returns to privileged EXEC from nested configuration modes."
+      "explanation": "end returns to privileged EXEC from nested configuration modes.",
+      "option_explanations": {
+        "A": "exit backs out only to global configuration mode.",
+        "B": "end returns to privileged EXEC from nested configuration modes.",
+        "C": "disable is an EXEC privilege command.",
+        "D": "do show version displays information without leaving the interface context."
+      }
     },
     {
       "id": "ccna-exam-v2-02-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "do allows an EXEC command to run from a configuration context."
+      "explanation": "do allows an EXEC command to run from a configuration context.",
+      "option_explanations": {
+        "A": "A bare show running-config is an EXEC command here.",
+        "B": "do allows an EXEC command to run from a configuration context.",
+        "C": "end must be entered separately and leaves configuration mode.",
+        "D": "configure terminal is a mode transition rather than the requested display."
+      }
     },
     {
       "id": "ccna-exam-v2-02-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "disable lowers the privilege level. exit at the EXEC level can close the session."
+      "explanation": "disable lowers the privilege level. exit at the EXEC level can close the session.",
+      "option_explanations": {
+        "A": "exit closes the EXEC session instead of keeping it open.",
+        "B": "disable lowers the privilege level. exit at the EXEC level can close the session.",
+        "C": "configure terminal enters global configuration mode.",
+        "D": "end exits configuration mode, and this prompt is already in EXEC."
+      }
     },
     {
       "id": "ccna-exam-v2-02-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "exit reaches global configuration, where IOS accepts hostname."
+      "explanation": "exit reaches global configuration, where IOS accepts hostname.",
+      "option_explanations": {
+        "A": "exit reaches global configuration, where IOS accepts hostname.",
+        "B": "disable is not the way out of interface configuration, and hostname requires global configuration.",
+        "C": "end lands at privileged EXEC, where hostname is not a configuration command.",
+        "D": "do runs EXEC commands rather than moving a global configuration command into interface mode."
+      }
     },
     {
       "id": "ccna-exam-v2-02-10",
@@ -182,7 +236,13 @@
         "C"
       ],
       "explanation": "The config-if prompt provides the context for the description subcommand.",
-      "snippet": "Illustrative excerpt\nR1(config-if)#"
+      "snippet": "Illustrative excerpt\nR1(config-if)#",
+      "option_explanations": {
+        "A": "interface selects a port from global configuration and is not the syntax for its description.",
+        "B": "do calls EXEC commands, while description is a configuration command.",
+        "C": "The config-if prompt provides the context for the description subcommand.",
+        "D": "hostname sets the device name from global configuration, not the current port description."
+      }
     }
   ]
 }

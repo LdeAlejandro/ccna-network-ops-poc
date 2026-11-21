@@ -19,7 +19,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "A /27 divides the final octet into blocks of 32. Octet 77 is in the interval 64–95."
+      "explanation": "A /27 divides the final octet into blocks of 32. Octet 77 is in the interval 64–95.",
+      "option_explanations": {
+        "A": "A /27 at .0 covers .0–.31.",
+        "B": "A /27 at .32 covers .32–.63.",
+        "C": "A /27 divides the final octet into blocks of 32. Octet 77 is in the interval 64–95.",
+        "D": "The .96 block starts above .77."
+      }
     },
     {
       "id": "subnet-002",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A /26 leaves six host bits. Its 64 addresses provide 62 usable host addresses after reserving network and broadcast. A /27 provides only 30."
+      "explanation": "A /26 leaves six host bits. Its 64 addresses provide 62 usable host addresses after reserving network and broadcast. A /27 provides only 30.",
+      "option_explanations": {
+        "A": "A /25 has enough addresses but is a shorter, larger subnet than required.",
+        "B": "A /26 leaves six host bits. Its 64 addresses provide 62 usable host addresses after reserving network and broadcast. A /27 provides only 30.",
+        "C": "A /27 has only 30 ordinary usable hosts.",
+        "D": "A /28 has only 14 ordinary usable hosts."
+      }
     }
   ]
 }

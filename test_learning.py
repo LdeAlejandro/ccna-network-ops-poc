@@ -7,11 +7,14 @@ from ipaddress import ip_interface, ip_network
 import json
 import sqlite3
 from pathlib import Path
+from random import Random
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
-from learning import Learning, LearningError, MISSION, REVIEW, SCHEMA, parse_pack
+from learning import Learning, LearningError, MISSION, PRACTICE_LENGTH, REVIEW, SCHEMA, parse_pack
 from missions import MISSIONS, load_bundled
+from ops import Dashboard
 
 CONTENT = Path(__file__).with_name("content")
 
@@ -28,6 +31,56 @@ class EngineTest(unittest.TestCase):
 
     def import_sample(self, pack):
         return self.engine.ingest(CONTENT / f"{pack}.json")
+
+    def test_option_explanations_require_exact_coverage(self):
+        pack = json.loads((CONTENT / "network-fundamentals.json").read_text())
+        reasons = pack["questions"][0]["option_explanations"]
+        reasons.pop("D")
+        with self.assertRaisesRegex(LearningError, "cover exactly"):
+            parse_pack(json.dumps(pack))
+        reasons["D"] = " "
+        with self.assertRaisesRegex(LearningError, "explanation for D"):
+            parse_pack(json.dumps(pack))
+
+    def test_feedback_refresh_preserves_attempt_and_resumes_on_small_terminal(self):
+        pack = json.loads((CONTENT / "network-fundamentals.json").read_text())
+        question = pack["questions"][1]
+        pack["questions"] = [question]
+        reasons = question.pop("option_explanations")
+        legacy = self.root / "legacy-pack.json"
+        legacy.write_text(json.dumps(pack))
+        self.engine.ingest(legacy)
+        app = Dashboard(self.root / "theme", self.engine, self.root / "inbox")
+        app.key("x")
+        self.assertNotIn(reasons["A"], app.frame(140, 45))
+        app.key("a")
+        app.key("b")
+        app.key("ENTER")
+        self.assertIn(question["explanation"][:60], app.frame(140, 45))
+        before = self.engine.session()
+        history = self.engine.history()
+        load_bundled(self.engine)
+        self.assertEqual(self.engine.history(), history)
+        self.assertEqual(self.engine.session()["selected"], before["selected"])
+        self.assertEqual(self.engine.session()["data"]["option_explanations"], reasons)
+
+        with closing(Learning(self.path)) as reopened:
+            resumed = Dashboard(self.root / "theme", reopened, self.root / "inbox")
+            resumed.key("x")
+            first_screen = resumed.frame(50, 18)
+            self.assertIn("INCORRECT", first_screen)
+            frames = [first_screen]
+            for _ in range(25):
+                resumed.key("DOWN")
+                frames.append(resumed.frame(50, 18))
+            feedback = "".join(frames)
+            self.assertIn("ANSWER REVIEW", feedback)
+            self.assertIn("A. Correct · Selected", feedback)
+            self.assertIn("B. Incorrect · Selected", feedback)
+            self.assertIn("C. Correct", feedback)
+            self.assertIn("D. Incorrect", feedback)
+            for reason in reasons.values():
+                self.assertIn(reason[:30], feedback)
 
     def test_schema_and_subnetting_answers(self):
         for path in CONTENT.glob("*.json"):
@@ -95,16 +148,16 @@ class EngineTest(unittest.TestCase):
         self.assertEqual(self.engine.submit()["number"], 1)
         self.assertIsNone(self.engine.start(advance=True))
         self.today += timedelta(days=1)
-        self.assertEqual(self.engine.start(advance=True)["number"], 2)
-        self.engine.select("B")
-        correct = self.engine.submit()
+        self.assertEqual(self.engine.start(review=True)["number"], 2)
+        self.engine.select("B", REVIEW)
+        correct = self.engine.submit(REVIEW)
         self.assertTrue(correct["correct"])
         self.assertEqual(correct["xp"], 40)
         self.assertEqual(correct["next_review"], "2026-01-03")
         self.today += timedelta(days=1)
-        self.engine.start(advance=True)
-        self.engine.select("B")
-        repeated = self.engine.submit()
+        self.engine.start(advance=True, review=True)
+        self.engine.select("B", REVIEW)
+        repeated = self.engine.submit(REVIEW)
         self.assertEqual(repeated["xp"], 0)
         self.assertEqual(repeated["next_review"], "2026-01-06")
         with closing(Learning(self.path)) as reopened:
@@ -129,23 +182,95 @@ class EngineTest(unittest.TestCase):
                 self.engine.select(question["correct_answers"][0])
             self.assertEqual(self.engine.submit()["number"], i + 1)
         self.assertEqual(self.engine.summary()["topics"]["Network Fundamentals"], ("Mastered", 3, 3))
-        self.today += timedelta(days=1)
-        while (question := self.engine.start(advance=True)["data"])["type"] != "multiple_choice":
+        self.assertIsNone(self.engine.start(advance=True))
+        session = self.engine.start(new_round=True)
+        while (question := session["data"])["type"] != "multiple_choice":
             self.engine.select(question["correct_answers"][0])
             self.engine.submit()
+            session = self.engine.start(advance=True)
         for answer in ("A", "B", "C"):
             self.engine.select(answer)
         self.assertFalse(self.engine.submit()["correct"])
 
-    def test_weighting_redistributes_and_uses_due_questions(self):
-        for path in CONTENT.glob("*.json"):
-            self.engine.ingest(path)
-        self.assertEqual(self.engine.start()["data"]["category"], "networking_theory")
-        self.engine.submit()
-        self.assertEqual(self.engine.start(advance=True)["data"]["category"], "ios_commands")
-        self.engine.submit()
+    def test_randomized_practice_is_finite_and_resumable(self):
+        load_bundled(self.engine)
+        with patch("learning.expovariate", Random(12).expovariate):
+            self.engine.start()
+        first_draw = self.engine.practice_round()["questions"]
+        self.assertEqual(len(set(first_draw)), PRACTICE_LENGTH)
+        self.assertNotEqual(first_draw, sorted(first_draw))
+        self.engine.select("B")
+        with closing(Learning(self.path)) as reopened:
+            self.assertEqual(reopened.start()["selected"], ["B"])
+            self.assertEqual(reopened.practice_round()["questions"], first_draw)
+            app = Dashboard(self.root / "theme", reopened, self.root / "inbox")
+            app.key("x")
+            for index, qid in enumerate(first_draw):
+                current = reopened.session()
+                self.assertEqual(current["question"], qid)
+                question = current["data"]
+                keys = set(question["correct_answers"])
+                if question["type"] == "multiple_choice":
+                    for key in keys.symmetric_difference(current["selected"]):
+                        app.key(key)
+                else:
+                    app.key(question["correct_answers"][0])
+                app.key("ENTER")
+                app.key("ENTER")  # Duplicate submission may not alter the totals.
+                if index == PRACTICE_LENGTH - 1:
+                    self.assertIn("[N] Results", app.frame(140, 45))
+                app.key("n")
+            self.assertIsNone(reopened.start(advance=True))
+            self.assertTrue(reopened.practice_round()["finished"])
+            result = app.frame(50, 18)
+            self.assertIn("PRACTICE RESULTS", result)
+            self.assertIn("100 correct", result)
+            app.key("ESC")
+            app.key("x")
+            self.assertIn("PRACTICE RESULTS", app.frame(140, 45))
+            with patch("learning.expovariate", Random(13).expovariate):
+                app.key("ENTER")
+            self.assertNotEqual(reopened.practice_round()["questions"], first_draw)
+            self.assertEqual(reopened.practice_round()["position"], 0)
+
+    def test_practice_results_show_accuracy_by_topic_for_current_round(self):
+        self.import_sample("network-fundamentals")
+        self.import_sample("vlan-troubleshooting")
+        app = Dashboard(self.root / "theme", self.engine, self.root / "inbox")
+        app.key("x")
+        while app.mode == "quiz":
+            question = self.engine.session()["data"]
+            answers = {"fund-001": "C", "fund-002": "B", "fund-003": "A", "vlan-001": "B"}
+            app.key(answers[question["id"]])
+            app.key("ENTER")
+            app.key("n")
+
+        # A later attempt from Review must not affect the Practice results.
         self.today += timedelta(days=1)
-        self.assertEqual(self.engine.start(advance=True)["data"]["id"], "fund-001")
+        self.engine.start(review=True)
+        self.engine.select("B", REVIEW)
+        self.engine.submit(REVIEW)
+
+        with closing(Learning(self.path)) as reopened:
+            resumed = Dashboard(self.root / "theme", reopened, self.root / "inbox")
+            resumed.key("x")
+            visible = resumed.frame(50, 18)
+            self.assertIn("ACCURACY BY TOPIC", visible)
+            resumed.key("PAGEDOWN")
+            visible = resumed.frame(50, 18)
+            self.assertIn("33%   1/3   Network Fundamentals", visible)
+            self.assertIn("100%   1/1   VLANs", visible)
+            self.assertNotIn("Topic breakdown covers", visible)
+            resumed.key("ENTER")
+            self.assertEqual(reopened.practice_topics(), [])
+
+    def test_review_only_draws_due_questions(self):
+        self.import_sample("vlan-troubleshooting")
+        self.engine.start()
+        self.engine.submit()
+        self.assertIsNone(self.engine.start(review=True))
+        self.today += timedelta(days=1)
+        self.assertEqual(self.engine.start(review=True)["data"]["id"], "vlan-001")
 
     def test_upgrade_preserves_legacy_progress_and_pending_selection(self):
         legacy = self.root / "legacy.sqlite3"

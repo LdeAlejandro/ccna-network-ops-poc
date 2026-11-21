@@ -9,11 +9,13 @@ from itertools import combinations
 import json
 import os
 from pathlib import Path
+from random import Random
 import re
 import shutil
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
+from unittest.mock import patch
 
 BANK = Path(__file__).resolve().parent
 REPO = BANK.parents[2]
@@ -161,7 +163,7 @@ def check_packs(paths):
                 assert q["question"].startswith("Select TWO.") and len(q["correct_answers"]) == 2
             else:
                 keys.update(q["correct_answers"])
-            assert q["explanation"].strip()
+            assert q["option_explanations"].keys() == q["options"].keys()
             if q["snippet"]:
                 assert q["snippet"].startswith("Illustrative excerpt\n")
                 assert max(map(len, q["snippet"].splitlines())) <= 80
@@ -240,7 +242,9 @@ def check_app(paths, questions):
             else:
                 raise AssertionError("Duplicate pack was accepted")
             app.key("ESC")
-            app.key("x")
+            rng = Random(42)
+            with patch("learning.expovariate", rng.expovariate):
+                app.key("x")
             attempts = 0
             modes = set()
             while len(modes) < 2 and attempts < 270:
@@ -253,13 +257,19 @@ def check_app(paths, questions):
                 app.key("ENTER")
                 assert engine.session()["correct"] == 1
                 feedback = app.frame(140, 45)
-                assert "Correct:" in feedback
-                assert q["explanation"][:30] in feedback
+                assert "Correct:" in feedback and "ANSWER REVIEW" in feedback
+                for key, reason in q["option_explanations"].items():
+                    state = "Correct" if key in q["correct_answers"] else "Incorrect"
+                    assert f"{key}. {state}" in feedback
+                    assert reason[:30] in feedback
                 if q["id"] in questions:
                     modes.add(q["type"])
                 attempts += 1
                 if len(modes) < 2:
                     app.key("n")
+                    if app.mode == "practice_result":
+                        with patch("learning.expovariate", rng.expovariate):
+                            app.key("ENTER")
             assert modes == {"single_choice", "multiple_choice"}
             expected = engine.session()["question"]
         with closing(Learning(db)) as engine:

@@ -19,7 +19,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A MAC has 48 bits, and each hexadecimal digit represents four."
+      "explanation": "A MAC has 48 bits, and each hexadecimal digit represents four.",
+      "option_explanations": {
+        "A": "Eight hex digits encode only 32 bits.",
+        "B": "Sixteen digits encode 64 bits, more than a standard 48-bit MAC.",
+        "C": "Twenty-four hex digits encode 96 bits.",
+        "D": "A MAC has 48 bits, and each hexadecimal digit represents four."
+      }
     },
     {
       "id": "ccna-exam-v2-18-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The FCS contains a CRC computed over the frame contents."
+      "explanation": "The FCS contains a CRC computed over the frame contents.",
+      "option_explanations": {
+        "A": "EtherType identifies the encapsulated protocol.",
+        "B": "The source MAC identifies the link-layer origin.",
+        "C": "The preamble helps the receiver synchronize before the frame.",
+        "D": "The FCS contains a CRC computed over the frame contents."
+      }
     },
     {
       "id": "ccna-exam-v2-18-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Keep the original digit order and regroup the digits into pairs."
+      "explanation": "Keep the original digit order and regroup the digits into pairs.",
+      "option_explanations": {
+        "A": "40 reverses the nibbles in the fifth octet, which should be 04.",
+        "B": "30 reverses the nibbles in the fourth octet, which should be 03.",
+        "C": "Keep the original digit order and regroup the digits into pairs.",
+        "D": "b2 reverses the nibbles in the third octet, which should be 2b."
+      }
     },
     {
       "id": "ccna-exam-v2-18-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A traditional OUI is the leading 24 bits. Later bits distinguish assigned interfaces."
+      "explanation": "A traditional OUI is the leading 24 bits. Later bits distinguish assigned interfaces.",
+      "option_explanations": {
+        "A": "The final two octets are part of the interface portion.",
+        "B": "Under a 24-bit OUI, the final three octets distinguish individual assignments.",
+        "C": "Two octets provide only 16 of the 24 OUI bits.",
+        "D": "A traditional OUI is the leading 24 bits. Later bits distinguish assigned interfaces."
+      }
     },
     {
       "id": "ccna-exam-v2-18-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "EtherType 0x0800 identifies IPv4. ARP uses 0x0806 and IPv6 uses 0x86DD."
+      "explanation": "EtherType 0x0800 identifies IPv4. ARP uses 0x0806 and IPv6 uses 0x86DD.",
+      "option_explanations": {
+        "A": "EtherType 0x0800 identifies IPv4. ARP uses 0x0806 and IPv6 uses 0x86DD.",
+        "B": "ARP is identified by EtherType 0x0806.",
+        "C": "IPv6 is identified by EtherType 0x86DD.",
+        "D": "The FCS appears at the end of the frame after the payload."
+      }
     },
     {
       "id": "ccna-exam-v2-18-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "In an Ethernet II frame the destination MAC comes first, followed by the source MAC and EtherType."
+      "explanation": "In an Ethernet II frame the destination MAC comes first, followed by the source MAC and EtherType.",
+      "option_explanations": {
+        "A": "In an Ethernet II frame the destination MAC comes first, followed by the source MAC and EtherType.",
+        "B": "The source IP is inside the encapsulated IP packet when one is present.",
+        "C": "The second six bytes carry the Ethernet source MAC.",
+        "D": "EtherType or length comes after both MAC fields."
+      }
     },
     {
       "id": "ccna-exam-v2-18-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The router builds a new Layer 2 frame on the outgoing link and uses that interface as the source."
+      "explanation": "The router builds a new Layer 2 frame on the outgoing link and uses that interface as the source.",
+      "option_explanations": {
+        "A": "The ingress MAC belongs to the old link and is not the outgoing source.",
+        "B": "The router builds a new Layer 2 frame on the outgoing link and uses that interface as the source.",
+        "C": "Routing discards the incoming link-layer header and creates a new one.",
+        "D": "A destination host does not supply the source MAC of the router's outbound frame."
+      }
     },
     {
       "id": "ccna-exam-v2-18-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Local administration allows an address to be set independently of the manufacturer's allocation."
+      "explanation": "Local administration allows an address to be set independently of the manufacturer's allocation.",
+      "option_explanations": {
+        "A": "The frame carries the full 48-bit MAC address.",
+        "B": "Ordinary switches learn MAC addresses without rewriting the vendor prefix.",
+        "C": "Local administration allows an address to be set independently of the manufacturer's allocation.",
+        "D": "A traditional universally administered assignment includes the assigned organization prefix."
+      }
     },
     {
       "id": "ccna-exam-v2-18-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Ethernet FCS detects errors. A higher-layer reliable protocol such as TCP can resend lost data."
+      "explanation": "Ethernet FCS detects errors. A higher-layer reliable protocol such as TCP can resend lost data.",
+      "option_explanations": {
+        "A": "ICMP does not reconstruct a dropped Ethernet frame or retransmit TCP application bytes.",
+        "B": "ARP resolves neighbor addresses, not lost application data.",
+        "C": "The FCS detects corruption but does not correct it.",
+        "D": "Ethernet FCS detects errors. A higher-layer reliable protocol such as TCP can resend lost data."
+      }
     },
     {
       "id": "ccna-exam-v2-18-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The MAC forwarding table uses the destination MAC in the VLAN. EtherType identifies the payload instead."
+      "explanation": "The MAC forwarding table uses the destination MAC in the VLAN. EtherType identifies the payload instead.",
+      "option_explanations": {
+        "A": "0x0806 identifies an ARP payload, not an egress port.",
+        "B": "Ordinary Ethernet unicast forwarding uses Layer 2 addresses, not addresses inside ARP.",
+        "C": "The FCS validates the frame rather than selecting the output port.",
+        "D": "The MAC forwarding table uses the destination MAC in the VLAN. EtherType identifies the payload instead."
+      }
     }
   ]
 }

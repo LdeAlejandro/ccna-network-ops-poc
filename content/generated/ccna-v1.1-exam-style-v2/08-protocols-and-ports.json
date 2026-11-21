@@ -19,7 +19,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "SSH normally listens on TCP 22."
+      "explanation": "SSH normally listens on TCP 22.",
+      "option_explanations": {
+        "A": "SSH normally listens on TCP 22.",
+        "B": "The conventional SSH listener uses TCP, not UDP.",
+        "C": "TCP 23 is the conventional Telnet port.",
+        "D": "TCP 21 is conventionally FTP control."
+      }
     },
     {
       "id": "ccna-exam-v2-08-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Telnet uses TCP 23 for its standard remote terminal service."
+      "explanation": "Telnet uses TCP 23 for its standard remote terminal service.",
+      "option_explanations": {
+        "A": "SMTP relay normally listens on TCP 25.",
+        "B": "DNS listens on port 53.",
+        "C": "Telnet uses TCP 23 for its standard remote terminal service.",
+        "D": "TFTP starts with a request to UDP 69."
+      }
     },
     {
       "id": "ccna-exam-v2-08-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The conventional TCP ports are HTTP 80 and HTTPS 443."
+      "explanation": "The conventional TCP ports are HTTP 80 and HTTPS 443.",
+      "option_explanations": {
+        "A": "53 is DNS and 161 is SNMP polling.",
+        "B": "21 and 22 are FTP control and SSH.",
+        "C": "This reverses the HTTP and HTTPS listener ports.",
+        "D": "The conventional TCP ports are HTTP 80 and HTTPS 443."
+      }
     },
     {
       "id": "ccna-exam-v2-08-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "FTP control uses TCP 21. Active-mode data commonly uses server TCP port 20."
+      "explanation": "FTP control uses TCP 21. Active-mode data commonly uses server TCP port 20.",
+      "option_explanations": {
+        "A": "TCP 20 is associated with the server side of active FTP data.",
+        "B": "UDP 69 initiates a TFTP transfer.",
+        "C": "FTP control uses TCP 21. Active-mode data commonly uses server TCP port 20.",
+        "D": "TCP 25 is conventional server-to-server SMTP."
+      }
     },
     {
       "id": "ccna-exam-v2-08-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "UDP 69 is the rendezvous port. The server chooses a transfer identifier that the client uses as the destination for this transfer."
+      "explanation": "UDP 69 is the rendezvous port. The server chooses a transfer identifier that the client uses as the destination for this transfer.",
+      "option_explanations": {
+        "A": "That is the client's own transfer ID rather than the server's.",
+        "B": "UDP 69 is the rendezvous port. The server chooses a transfer identifier that the client uses as the destination for this transfer.",
+        "C": "53 is the DNS port and is unrelated to this transfer.",
+        "D": "69 is only the server's initial request listener, not its selected transfer port."
+      }
     },
     {
       "id": "ccna-exam-v2-08-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Traditional DNS permits retry over TCP on the same service port after a truncated UDP reply."
+      "explanation": "Traditional DNS permits retry over TCP on the same service port after a truncated UDP reply.",
+      "option_explanations": {
+        "A": "TCP 443 is conventional HTTPS.",
+        "B": "Traditional DNS permits retry over TCP on the same service port after a truncated UDP reply.",
+        "C": "UDP 69 is for initial TFTP requests.",
+        "D": "UDP 161 is conventional SNMP polling."
+      }
     },
     {
       "id": "ccna-exam-v2-08-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Server-to-server SMTP uses TCP 25. TCP 587 normally serves message submission by clients."
+      "explanation": "Server-to-server SMTP uses TCP 25. TCP 587 normally serves message submission by clients.",
+      "option_explanations": {
+        "A": "TCP 110 is POP3 retrieval.",
+        "B": "TCP 465 is used for implicit TLS submission, not conventional relay delivery.",
+        "C": "Server-to-server SMTP uses TCP 25. TCP 587 normally serves message submission by clients.",
+        "D": "The conventional SMTP service uses TCP."
+      }
     },
     {
       "id": "ccna-exam-v2-08-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Agents normally receive requests at 161, while notification receivers listen at 162."
+      "explanation": "Agents normally receive requests at 161, while notification receivers listen at 162.",
+      "option_explanations": {
+        "A": "162 is the trap destination, not the standard polling destination.",
+        "B": "161 is the polling destination, not the standard trap destination.",
+        "C": "Agents normally receive requests at 161, while notification receivers listen at 162.",
+        "D": "The order is reversed."
+      }
     },
     {
       "id": "ccna-exam-v2-08-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Active-mode data normally originates from server TCP port 20. TCP 21 carries the control connection."
+      "explanation": "Active-mode data normally originates from server TCP port 20. TCP 21 carries the control connection.",
+      "option_explanations": {
+        "A": "Active-mode data normally originates from server TCP port 20. TCP 21 carries the control connection.",
+        "B": "TCP 22 is SSH.",
+        "C": "UDP 69 starts a TFTP transfer.",
+        "D": "TCP 21 is the existing control connection rather than the active-mode data source."
+      }
     },
     {
       "id": "ccna-exam-v2-08-10",
@@ -182,7 +236,13 @@
         "A",
         "D"
       ],
-      "explanation": "SMTP relay uses TCP 25. Traditional DNS datagram queries are carried on UDP 53."
+      "explanation": "SMTP relay uses TCP 25. Traditional DNS datagram queries are carried on UDP 53.",
+      "option_explanations": {
+        "A": "Ordinary DNS datagram queries go to UDP port 53.",
+        "B": "SMTP uses TCP, not UDP.",
+        "C": "DNS does not use port 69, which is the conventional TFTP request port over UDP.",
+        "D": "Direct SMTP relay service conventionally listens on TCP port 25."
+      }
     }
   ]
 }

@@ -19,7 +19,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The 2811 belongs to the classic ISR generation running Cisco IOS."
+      "explanation": "The 2811 belongs to the classic ISR generation running Cisco IOS.",
+      "option_explanations": {
+        "A": "The 2811 belongs to the classic ISR generation running Cisco IOS.",
+        "B": "IOS XR targets carrier routing platforms.",
+        "C": "NX-OS is associated with Nexus data-center switches.",
+        "D": "CatOS was a legacy Catalyst switching OS."
+      }
     },
     {
       "id": "ccna-exam-v2-01-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Catalyst 9300 switches use IOS XE, which retains an IOS-style CLI."
+      "explanation": "Catalyst 9300 switches use IOS XE, which retains an IOS-style CLI.",
+      "option_explanations": {
+        "A": "Catalyst 9300 switches use IOS XE, which retains an IOS-style CLI.",
+        "B": "IOS XR is used on carrier platforms such as ASR 9000.",
+        "C": "NX-OS is used on Nexus switches.",
+        "D": "CatOS predates the Catalyst 9300."
+      }
     },
     {
       "id": "ccna-exam-v2-01-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Standalone Nexus 9000 software uses NX-OS."
+      "explanation": "Standalone Nexus 9000 software uses NX-OS.",
+      "option_explanations": {
+        "A": "Legacy CatOS is not the Nexus standalone OS.",
+        "B": "IOS XR is for carrier routing platforms.",
+        "C": "Classic IOS is a different software family from NX-OS.",
+        "D": "Standalone Nexus 9000 software uses NX-OS."
+      }
     },
     {
       "id": "ccna-exam-v2-01-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The recorded operating system and hardware determine image compatibility across the two product lines."
+      "explanation": "The recorded operating system and hardware determine image compatibility across the two product lines.",
+      "option_explanations": {
+        "A": "The recorded operating system and hardware determine image compatibility across the two product lines.",
+        "B": "A Nexus image targets Nexus hardware.",
+        "C": "ASR 1000 and ASR 9000 use different software families.",
+        "D": "Renaming an image cannot make its binaries compatible."
+      }
     },
     {
       "id": "ccna-exam-v2-01-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The set-based syntax is characteristic of CatOS on older Catalyst switches."
+      "explanation": "The set-based syntax is characteristic of CatOS on older Catalyst switches.",
+      "option_explanations": {
+        "A": "NX-OS is not the legacy Catalyst set-command environment.",
+        "B": "IOS XR uses a different configuration syntax and commit model.",
+        "C": "The set-based syntax is characteristic of CatOS on older Catalyst switches.",
+        "D": "IOS XE uses IOS-style configuration, such as vlan in global configuration mode."
+      }
     },
     {
       "id": "ccna-exam-v2-01-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "IOS XE runs IOSd on a Linux-based architecture while retaining familiar IOS commands."
+      "explanation": "IOS XE runs IOSd on a Linux-based architecture while retaining familiar IOS commands.",
+      "option_explanations": {
+        "A": "IOS XE does not embed legacy CatOS inside IOS XR.",
+        "B": "CatOS is a separate legacy operating system.",
+        "C": "IOS XE runs IOSd on a Linux-based architecture while retaining familiar IOS commands.",
+        "D": "NX-OS is a distinct OS and does not supply the IOS XE CLI."
+      }
     },
     {
       "id": "ccna-exam-v2-01-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "IOS XR applies the contents of the candidate configuration to running state at commit."
+      "explanation": "IOS XR applies the contents of the candidate configuration to running state at commit.",
+      "option_explanations": {
+        "A": "IOS XR applies the contents of the candidate configuration to running state at commit.",
+        "B": "NX-OS commands do not apply a pending IOS XR candidate change.",
+        "C": "A backup captures the current state without committing the candidate.",
+        "D": "Reopening the second session still shows the unchanged running configuration."
+      }
     },
     {
       "id": "ccna-exam-v2-01-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Cisco uses the ASR name across distinct platforms that can run different operating systems."
+      "explanation": "Cisco uses the ASR name across distinct platforms that can run different operating systems.",
+      "option_explanations": {
+        "A": "The ASR brand spans hardware families and software trains.",
+        "B": "The cable determines console connectivity, not the installed CLI.",
+        "C": "Cisco uses the ASR name across distinct platforms that can run different operating systems.",
+        "D": "Subnet size has no bearing on the platform's command syntax."
+      }
     },
     {
       "id": "ccna-exam-v2-01-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The version display identifies installed software and typically includes platform information."
+      "explanation": "The version display identifies installed software and typically includes platform information.",
+      "option_explanations": {
+        "A": "The routing table describes destinations and next hops.",
+        "B": "Interface output describes ports and link state.",
+        "C": "The version display identifies installed software and typically includes platform information.",
+        "D": "The ARP table maps IPv4 neighbors to link-layer addresses."
+      }
     },
     {
       "id": "ccna-exam-v2-01-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The separate legacy configuration contexts and CatOS syntax must be translated and reviewed for the new platform."
+      "explanation": "The separate legacy configuration contexts and CatOS syntax must be translated and reviewed for the new platform.",
+      "option_explanations": {
+        "A": "A routing module image is executable software, not a configuration file.",
+        "B": "The separate legacy configuration contexts and CatOS syntax must be translated and reviewed for the new platform.",
+        "C": "CatOS switch commands differ from IOS XE syntax.",
+        "D": "IOS XR commits do not translate settings for an IOS XE target."
+      }
     }
   ]
 }

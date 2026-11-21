@@ -37,6 +37,13 @@
           "uniqueItems": true
         },
         "explanation": {"type": "string", "minLength": 1, "maxLength": 6000},
+        "option_explanations": {
+          "type": "object",
+          "required": ["A", "B"],
+          "propertyNames": {"enum": ["A", "B", "C", "D"]},
+          "dependentRequired": {"D": ["C"]},
+          "additionalProperties": {"type": "string", "minLength": 1, "maxLength": 1200}
+        },
         "snippet": {"type": "string", "minLength": 1, "maxLength": 6000}
       },
       "if": {"properties": {"type": {"const": "single_choice"}}},

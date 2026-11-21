@@ -19,7 +19,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "8P8C describes the modular plug's eight positions and contacts. RJ-45 is common Ethernet shorthand."
+      "explanation": "8P8C describes the modular plug's eight positions and contacts. RJ-45 is common Ethernet shorthand.",
+      "option_explanations": {
+        "A": "8P8C describes the modular plug's eight positions and contacts. RJ-45 is common Ethernet shorthand.",
+        "B": "SC is a fiber connector.",
+        "C": "BNC is a coaxial connector.",
+        "D": "LC duplex is used for paired fiber strands."
+      }
     },
     {
       "id": "ccna-exam-v2-21-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "LC and SC are optical connector families used on Ethernet links."
+      "explanation": "LC and SC are optical connector families used on Ethernet links.",
+      "option_explanations": {
+        "A": "Both F-type and BNC are coaxial connector styles.",
+        "B": "8P8C is a modular copper connector, and BNC is coaxial.",
+        "C": "LC and SC are optical connector families used on Ethernet links.",
+        "D": "USB-C and 8P8C are not fiber Ethernet connector styles."
+      }
     },
     {
       "id": "ccna-exam-v2-21-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Complementary transmit and receive pair assignments line up through a straight-through cable."
+      "explanation": "Complementary transmit and receive pair assignments line up through a straight-through cable.",
+      "option_explanations": {
+        "A": "A crossover would be needed between like fixed port types, not complementary MDI and MDI-X.",
+        "B": "Complementary transmit and receive pair assignments line up through a straight-through cable.",
+        "C": "The 100BASE-TX ports require twisted-pair copper.",
+        "D": "Rollover cabling is associated with console connections."
+      }
     },
     {
       "id": "ccna-exam-v2-21-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The crossover swaps transmit and receive pair positions between like ports."
+      "explanation": "The crossover swaps transmit and receive pair positions between like ports.",
+      "option_explanations": {
+        "A": "The ports are copper 100BASE-TX rather than optical LC.",
+        "B": "A console rollover cable does not pair Ethernet transmit and receive correctly.",
+        "C": "With like pair assignments, straight-through fails to cross the transmit and receive pairs.",
+        "D": "The crossover swaps transmit and receive pair positions between like ports."
+      }
     },
     {
       "id": "ccna-exam-v2-21-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Auto MDI-X resolves wiring orientation so either appropriate straight-through or crossover cabling can work."
+      "explanation": "Auto MDI-X resolves wiring orientation so either appropriate straight-through or crossover cabling can work.",
+      "option_explanations": {
+        "A": "VLAN tagging is a frame-level operation.",
+        "B": "Auto MDI-X resolves wiring orientation so either appropriate straight-through or crossover cabling can work.",
+        "C": "Auto MDI-X swaps the pair roles and does not change electrical propagation speed.",
+        "D": "Auto MDI-X concerns copper pairs, not fiber type."
+      }
     },
     {
       "id": "ccna-exam-v2-21-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Cat 6A is specified for 10GBASE-T over the full channel length under the standard installation limits."
+      "explanation": "Cat 6A is specified for 10GBASE-T over the full channel length under the standard installation limits.",
+      "option_explanations": {
+        "A": "Cat 3 does not meet the 10GBASE-T channel requirements.",
+        "B": "Cat 5 is not rated for full-length 10GBASE-T.",
+        "C": "Cat 6A is specified for 10GBASE-T over the full channel length under the standard installation limits.",
+        "D": "Cat 5e is not the conventional choice for the full 100 m 10GBASE-T channel."
+      }
     },
     {
       "id": "ccna-exam-v2-21-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "SR optics are designed for multimode fiber. Connector shape alone does not determine optical compatibility."
+      "explanation": "SR optics are designed for multimode fiber. Connector shape alone does not determine optical compatibility.",
+      "option_explanations": {
+        "A": "Cat 6A supports twisted-pair transceivers such as 10GBASE-T, not 10GBASE-SR optics.",
+        "B": "A console cable carries no optical Ethernet signal.",
+        "C": "An LC connector alone does not make single-mode fiber suitable for SR optics.",
+        "D": "SR optics are designed for multimode fiber. Connector shape alone does not determine optical compatibility."
+      }
     },
     {
       "id": "ccna-exam-v2-21-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Single-mode 10GBASE-LR supports kilometer-scale links. The other listed choices have shorter rated reach."
+      "explanation": "Single-mode 10GBASE-LR supports kilometer-scale links. The other listed choices have shorter rated reach.",
+      "option_explanations": {
+        "A": "A standard Cat 6A 10GBASE-T channel is up to 100 m, far below 2 km.",
+        "B": "OM3 multimode with 10GBASE-SR supports hundreds of meters rather than 2 km.",
+        "C": "Single-mode 10GBASE-LR supports kilometer-scale links. The other listed choices have shorter rated reach.",
+        "D": "1000BASE-T over Cat 5e is a copper link with a 100 m channel limit."
+      }
     },
     {
       "id": "ccna-exam-v2-21-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Each transmitter must reach the peer receiver. Swapping both ends would recreate the original pairing."
+      "explanation": "Each transmitter must reach the peer receiver. Swapping both ends would recreate the original pairing.",
+      "option_explanations": {
+        "A": "Replacing connectors with the same orientation leaves transmit-to-transmit polarity intact.",
+        "B": "Swapping both ends preserves the same end-to-end polarity.",
+        "C": "Duplex settings cannot make light arrive at a receiver connected to the other strand.",
+        "D": "Each transmitter must reach the peer receiver. Swapping both ends would recreate the original pairing."
+      }
     },
     {
       "id": "ccna-exam-v2-21-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Optical fiber transports light rather than electrical signals and is immune to electromagnetic interference in the data path."
+      "explanation": "Optical fiber transports light rather than electrical signals and is immune to electromagnetic interference in the data path.",
+      "option_explanations": {
+        "A": "Another unshielded patch cord does not remove the interference exposure.",
+        "B": "Optical fiber transports light rather than electrical signals and is immune to electromagnetic interference in the data path.",
+        "C": "Duplex mode changes transmission behavior but does not remove induced noise.",
+        "D": "DHCP lease time does not affect electrical interference."
+      }
     }
   ]
 }

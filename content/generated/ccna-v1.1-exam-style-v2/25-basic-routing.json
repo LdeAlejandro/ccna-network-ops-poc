@@ -19,7 +19,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "C marks the directly connected network prefix. L marks a route to an interface address itself."
+      "explanation": "C marks the directly connected network prefix. L marks a route to an interface address itself.",
+      "option_explanations": {
+        "A": "L identifies a local host route for the router's interface address.",
+        "B": "S denotes a static route.",
+        "C": "O denotes an OSPF route.",
+        "D": "C marks the directly connected network prefix. L marks a route to an interface address itself."
+      }
     },
     {
       "id": "ccna-exam-v2-25-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "S indicates a route introduced by static configuration."
+      "explanation": "S indicates a route introduced by static configuration.",
+      "option_explanations": {
+        "A": "S indicates a route introduced by static configuration.",
+        "B": "O identifies an OSPF route.",
+        "C": "L identifies the router's own local interface route.",
+        "D": "C indicates a directly connected network."
+      }
     },
     {
       "id": "ccna-exam-v2-25-03",
@@ -56,7 +68,13 @@
         "B"
       ],
       "explanation": ".77 matches the static destination prefix. The address after via is the configured next hop.",
-      "snippet": "Illustrative excerpt\nS 203.0.113.64/26 [1/0] via 192.0.2.6\nC 192.0.2.4/30 is directly connected, GigabitEthernet0/0\nL 192.0.2.5/32 is directly connected, GigabitEthernet0/0"
+      "snippet": "Illustrative excerpt\nS 203.0.113.64/26 [1/0] via 192.0.2.6\nC 192.0.2.4/30 is directly connected, GigabitEthernet0/0\nL 192.0.2.5/32 is directly connected, GigabitEthernet0/0",
+      "option_explanations": {
+        "A": "192.0.2.5 is the router's own connected transit address in the exhibit.",
+        "B": ".77 matches the static destination prefix. The address after via is the configured next hop.",
+        "C": ".64 is the matched destination network, not its next hop.",
+        "D": ".77 is the queried destination, not the next hop."
+      }
     },
     {
       "id": "ccna-exam-v2-25-04",
@@ -74,7 +92,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "IOS expects destination network, mask and next hop. .10 is the neighbor in the local /30."
+      "explanation": "IOS expects destination network, mask and next hop. .10 is the neighbor in the local /30.",
+      "option_explanations": {
+        "A": "This reverses the destination prefix and the neighboring gateway.",
+        "B": ".9 is the router's own transit address.",
+        "C": "IOS expects destination network, mask and next hop. .10 is the neighbor in the local /30.",
+        "D": "255.255.255.0 is /24 and does not describe the required /25."
+      }
     },
     {
       "id": "ccna-exam-v2-25-05",
@@ -93,7 +117,13 @@
         "A"
       ],
       "explanation": "Use the no form with the destination, mask and next hop from the existing configuration.",
-      "snippet": "Illustrative excerpt\nip route 203.0.113.0 255.255.255.0 192.0.2.2"
+      "snippet": "Illustrative excerpt\nip route 203.0.113.0 255.255.255.0 192.0.2.2",
+      "option_explanations": {
+        "A": "Use the no form with the destination, mask and next hop from the existing configuration.",
+        "B": "The entry uses .2 as its next hop, not .1.",
+        "C": "Clearing an active route does not remove the static configuration.",
+        "D": "The configured entry is /24, not /25."
+      }
     },
     {
       "id": "ccna-exam-v2-25-06",
@@ -112,7 +142,13 @@
         "B"
       ],
       "explanation": "The L entry is the local host route for the router's configured address.",
-      "snippet": "Illustrative excerpt\nC 192.0.2.64/26 is directly connected, GigabitEthernet0/0\nL 192.0.2.65/32 is directly connected, GigabitEthernet0/0\nS 203.0.113.0/24 [1/0] via 192.0.2.66"
+      "snippet": "Illustrative excerpt\nC 192.0.2.64/26 is directly connected, GigabitEthernet0/0\nL 192.0.2.65/32 is directly connected, GigabitEthernet0/0\nS 203.0.113.0/24 [1/0] via 192.0.2.66",
+      "option_explanations": {
+        "A": "The C entry is the whole connected network.",
+        "B": "The L entry is the local host route for the router's configured address.",
+        "C": "The S entry is a remote destination reached through a next hop.",
+        "D": ".66 is the neighboring next hop, not the router's local address."
+      }
     },
     {
       "id": "ccna-exam-v2-25-07",
@@ -130,7 +166,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "A connected route depends on the interface being operational."
+      "explanation": "A connected route depends on the interface being operational.",
+      "option_explanations": {
+        "A": "A connected route depends on the interface being operational.",
+        "B": "Losing the link does not create a static route.",
+        "C": "A connected route does not turn into a peer host route when the interface goes down.",
+        "D": "Connected routes track interface state immediately rather than waiting for a reboot."
+      }
     },
     {
       "id": "ccna-exam-v2-25-08",
@@ -149,7 +191,13 @@
         "A"
       ],
       "explanation": "Both routes match, and the longer /25 is more specific than the /24.",
-      "snippet": "Illustrative excerpt\nS 198.51.100.0/24 [1/0] via 192.0.2.13\nS 198.51.100.128/25 [1/0] via 192.0.2.14\nC 192.0.2.8/29 is directly connected, GigabitEthernet0/0"
+      "snippet": "Illustrative excerpt\nS 198.51.100.0/24 [1/0] via 192.0.2.13\nS 198.51.100.128/25 [1/0] via 192.0.2.14\nC 192.0.2.8/29 is directly connected, GigabitEthernet0/0",
+      "option_explanations": {
+        "A": "Both routes match .200. The more specific /25 wins, and its via field identifies 192.0.2.14.",
+        "B": ".15 is not listed as either matching next hop.",
+        "C": "This is the base address of the selected destination prefix.",
+        "D": ".13 is the next hop for the less-specific /24."
+      }
     },
     {
       "id": "ccna-exam-v2-25-09",
@@ -167,7 +215,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The connected /30 spans .16–.19. The next hop .22 is outside it and there is no other route to resolve it."
+      "explanation": "The connected /30 spans .16–.19. The next hop .22 is outside it and there is no other route to resolve it.",
+      "option_explanations": {
+        "A": "Static and dynamic routes are allowed when their requirements are met.",
+        "B": "A static configuration does not make the destination a connected network.",
+        "C": "The connected /30 spans .16–.19. The next hop .22 is outside it and there is no other route to resolve it.",
+        "D": "Startup-config affects persistence across reload, not whether a currently configured next hop resolves."
+      }
     },
     {
       "id": "ccna-exam-v2-25-10",
@@ -185,7 +239,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Return traffic targets the entire /24 through R1's directly reachable transit address."
+      "explanation": "Return traffic targets the entire /24 through R1's directly reachable transit address.",
+      "option_explanations": {
+        "A": "A /25 reaches only the lower half of R1's /24 LAN.",
+        "B": "The route targets the transit network rather than R1's LAN, and its next hop is on the wrong side.",
+        "C": "Return traffic targets the entire /24 through R1's directly reachable transit address.",
+        "D": ".6 is R2's own address, not R1's neighboring transit address."
+      }
     }
   ]
 }

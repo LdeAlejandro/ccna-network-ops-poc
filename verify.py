@@ -173,17 +173,30 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
             else:
                 assert b"Introduced" in frame()
                 initial = press(b"x")
-                assert b"EXERCISE 001" in initial and "● C.".encode() in initial
+                assert b"EXERCISE 001 OF 3" in initial and "● C.".encode() in initial
                 assert b"Correct:" not in initial
-                result = press(b"\r")
-                assert b"CORRECT" in result and b"Correct: C" in result and b"+20 XP" in result
-                assert b"EXERCISE 002" in press(b"n")
-                assert b"Select at least one" in press(b"\r")
-                assert b"EXERCISE 002" in press(b" ")
-                press(b"c")
-                assert b"Correct: A, C" in press(b"\r")
+                with closing(Learning(db_path)) as engine:
+                    plan = engine.practice_round()["questions"]
+                    for index, qid in enumerate(plan, 1):
+                        current = engine.session()
+                        assert current["question"] == qid
+                        q = current["data"]
+                        if q["type"] == "multiple_choice":
+                            for key in set(q["correct_answers"]) ^ set(current["selected"]):
+                                press(key.encode())
+                        else:
+                            press(q["correct_answers"][0].encode())
+                        result = press(b"\r")
+                        assert b"CORRECT" in result and b"ANSWER REVIEW" in result
+                        assert all(reason[:25].encode() in result for reason in q["option_explanations"].values())
+                        result = press(b"n")
+                        if index < len(plan):
+                            assert f"EXERCISE {index + 1:03d} OF 3".encode() in result
+                assert b"PRACTICE RESULTS" in result and b"3 correct" in result
+                assert b"ACCURACY BY TOPIC" in result and b"100%   3/3   Network Fundamentals" in result
+                assert b"PRACTICE RESULTS" in press(b"x")
                 result = press(b"q")
-                assert b"XP 680/1,000" in result and b"Practiced" in result
+                assert b"XP 700/1,000" in result and b"Mastered" in result
         else:
             initial = dashboard()
             if graphics_reply:

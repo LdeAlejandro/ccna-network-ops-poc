@@ -20,7 +20,13 @@
         "B"
       ],
       "explanation": "The Method column shows DHCP for Gi0/1 and manual configuration for Gi0/0.",
-      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status Protocol\nGigabitEthernet0/0     192.0.2.1       YES manual up     up\nGigabitEthernet0/1     198.51.100.18   YES DHCP   up     up"
+      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status Protocol\nGigabitEthernet0/0     192.0.2.1       YES manual up     up\nGigabitEthernet0/1     198.51.100.18   YES DHCP   up     up",
+      "option_explanations": {
+        "A": "The Method column shows manual for Gi0/0.",
+        "B": "The Method column shows DHCP for Gi0/1 and manual configuration for Gi0/0.",
+        "C": "Gi0/1 is explicitly marked DHCP.",
+        "D": "Only one row in the exhibit shows DHCP."
+      }
     },
     {
       "id": "ccna-exam-v2-24-02",
@@ -38,7 +44,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "no shutdown removes the administrative disable flag. Physical link still depends on the medium and peer."
+      "explanation": "no shutdown removes the administrative disable flag. Physical link still depends on the medium and peer.",
+      "option_explanations": {
+        "A": "Clearing counters resets statistics rather than enabling the port.",
+        "B": "shutdown disables the port.",
+        "C": "no shutdown removes the administrative disable flag. Physical link still depends on the medium and peer.",
+        "D": "Removing the IP address does not remove an administrative shutdown."
+      }
     },
     {
       "id": "ccna-exam-v2-24-03",
@@ -56,7 +68,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "IOS expects a dotted-decimal subnet mask. The address .128 is the network ID in this /25."
+      "explanation": "IOS expects a dotted-decimal subnet mask. The address .128 is the network ID in this /25.",
+      "option_explanations": {
+        "A": "0.0.0.127 is the wildcard (inverse) form, not the interface subnet mask.",
+        "B": "IOS expects a dotted-decimal subnet mask. The address .128 is the network ID in this /25.",
+        "C": "255.255.255.0 is a /24 rather than a /25.",
+        "D": ".128 is the network address of the /25, not the requested host address."
+      }
     },
     {
       "id": "ccna-exam-v2-24-04",
@@ -75,7 +93,13 @@
         "D"
       ],
       "explanation": "Administratively down indicates the port was disabled through configuration.",
-      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0     192.0.2.129     YES manual administratively down down"
+      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0     192.0.2.129     YES manual administratively down down",
+      "option_explanations": {
+        "A": "Changing the mask does not enable an administratively disabled interface.",
+        "B": "Clearing counters leaves the port configuration intact.",
+        "C": "shutdown applies the barrier the question asks to remove.",
+        "D": "Administratively down means the port is disabled by configuration. In interface mode, no shutdown removes that setting."
+      }
     },
     {
       "id": "ccna-exam-v2-24-05",
@@ -94,7 +118,13 @@
         "B"
       ],
       "explanation": "Down/down without the administrative qualifier usually points to lack of link on this Ethernet port.",
-      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/1     192.0.2.1       YES manual down                  down"
+      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/1     192.0.2.1       YES manual down                  down",
+      "option_explanations": {
+        "A": "ARP entries do not determine whether the Ethernet port has carrier.",
+        "B": "Down/down without the administrative qualifier usually points to lack of link on this Ethernet port.",
+        "C": "DNS resolution is higher layer and cannot bring up the link.",
+        "D": "Static-route configuration cannot create physical link on this interface."
+      }
     },
     {
       "id": "ccna-exam-v2-24-06",
@@ -113,7 +143,13 @@
         "C"
       ],
       "explanation": "The two values are separate. The first reports interface status and the second reports line protocol.",
-      "snippet": "Illustrative excerpt\nSerial0/0/0 is up, line protocol is down"
+      "snippet": "Illustrative excerpt\nSerial0/0/0 is up, line protocol is down",
+      "option_explanations": {
+        "A": "The first status is up rather than administratively down.",
+        "B": "The line does not show any routing-table entry.",
+        "C": "The two values are separate. The first reports interface status and the second reports line protocol.",
+        "D": "The second value reports that line protocol is down."
+      }
     },
     {
       "id": "ccna-exam-v2-24-07",
@@ -131,7 +167,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The detailed interface view includes operational settings and counters omitted by the brief address summary."
+      "explanation": "The detailed interface view includes operational settings and counters omitted by the brief address summary.",
+      "option_explanations": {
+        "A": "The detailed interface view includes operational settings and counters omitted by the brief address summary.",
+        "B": "This filters the running configuration for hostname only.",
+        "C": "The brief output shows the state columns but not detailed physical counters or duplex.",
+        "D": "Connected route output lists network reachability rather than interface error details."
+      }
     },
     {
       "id": "ccna-exam-v2-24-08",
@@ -150,7 +192,13 @@
         "D"
       ],
       "explanation": "An Ethernet link can operate without a configured IPv4 address. Unassigned describes the address column.",
-      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/2     unassigned      YES unset  up                    up"
+      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/2     unassigned      YES unset  up                    up",
+      "option_explanations": {
+        "A": "Unassigned is not a DHCP lease for 0.0.0.0.",
+        "B": "An administratively disabled interface would not be shown as up/up.",
+        "C": "The address column is unassigned, so the row does not establish a connected /24.",
+        "D": "An Ethernet link can operate without a configured IPv4 address. Unassigned describes the address column."
+      }
     },
     {
       "id": "ccna-exam-v2-24-09",
@@ -169,7 +217,13 @@
         "D"
       ],
       "explanation": "Up/up is local interface evidence. It does not establish end-to-end routing or application reachability.",
-      "snippet": "Illustrative excerpt\nGigabitEthernet0/0 is up, line protocol is up"
+      "snippet": "Illustrative excerpt\nGigabitEthernet0/0 is up, line protocol is up",
+      "option_explanations": {
+        "A": "The port is up/up, not administratively down.",
+        "B": "A local interface state does not demonstrate the remote endpoint's return route.",
+        "C": "The exhibit does not show any static routes.",
+        "D": "Up/up is local interface evidence. It does not establish end-to-end routing or application reachability."
+      }
     },
     {
       "id": "ccna-exam-v2-24-10",
@@ -188,7 +242,13 @@
         "C"
       ],
       "explanation": "Plain down and administratively down distinguish operational link loss from a configured shutdown.",
-      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0     192.0.2.9       YES manual down                  down\nGigabitEthernet0/1     198.51.100.1    YES manual administratively down down"
+      "snippet": "Illustrative excerpt\nInterface              IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0     192.0.2.9       YES manual down                  down\nGigabitEthernet0/1     198.51.100.1    YES manual administratively down down",
+      "option_explanations": {
+        "A": "Changing masks addresses IPv4 configuration and does not distinguish carrier loss from shutdown.",
+        "B": "DHCP cannot repair either physical carrier or administrative shutdown.",
+        "C": "Gi0/0 is plain down, so check its carrier path. Gi0/1 is administratively down, so check its shutdown setting.",
+        "D": "The checks are reversed. Gi0/0 is plain down, while Gi0/1 is administratively down."
+      }
     }
   ]
 }

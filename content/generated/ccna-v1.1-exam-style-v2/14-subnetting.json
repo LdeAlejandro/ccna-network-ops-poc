@@ -19,7 +19,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Four host bits give 16 total addresses, including the network and broadcast."
+      "explanation": "Four host bits give 16 total addresses, including the network and broadcast.",
+      "option_explanations": {
+        "A": "32 addresses corresponds to a /27.",
+        "B": "28 is the prefix length, not the block size.",
+        "C": "Four host bits give 16 total addresses, including the network and broadcast.",
+        "D": "14 is the usual usable host count after reserving two addresses."
+      }
     },
     {
       "id": "ccna-exam-v2-14-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The subnet prefix adds three bits to the parent prefix."
+      "explanation": "The subnet prefix adds three bits to the parent prefix.",
+      "option_explanations": {
+        "A": "The subnet prefix adds three bits to the parent prefix.",
+        "B": "/24 has eight host bits available before borrowing.",
+        "C": "Five host bits remain after the split.",
+        "D": "27 is the new prefix length rather than the number borrowed."
+      }
     },
     {
       "id": "ccna-exam-v2-14-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Four extra prefix bits allow 16 child prefixes."
+      "explanation": "Four extra prefix bits allow 16 child prefixes.",
+      "option_explanations": {
+        "A": "Four extra prefix bits allow 16 child prefixes.",
+        "B": "Eight would cover only half the /20.",
+        "C": "32 would require a /19.",
+        "D": "256 /24 blocks would require a /16."
+      }
     },
     {
       "id": "ccna-exam-v2-14-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Seven host bits give 128 addresses. Two are reserved for network and broadcast."
+      "explanation": "Seven host bits give 128 addresses. Two are reserved for network and broadcast.",
+      "option_explanations": {
+        "A": "Seven host bits give 128 addresses. Two are reserved for network and broadcast.",
+        "B": "254 is the usual host count in a /24.",
+        "C": "Only two of the /25's 128 addresses are reserved, giving 126.",
+        "D": "128 counts the network and broadcast addresses as well."
+      }
     },
     {
       "id": "ccna-exam-v2-14-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The subnet starts at .144, so .145 is the first host."
+      "explanation": "The subnet starts at .144, so .145 is the first host.",
+      "option_explanations": {
+        "A": ".159 is the directed broadcast.",
+        "B": ".144 is the network identifier.",
+        "C": ".146 is usable but is the second host address.",
+        "D": "The subnet starts at .144, so .145 is the first host."
+      }
     },
     {
       "id": "ccna-exam-v2-14-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The four addresses are .200–.203, with .201 and .202 usable."
+      "explanation": "The four addresses are .200–.203, with .201 and .202 usable.",
+      "option_explanations": {
+        "A": "The four addresses are .200–.203, with .201 and .202 usable.",
+        "B": ".203 is the directed broadcast.",
+        "C": ".201 is usable but is the first host.",
+        "D": ".204 is the next /30 network address."
+      }
     },
     {
       "id": "ccna-exam-v2-14-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A /21 has third-octet boundaries every eight. 171 lies in the block beginning at 168."
+      "explanation": "A /21 has third-octet boundaries every eight. 171 lies in the block beginning at 168.",
+      "option_explanations": {
+        "A": "Third octet 176 starts the next block.",
+        "B": "A /21 has third-octet boundaries every eight. 171 lies in the block beginning at 168.",
+        "C": "Third octet 160 starts the previous block.",
+        "D": "171 is within the block starting at 168 and is not aligned to an eight-octet boundary."
+      }
     },
     {
       "id": "ccna-exam-v2-14-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The third octet advances in increments of 32. The block 192–223 loses its two endpoint addresses for hosts."
+      "explanation": "The third octet advances in increments of 32. The block 192–223 loses its two endpoint addresses for hosts.",
+      "option_explanations": {
+        "A": "A /19 block spans 32 values in the third octet, not 16.",
+        "B": "This range includes the network and broadcast addresses.",
+        "C": "This treats the LAN as a /24 rather than its /19.",
+        "D": "The third octet advances in increments of 32. The block 192–223 loses its two endpoint addresses for hosts."
+      }
     },
     {
       "id": "ccna-exam-v2-14-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "A /27 provides eight subnets with 30 usable hosts each. /26 gives too few subnets and /28 gives too few hosts."
+      "explanation": "A /27 provides eight subnets with 30 usable hosts each. /26 gives too few subnets and /28 gives too few hosts.",
+      "option_explanations": {
+        "A": "A /27 provides eight subnets with 30 usable hosts each. /26 gives too few subnets and /28 gives too few hosts.",
+        "B": "A /29 supplies just six ordinary usable hosts.",
+        "C": "A /26 supplies enough hosts but yields only four subnets.",
+        "D": "A /28 supplies 14 ordinary usable hosts."
+      }
     },
     {
       "id": "ccna-exam-v2-14-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The .104/29 block ends at .111, its broadcast. .104 is the network address."
+      "explanation": "The .104/29 block ends at .111, its broadcast. .104 is the network address.",
+      "option_explanations": {
+        "A": ".110 is the last usable host address.",
+        "B": ".104 is the subnet identifier.",
+        "C": ".112 is the start of the next /29.",
+        "D": "The .104/29 block ends at .111, its broadcast. .104 is the network address."
+      }
     }
   ]
 }

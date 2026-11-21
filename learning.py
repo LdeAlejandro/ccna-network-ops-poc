@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 import json
 from pathlib import Path
+from random import expovariate
 import re
 import sqlite3
 import unicodedata
@@ -24,6 +25,7 @@ KEYS = "ABCD"
 MAX_SOURCE_BYTES = 2_000_000
 
 PRACTICE, REVIEW, MISSION = 1, 2, 3
+PRACTICE_LENGTH = 100
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS topics (name TEXT PRIMARY KEY);
@@ -69,6 +71,13 @@ CREATE TABLE IF NOT EXISTS mission_answers (
     attempt INTEGER NOT NULL UNIQUE REFERENCES attempts(number),
     PRIMARY KEY (run, position)
 );
+CREATE TABLE IF NOT EXISTS practice_round (
+    slot INTEGER PRIMARY KEY CHECK (slot = 1), questions TEXT NOT NULL,
+    position INTEGER NOT NULL, correct INTEGER NOT NULL, xp INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS practice_answers (
+    attempt INTEGER PRIMARY KEY REFERENCES attempts(number)
+);
 CREATE TABLE IF NOT EXISTS attempt_order (
     sequence INTEGER PRIMARY KEY, attempt INTEGER NOT NULL UNIQUE REFERENCES attempts(number)
 );
@@ -98,7 +107,7 @@ def unique_object(pairs):
 
 
 def parse_pack(text):
-    """Validate the v1 format and return normalized questions in display order."""
+    """Validate the pack format and return normalized questions in display order."""
     try:
         pack = json.loads(text, object_pairs_hook=unique_object)
     except (json.JSONDecodeError, RecursionError) as error:
@@ -148,6 +157,14 @@ def parse_pack(text):
             "explanation": clean_text(item.get("explanation"), f"{label} explanation", 6000, True),
             "snippet": clean_text(snippet, f"{label} snippet", 6000, True) if snippet is not None else "",
         }
+        if "option_explanations" in item:
+            reasons = item["option_explanations"]
+            if not isinstance(reasons, dict) or reasons.keys() != options.keys():
+                raise LearningError(f"{label}: option_explanations must cover exactly the available options")
+            questions[qid]["option_explanations"] = {
+                key: clean_text(reasons[key], f"{label} explanation for {key}", 1200, True)
+                for key in options
+            }
     return pack_id, pack["version"], topic, questions
 
 
@@ -180,6 +197,13 @@ class Learning:
                     self.db.execute("""
                         INSERT INTO attempt_order(attempt) SELECT number FROM attempts ORDER BY number
                     """)
+                # The active slot identifies the latest answer even in older rounds.
+                self.db.execute("""
+                    INSERT OR IGNORE INTO practice_answers(attempt)
+                    SELECT a.number FROM active a JOIN attempts h ON h.number = a.number
+                    JOIN practice_round p ON p.slot = a.slot
+                    WHERE a.slot = ?
+                """, (PRACTICE,))
                 self.db.execute("PRAGMA user_version = 2")
         except BaseException:
             self.db.close()
@@ -202,7 +226,7 @@ class Learning:
         topic = clean_text(topic, "topic", 70)
         self.db.execute("INSERT OR IGNORE INTO topics VALUES (?)", (topic,))
 
-    def ingest(self, path, topic=None, subtopic=None, *, keep_existing=False):
+    def ingest(self, path, topic=None, subtopic=None, *, keep_existing=False, feedback_only=False):
         path = Path(path)
         kind = path.suffix.lower()
         if kind not in (".json", ".md", ".txt"):
@@ -235,9 +259,12 @@ class Learning:
 
         with self.transaction():
             if self.db.execute("SELECT 1 FROM sources WHERE id = ?", (identifier,)).fetchone():
-                if keep_existing:
+                if keep_existing or feedback_only:
+                    self._refresh_option_explanations(identifier, questions)
                     return identifier
                 raise LearningError("Source already imported. Use a new pack ID for a different pack.")
+            if feedback_only:
+                return None
             for qid in questions:
                 if self.db.execute("SELECT 1 FROM questions WHERE id = ?", (qid,)).fetchone():
                     raise LearningError(f"Question ID already exists: {qid}")
@@ -248,6 +275,22 @@ class Learning:
             self.db.executemany("INSERT INTO questions VALUES (?, ?, ?)",
                                 ((qid, identifier, json.dumps(q)) for qid, q in questions.items()))
         return identifier
+
+    def _refresh_option_explanations(self, source, questions):
+        """Add bundled feedback to existing questions without replacing their content."""
+        for row in self.db.execute("SELECT id, data FROM questions WHERE source = ?", (source,)):
+            incoming = questions.get(row["id"], {})
+            reasons = incoming.get("option_explanations")
+            if not reasons:
+                continue
+            existing = json.loads(row["data"])
+            fields = ("question", "snippet", "options", "correct_answers")
+            if any(existing.get(field) != incoming[field] for field in fields):
+                continue
+            if existing.get("option_explanations") != reasons:
+                existing["option_explanations"] = reasons
+                self.db.execute("UPDATE questions SET data = ? WHERE id = ?",
+                                (json.dumps(existing), row["id"]))
 
     def sources(self):
         return self.db.execute("""
@@ -265,40 +308,96 @@ class Learning:
             return None
         return {**dict(row), "data": json.loads(row["data"]), "selected": json.loads(row["selected"])}
 
-    def set_question(self, slot, target):
+    def set_question(self, slot, qid):
+        kind = self.db.execute("SELECT json_extract(data, '$.type') FROM questions WHERE id = ?",
+                               (qid,)).fetchone()[0]
         number = self.db.execute("""
             SELECT coalesce(max(number), 0) + 1 FROM (
                 SELECT number FROM attempts UNION ALL SELECT number FROM active
             )
         """).fetchone()[0]
-        selected = '["A"]' if target["type"] == "single_choice" else "[]"
+        selected = '["A"]' if kind == "single_choice" else "[]"
         self.db.execute("INSERT OR REPLACE INTO active VALUES (?, ?, ?, 0, ?)",
-                        (slot, number, target["id"], selected))
+                        (slot, number, qid, selected))
         return self.session(slot)
 
-    def start(self, advance=False, *, review=False):
-        slot = REVIEW if review else PRACTICE
+    def practice_round(self):
+        row = self.db.execute("SELECT * FROM practice_round WHERE slot = 1").fetchone()
+        if row:
+            questions = json.loads(row["questions"])
+            return {**dict(row), "questions": questions, "finished": row["position"] == len(questions)}
+        return None
+
+    def practice_topics(self):
+        return self.db.execute("""
+            SELECT s.topic, count(*) AS answered, sum(a.correct) AS correct
+            FROM practice_answers p
+            JOIN attempts a ON a.number = p.attempt
+            JOIN questions q ON q.id = a.question
+            JOIN sources s ON s.id = q.source
+            GROUP BY s.topic ORDER BY s.topic COLLATE NOCASE, s.topic
+        """).fetchall()
+
+    def _start_practice(self, advance, new_round):
+        current = self.session()
+        round_ = self.practice_round()
+        if round_ and round_["finished"] and not new_round:
+            return None
+        if round_ and not round_["finished"]:
+            if not advance or current["correct"] is None:
+                return current
+            position = round_["position"] + 1
+            self.db.execute("UPDATE practice_round SET position = ? WHERE slot = 1", (position,))
+            if position == len(round_["questions"]):
+                return None
+            return self.set_question(PRACTICE, round_["questions"][position])
+
+        # Retain an active question from saves that predate finite rounds.
+        legacy = current if round_ is None else None
+        candidates = self.db.execute("""
+            SELECT id, json_extract(data, '$.category') AS category FROM questions ORDER BY id
+        """).fetchall()
+        if not candidates:
+            return None
+        if legacy:
+            candidates = [row for row in candidates if row["id"] != legacy["question"]]
+        counts = Counter(row["category"] for row in candidates)
+        # An exponential sort draws a weighted sample without replacement.
+        shuffled = sorted(candidates, key=lambda row: expovariate(
+            self.weights[row["category"]] / counts[row["category"]]))
+        questions = [legacy["question"]] if legacy else []
+        questions.extend(row["id"] for row in shuffled[:PRACTICE_LENGTH - len(questions)])
+        self.db.execute("DELETE FROM practice_answers")
+        self.db.execute("INSERT OR REPLACE INTO practice_round VALUES (1, ?, 0, ?, ?)",
+                        (json.dumps(questions), int(bool(legacy and legacy["correct"])),
+                         (legacy["xp"] or 0) if legacy else 0))
+        if legacy:
+            if legacy["correct"] is not None:
+                self.db.execute("INSERT INTO practice_answers VALUES (?)", (legacy["number"],))
+            return legacy
+        return self.set_question(PRACTICE, questions[0])
+
+    def start(self, advance=False, *, review=False, new_round=False):
         with self.transaction():
-            session = self.session(slot)
-            if review and session and session["correct"] is None:
+            if not review:
+                return self._start_practice(advance, new_round)
+            session = self.session(REVIEW)
+            if session and session["correct"] is None:
                 due = self.db.execute("SELECT due FROM reviews WHERE question = ?", (session["question"],)).fetchone()
-                if due is None or due["due"] > self.today().isoformat():
-                    self.db.execute("DELETE FROM active WHERE slot = ?", (slot,))
+                if due is None or due[0] > self.today().isoformat():
+                    self.db.execute("DELETE FROM active WHERE slot = ?", (REVIEW,))
                     session = None
             if session and (not advance or session["correct"] is None):
                 return session
-            target = self.select_question(review=review)
-            if target is None:
-                return None
-            return self.set_question(slot, target)
+            target = self.select_review()
+            return self.set_question(REVIEW, target["id"]) if target else None
 
-    def select_question(self, *, review=False):
+    def select_review(self):
         today = self.today().isoformat()
         rows = self.db.execute("""
-            SELECT q.data, r.due FROM questions q JOIN sources s ON q.source=s.id
-            JOIN topics t ON s.topic=t.name LEFT JOIN reviews r ON r.question=q.id
-            WHERE r.due <= ? OR (NOT ? AND r.due IS NULL)
-        """, (today, review)).fetchall()
+            SELECT q.data, r.due FROM reviews r JOIN questions q ON q.id=r.question
+            WHERE r.due <= ?
+        """, (today,)).fetchall()
         if not rows:
             return None
         candidates = [(json.loads(row["data"]), row["due"]) for row in rows]
@@ -306,8 +405,6 @@ class Learning:
         if history and len(candidates) > 1:
             candidates = [(q, due) for q, due in candidates if q["id"] != history[-1]["question"]]
 
-        due_candidates = [(q, due) for q, due in candidates if due]
-        candidates = due_candidates or candidates
         categories = {q["category"] for q, _ in candidates}
         weight_sum = sum(self.weights[key] for key in categories)
         counts = Counter(row["category"] for row in history if row["category"] in categories)
@@ -361,8 +458,7 @@ class Learning:
             return self.mission_question(mission.questions[0])
 
     def mission_question(self, qid):
-        data = self.db.execute("SELECT data FROM questions WHERE id = ?", (qid,)).fetchone()["data"]
-        return self.set_question(MISSION, json.loads(data))
+        return self.set_question(MISSION, qid)
 
     def advance_mission(self):
         with self.transaction():
@@ -442,6 +538,10 @@ class Learning:
             self.db.execute("INSERT INTO attempt_order(attempt) VALUES (?)", (session["number"],))
             if slot == MISSION:
                 self.record_mission_answer(session["number"])
+            elif slot == PRACTICE:
+                self.db.execute("INSERT INTO practice_answers VALUES (?)", (session["number"],))
+                self.db.execute("UPDATE practice_round SET correct = correct + ?, xp = xp + ? WHERE slot = 1",
+                                (correct, xp))
             return self.session(slot)
 
     def history(self):

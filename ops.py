@@ -140,9 +140,13 @@ class Dashboard:
         self.scroll = 0
         self.reveal = None
 
-    def open_quiz(self, slot=PRACTICE):
+    def open_quiz(self, slot=PRACTICE, *, new_round=False):
         self.show_mode("review" if slot == REVIEW else "quiz")
-        self.learning.start(review=slot == REVIEW)
+        session = self.learning.start(review=slot == REVIEW, new_round=new_round)
+        if session and session["correct"] is not None:
+            self.reveal = "feedback"
+        elif slot == PRACTICE and not session and self.learning.practice_round():
+            self.show_mode("practice_result")
 
     def open_missions(self):
         current = self.learning.mission_run()
@@ -173,6 +177,8 @@ class Dashboard:
                 self.notice = f"Resume {MISSIONS_BY_ID[run['mission']].name} first."
                 return
             self.show_mode("mission_quiz")
+            if self.learning.session(MISSION)["correct"] is not None:
+                self.reveal = "feedback"
         elif self.mode == "mission_result" and key == "ENTER":
             self.show_mode(None)
 
@@ -200,6 +206,12 @@ class Dashboard:
             return
         if self.mode in ("missions", "briefing", "mission_result"):
             self.mission_key(key)
+            return
+        if self.mode == "practice_result":
+            if key == "ENTER":
+                self.open_quiz(new_round=True)
+            elif key in ("UP", "DOWN"):
+                self.scroll = max(0, self.scroll + (-1 if key == "UP" else 1))
             return
         if self.mode == "progress":
             return
@@ -237,8 +249,10 @@ class Dashboard:
                         self.show_mode("mission_result")
                         return
                 elif not self.learning.start(advance=True, review=slot == REVIEW):
-                    self.notice = ("No more reviews due today." if slot == REVIEW
-                                   else "No new or due questions. Return on a review date.")
+                    if slot == PRACTICE and self.learning.practice_round():
+                        self.show_mode("practice_result")
+                    elif slot == REVIEW:
+                        self.notice = "No more reviews due today."
                     return
                 self.notice = ""
                 self.scroll = 0
@@ -249,6 +263,10 @@ class Dashboard:
                 self.notice = ""
                 self.reveal = "feedback"
         elif key in ("UP", "DOWN", " ", "a", "b", "c", "d"):
+            session = self.learning.session(slot)
+            if session and session["correct"] is not None and key in ("UP", "DOWN"):
+                self.scroll = max(0, self.scroll + (-1 if key == "UP" else 1))
+                return
             self.learning.select(key.upper(), slot)
             session = self.learning.session(slot)
             if session and session["correct"] is None:
@@ -261,10 +279,11 @@ class Dashboard:
         lines = []
         anchor = None
 
-        def add(value="", ink=None, wrap=True):
+        def add(value="", ink=None, wrap=True, indent=""):
             value = cell_text(value)
             for line in value.expandtabs(4).split("\n"):
-                chunks = (textwrap.wrap(line, width - 4, replace_whitespace=False)
+                chunks = (textwrap.wrap(line, width - 4, replace_whitespace=False,
+                                        initial_indent=indent, subsequent_indent=indent)
                           if wrap else [line[i:i + width - 4] for i in range(0, len(line), width - 4)])
                 lines.extend((piece, ink) for piece in chunks or [""])
 
@@ -273,6 +292,7 @@ class Dashboard:
             title = {PRACTICE: "QUIZ MODE / PRACTICE", REVIEW: "REVIEW MODE", MISSION: "MISSION QUIZ"}[slot]
             session = self.learning.session(slot)
             run = self.learning.mission_run() if slot == MISSION else None
+            practice = self.learning.practice_round() if slot == PRACTICE else None
             if run:
                 mission = MISSIONS_BY_ID[run["mission"]]
                 stage = run["answered"] + int(session["correct"] is None)
@@ -284,15 +304,23 @@ class Dashboard:
                 q = session["data"]
                 submitted = session["correct"] is not None
                 multiple = q["type"] == "multiple_choice"
-                if not run:
+                if practice:
+                    number, total = practice["position"] + 1, len(practice["questions"])
+                    title = (f"{title} / EXERCISE {number:03d} OF {total}" if cols >= 68
+                             else f"PRACTICE / {number:03d} OF {total}")
+                elif not run:
                     title += f"  /  EXERCISE {session['number']:03d}"
                 add(f"{q['topic']} / {q['subtopic']}  |  Difficulty {q['difficulty']}/5", theme.secondary)
-                add("Select all that apply" if multiple else "Select one answer", theme.muted)
+                if not submitted:
+                    add("Select all that apply" if multiple else "Select one answer", theme.muted)
                 add(q["question"], theme.text)
                 if q["snippet"]:
                     add(q["snippet"], theme.secondary, wrap=False)
-                add()
-                for index, (key, option) in enumerate(q["options"].items()):
+                reasons = q.get("option_explanations")
+                displayed_options = () if submitted and reasons else q["options"].items()
+                if displayed_options:
+                    add()
+                for index, (key, option) in enumerate(displayed_options):
                     selected = key in session["selected"]
                     correct = submitted and key in q["correct_answers"]
                     mark = "✓" if correct else "×" if submitted and selected else "●" if selected else "○"
@@ -307,13 +335,26 @@ class Dashboard:
                     verdict = "CORRECT" if session["correct"] else "INCORRECT"
                     add(f"{verdict}  |  +{session['xp']} XP  |  Review {session['next_review']}", theme.accent)
                     add(f"Correct: {', '.join(q['correct_answers'])}", theme.secondary)
-                    add(q["explanation"])
+                    if reasons:
+                        add()
+                        add("ANSWER REVIEW", theme.accent)
+                        for index, (key, option) in enumerate(q["options"].items()):
+                            if index:
+                                add()
+                            correct = key in q["correct_answers"]
+                            state = "Correct" if correct else "Incorrect"
+                            picked = " · Selected" if key in session["selected"] else ""
+                            add(f"{key}. {state}{picked} — {option}", theme.secondary if correct else theme.text)
+                            add(reasons[key], indent="  ")
+                    else:
+                        add(q["explanation"])
             else:
                 submitted = False
                 add("No reviews are due today." if slot == REVIEW else
-                    "No new or due questions. Import a pack in Feed or return on a review date.",
+                    "No questions available. Import a question pack in Feed.",
                     theme.secondary)
-            next_label = "Results" if run and run["finished"] else "Next"
+            last_exercise = practice and practice["position"] + 1 == len(practice["questions"])
+            next_label = "Results" if last_exercise or (run and run["finished"]) else "Next"
             if not session:
                 commands = (("Esc", "Back"),)
             elif submitted:
@@ -321,11 +362,29 @@ class Dashboard:
             else:
                 commands = (("↑↓", "Move"), ("A–D", "Pick"), ("Enter", "Submit"), ("Esc", "Back"))
             if submitted:
-                hint = "Feedback saved  /  N opens mission results" if next_label == "Results" else "Feedback saved"
+                hint = "N opens results" if next_label == "Results" else ""
             elif session and multiple:
                 hint = "Space toggles the highlighted option"
             else:
                 hint = "Enter submits the highlighted answer" if session else ""
+        elif self.mode == "practice_result":
+            title = "PRACTICE RESULTS"
+            round_ = self.learning.practice_round()
+            total, correct = len(round_["questions"]), round_["correct"]
+            add(f"{total} / {total} answered", theme.accent)
+            add(f"{correct} correct  /  {total - correct} incorrect")
+            add(f"Accuracy {100 * correct // total}%  /  +{round_['xp']} XP", theme.secondary)
+            topics = self.learning.practice_topics()
+            add()
+            add("ACCURACY BY TOPIC", theme.accent)
+            covered = sum(topic["answered"] for topic in topics)
+            if covered < total:
+                add(f"Topic breakdown covers {covered}/{total} answers from this round.", theme.muted)
+            for topic in topics:
+                correct, answered = topic["correct"], topic["answered"]
+                add(f"{100 * correct // answered:3d}%   {correct}/{answered}   {topic['topic']}")
+            commands = (("Enter", "New quiz"), ("Esc", "Back"))
+            hint = ""
         elif self.mode in ("missions", "briefing", "mission_result"):
             mission = MISSIONS[self.mission_cursor]
             run = self.learning.mission_run(mission.id)
@@ -451,7 +510,9 @@ class Dashboard:
         for row, (text, ink) in enumerate(lines[self.scroll:self.scroll + visible], 7):
             body(x, row, width, text, ink)
         if len(lines) > visible:
-            hint = f"Pg↑/Pg↓ scroll  |  {self.scroll + 1}–{self.scroll + visible} / {len(lines)}"
+            arrows = self.mode == "practice_result" or (slot and submitted)
+            scroll_keys = "↑↓ / Pg↑↓" if arrows else "Pg↑/Pg↓"
+            hint = f"{scroll_keys} scroll  |  {self.scroll + 1}–{self.scroll + visible} / {len(lines)}"
         body(x, height + 2, width, hint, theme.muted)
         body(x, height + 3, width, cell_text(self.notice), theme.accent)
         label = {PRACTICE: "Practice", REVIEW: "Review", MISSION: "Mission"}.get(slot)

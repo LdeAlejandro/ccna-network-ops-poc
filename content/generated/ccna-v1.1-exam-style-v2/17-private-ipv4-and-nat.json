@@ -19,7 +19,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "RFC 1918 reserves all of 10.0.0.0/8."
+      "explanation": "RFC 1918 reserves all of 10.0.0.0/8.",
+      "option_explanations": {
+        "A": "100.64.0.0/10 is shared carrier address space, outside RFC 1918.",
+        "B": "RFC 1918 reserves all of 10.0.0.0/8.",
+        "C": "An address starting with 11 is outside 10.0.0.0/8.",
+        "D": "169.254.0.0/16 is IPv4 link-local space."
+      }
     },
     {
       "id": "ccna-exam-v2-17-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The private block is specifically 192.168.0.0/16."
+      "explanation": "The private block is specifically 192.168.0.0/16.",
+      "option_explanations": {
+        "A": "The private block is specifically 192.168.0.0/16.",
+        "B": "The private 192.x block fixes the second octet at 168.",
+        "C": "192.0.2.0/24 is reserved for documentation.",
+        "D": "192.169 is outside the 192.168.0.0/16 private block."
+      }
     },
     {
       "id": "ccna-exam-v2-17-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A /12 here covers second octets 16 through 31."
+      "explanation": "A /12 here covers second octets 16 through 31.",
+      "option_explanations": {
+        "A": "The private second-octet range ends at 31.",
+        "B": "63 is above the private second-octet range.",
+        "C": "15 is below the private range starting at 16.",
+        "D": "A /12 here covers second octets 16 through 31."
+      }
     },
     {
       "id": "ccna-exam-v2-17-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "172.24.0.0/13 covers 172.24 through 172.31. The other options extend outside the private ranges."
+      "explanation": "172.24.0.0/13 covers 172.24 through 172.31. The other options extend outside the private ranges.",
+      "option_explanations": {
+        "A": "172.24.0.0/13 covers 172.24 through 172.31. The other options extend outside the private ranges.",
+        "B": "This also includes 192.169.0.0/16.",
+        "C": "This includes both 10.0.0.0/8 and nonprivate 11.0.0.0/8.",
+        "D": "Second octets 0–15 are outside the private 172.16–31 range."
+      }
     },
     {
       "id": "ccna-exam-v2-17-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Private addresses can be reused in isolated networks. Connecting overlapping networks requires a way to disambiguate them."
+      "explanation": "Private addresses can be reused in isolated networks. Connecting overlapping networks requires a way to disambiguate them.",
+      "option_explanations": {
+        "A": "Private addresses can be reused in isolated networks. Connecting overlapping networks requires a way to disambiguate them.",
+        "B": "Using the same mask preserves the overlap rather than creating uniqueness.",
+        "C": "Private addressing does not require registration.",
+        "D": "ARP resolves addresses to local link-layer destinations, not to newly assigned prefixes."
+      }
     },
     {
       "id": "ccna-exam-v2-17-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Source NAT presents a translated source address to the outside network."
+      "explanation": "Source NAT presents a translated source address to the outside network.",
+      "option_explanations": {
+        "A": "A subnet mask is not a translated address in the IP header.",
+        "B": "Source NAT changes the originating address. The external destination stays the same.",
+        "C": "Source NAT presents a translated source address to the outside network.",
+        "D": "The interface configuration does not change when NAT translates individual packets."
+      }
     },
     {
       "id": "ccna-exam-v2-17-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The NAT device reverses the mapping on the inbound return packet."
+      "explanation": "The NAT device reverses the mapping on the inbound return packet.",
+      "option_explanations": {
+        "A": "The outside server replies to the address it saw, which is the translated address.",
+        "B": "The NAT device reverses the mapping on the inbound return packet.",
+        "C": "Return delivery relies on NAT state, not a public advertisement of a private prefix.",
+        "D": "The inside client keeps its private address while the edge presents the translated address."
+      }
     },
     {
       "id": "ccna-exam-v2-17-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "RFC 1918 addresses can be routed across private networks with coordinated addressing."
+      "explanation": "RFC 1918 addresses can be routed across private networks with coordinated addressing.",
+      "option_explanations": {
+        "A": "Public addressing is optional for a private, routed path.",
+        "B": "Source NAT is not required when the private networks can route to one another.",
+        "C": "Destination NAT is unnecessary when each destination already has a unique reachable address.",
+        "D": "RFC 1918 addresses can be routed across private networks with coordinated addressing."
+      }
     },
     {
       "id": "ccna-exam-v2-17-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The identical destination is ambiguous in one routing context. Renumbering or appropriate translation can resolve that ambiguity."
+      "explanation": "The identical destination is ambiguous in one routing context. Renumbering or appropriate translation can resolve that ambiguity.",
+      "option_explanations": {
+        "A": "A /24 route can cover unicast addresses as well as the subnet broadcast.",
+        "B": "The identical destination is ambiguous in one routing context. Renumbering or appropriate translation can resolve that ambiguity.",
+        "C": "ARP resolves local IP-to-MAC mappings. It does not disambiguate identical routed IP destinations at different sites.",
+        "D": "Private prefixes are valid in private routing tables."
+      }
     },
     {
       "id": "ccna-exam-v2-17-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The source changes across the edge. The external destination stays the same."
+      "explanation": "The source changes across the edge. The external destination stays the same.",
+      "option_explanations": {
+        "A": "The observed difference is in the source. A gateway is selected by routing decisions.",
+        "B": "The paired captures show the same flow, with configured NAT accounting for the source change.",
+        "C": "The source changes across the edge. The external destination stays the same.",
+        "D": "The evidence is about the outbound source, not an externally rewritten destination."
+      }
     }
   ]
 }

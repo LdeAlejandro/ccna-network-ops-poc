@@ -70,3 +70,5 @@ def load_bundled(engine):
         raise ValueError("The bundled CCNA bank is incomplete.")
     for path in (CONTENT / "vlan-troubleshooting.json", *paths):
         engine.ingest(path, keep_existing=True)
+    for name in ("ios-basics", "ipv4-subnetting", "network-fundamentals"):
+        engine.ingest(CONTENT / f"{name}.json", feedback_only=True)

@@ -19,7 +19,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "hostname changes the device name shown in the prompt."
+      "explanation": "hostname changes the device name shown in the prompt.",
+      "option_explanations": {
+        "A": "ip host creates a static name-to-address mapping.",
+        "B": "A name server setting would point name resolution at a DNS server.",
+        "C": "description labels an interface or other configured object rather than the device prompt.",
+        "D": "hostname changes the device name shown in the prompt."
+      }
     },
     {
       "id": "ccna-exam-v2-04-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Running-config is the active configuration and can include changes missing from the saved copy."
+      "explanation": "Running-config is the active configuration and can include changes missing from the saved copy.",
+      "option_explanations": {
+        "A": "show version reports software and platform details.",
+        "B": "Running-config is the active configuration and can include changes missing from the saved copy.",
+        "C": "show startup-config reads the saved startup file.",
+        "D": "show flash: inspects flash storage rather than running settings."
+      }
     },
     {
       "id": "ccna-exam-v2-04-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The first argument is the source. startup-config is the saved destination."
+      "explanation": "The first argument is the source. startup-config is the saved destination.",
+      "option_explanations": {
+        "A": "The first argument is the source. startup-config is the saved destination.",
+        "B": "This direction reads from flash and writes into the active configuration.",
+        "C": "This writes a network backup rather than the startup configuration.",
+        "D": "This direction applies saved commands to the active configuration."
+      }
     },
     {
       "id": "ccna-exam-v2-04-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "ip host maps a name to an address in the device's local host table."
+      "explanation": "ip host maps a name to an address in the device's local host table.",
+      "option_explanations": {
+        "A": "ip host maps a name to an address in the device's local host table.",
+        "B": "ip name-server configures a resolver address, not a local host entry.",
+        "C": "hostname changes the device's own name.",
+        "D": "An interface ip address command assigns an address and mask to a port."
+      }
     },
     {
       "id": "ccna-exam-v2-04-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The unsaved active change is lost when the device reloads from the saved configuration."
+      "explanation": "The unsaved active change is lost when the device reloads from the saved configuration.",
+      "option_explanations": {
+        "A": "The question explicitly says the running change was not saved.",
+        "B": "Reloading normally does not erase the saved file.",
+        "C": "The unsaved active change is lost when the device reloads from the saved configuration.",
+        "D": "Whether the port uses DHCP depends on its saved interface configuration."
+      }
     },
     {
       "id": "ccna-exam-v2-04-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The copy source is the active configuration and the destination is a named file on flash."
+      "explanation": "The copy source is the active configuration and the destination is a named file on flash.",
+      "option_explanations": {
+        "A": "The copy source is the active configuration and the destination is a named file on flash.",
+        "B": "show displays contents rather than copying them.",
+        "C": "This reads the saved configuration and sends it to a remote server.",
+        "D": "This reads the local file into the live configuration, the opposite direction."
+      }
     },
     {
       "id": "ccna-exam-v2-04-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The saved file is the source and TFTP is the destination. IOS prompts for transfer details."
+      "explanation": "The saved file is the source and TFTP is the destination. IOS prompts for transfer details.",
+      "option_explanations": {
+        "A": "The saved file is the source and TFTP is the destination. IOS prompts for transfer details.",
+        "B": "This saves the active configuration on the router.",
+        "C": "This retrieves a remote file into the startup configuration.",
+        "D": "This creates a local flash copy."
+      }
     },
     {
       "id": "ccna-exam-v2-04-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Copying into running-config applies commands to the existing configuration. Extra settings can remain."
+      "explanation": "Copying into running-config applies commands to the existing configuration. Extra settings can remain.",
+      "option_explanations": {
+        "A": "Importing into running-config applies commands to the live configuration without a reboot.",
+        "B": "Copying into running-config applies commands to the existing configuration. Extra settings can remain.",
+        "C": "The specified destination is running-config, not startup-config.",
+        "D": "A merge retains existing configuration statements that the input does not replace or remove."
+      }
     },
     {
       "id": "ccna-exam-v2-04-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The active running configuration includes the recent change."
+      "explanation": "The active running configuration includes the recent change.",
+      "option_explanations": {
+        "A": "The active running configuration includes the recent change.",
+        "B": "The ARP table stores neighbor mappings, not interface configuration commands.",
+        "C": "startup-config omits the unsaved change.",
+        "D": "The IOS image contains system software, not the active device settings."
+      }
     },
     {
       "id": "ccna-exam-v2-04-10",
@@ -182,7 +236,13 @@
         "B"
       ],
       "explanation": "The router loads the saved configuration, whose hostname is Warehouse.",
-      "snippet": "Illustrative excerpt\nRunning: hostname Warehouse-East\nStartup: hostname Warehouse"
+      "snippet": "Illustrative excerpt\nRunning: hostname Warehouse-East\nStartup: hostname Warehouse",
+      "option_explanations": {
+        "A": "The exhibit does not configure this hostname.",
+        "B": "The router loads the saved configuration, whose hostname is Warehouse.",
+        "C": "The default name only applies if no saved hostname overrides it.",
+        "D": "The unsaved running hostname is lost at reload."
+      }
     }
   ]
 }

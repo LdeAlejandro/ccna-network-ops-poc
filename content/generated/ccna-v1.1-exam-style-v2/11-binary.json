@@ -19,7 +19,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The weights start at 128 and halve with each position."
+      "explanation": "The weights start at 128 and halve with each position.",
+      "option_explanations": {
+        "A": "64 is the second bit's weight.",
+        "B": "16 is the fourth bit's weight.",
+        "C": "The weights start at 128 and halve with each position.",
+        "D": "4 is the sixth bit's weight."
+      }
     },
     {
       "id": "ccna-exam-v2-11-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The leftmost and rightmost bits contribute 128 and 1."
+      "explanation": "The leftmost and rightmost bits contribute 128 and 1.",
+      "option_explanations": {
+        "A": "128 would have only the leftmost bit set.",
+        "B": "130 uses the two's bit instead of the one's bit.",
+        "C": "The leftmost and rightmost bits contribute 128 and 1.",
+        "D": "65 uses 64 + 1 rather than 128 + 1."
+      }
     },
     {
       "id": "ccna-exam-v2-11-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "128 + 32 + 16 + 4 + 2 equals 182."
+      "explanation": "128 + 32 + 16 + 4 + 2 equals 182.",
+      "option_explanations": {
+        "A": "180 omits the set two's bit.",
+        "B": "178 omits the set four's bit.",
+        "C": "186 uses the eight's bit and omits the four's bit instead of matching the given octet.",
+        "D": "128 + 32 + 16 + 4 + 2 equals 182."
+      }
     },
     {
       "id": "ccna-exam-v2-11-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "107 is 64 + 32 + 8 + 2 + 1."
+      "explanation": "107 is 64 + 32 + 8 + 2 + 1.",
+      "option_explanations": {
+        "A": "01111011 equals 123.",
+        "B": "01101101 equals 109.",
+        "C": "01011011 equals 91.",
+        "D": "107 is 64 + 32 + 8 + 2 + 1."
+      }
     },
     {
       "id": "ccna-exam-v2-11-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "224 is 128 + 64 + 32, making the first three bits ones."
+      "explanation": "224 is 128 + 64 + 32, making the first three bits ones.",
+      "option_explanations": {
+        "A": "224 is 128 + 64 + 32, making the first three bits ones.",
+        "B": "11100100 adds 4 to 224.",
+        "C": "11000000 equals 192.",
+        "D": "11110000 equals 240."
+      }
     },
     {
       "id": "ccna-exam-v2-11-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "AND preserves the first four bits here and clears the low four."
+      "explanation": "AND preserves the first four bits here and clears the low four.",
+      "option_explanations": {
+        "A": "AND preserves the first four bits here and clears the low four.",
+        "B": "00100110 contains the lower bits that the mask clears.",
+        "C": "11110110 sets bits that did not appear in both operands.",
+        "D": "11010110 is the unchanged first operand."
+      }
     },
     {
       "id": "ccna-exam-v2-11-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Converting each octet independently yields 203, 0, 113 and 19."
+      "explanation": "Converting each octet independently yields 203, 0, 113 and 19.",
+      "option_explanations": {
+        "A": "00010011 equals 19, not 17.",
+        "B": "Converting each octet independently yields 203, 0, 113 and 19.",
+        "C": "11001011 equals 203, not 202.",
+        "D": "01110001 equals 113, not 114."
+      }
     },
     {
       "id": "ccna-exam-v2-11-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "173 is 10101101. A /28 keeps the first four bits of the final octet and clears the rest."
+      "explanation": "173 is 10101101. A /28 keeps the first four bits of the final octet and clears the rest.",
+      "option_explanations": {
+        "A": "10101111 is 175, the subnet broadcast.",
+        "B": "10110000 is 176, the next /28 boundary.",
+        "C": "10101101 is the original host octet with its host bits intact.",
+        "D": "173 is 10101101. A /28 keeps the first four bits of the final octet and clears the rest."
+      }
     },
     {
       "id": "ccna-exam-v2-11-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "109 is 01101101 in binary. A /27 leaves the rightmost five bits for hosts."
+      "explanation": "109 is 01101101 in binary. A /27 leaves the rightmost five bits for hosts.",
+      "option_explanations": {
+        "A": "109 is 01101101 in binary. A /27 leaves the rightmost five bits for hosts.",
+        "B": "11101 represents 29, but 109 modulo 32 is 13.",
+        "C": "10110 represents 22, not the five low bits of 109.",
+        "D": "11010 represents 26, not the five low bits of 109."
+      }
     },
     {
       "id": "ccna-exam-v2-11-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Their first four bits match and their fifth bits differ, so the first 28 address bits match."
+      "explanation": "Their first four bits match and their fifth bits differ, so the first 28 address bits match.",
+      "option_explanations": {
+        "A": "/27 separates the two octets at the bit where they first differ.",
+        "B": "/30 fixes six bits in the final octet, but only four are shared.",
+        "C": "Their first four bits match and their fifth bits differ, so the first 28 address bits match.",
+        "D": "/29 fixes five bits in the final octet, one more than is shared."
+      }
     }
   ]
 }

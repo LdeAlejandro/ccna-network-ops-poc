@@ -19,7 +19,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A router forwards IP packets between networks."
+      "explanation": "A router forwards IP packets between networks.",
+      "option_explanations": {
+        "A": "A PoE injector adds electrical power rather than routing IP packets.",
+        "B": "A hub repeats physical-layer signals.",
+        "C": "A patch panel terminates cabling and performs no forwarding.",
+        "D": "A router forwards IP packets between networks."
+      }
     },
     {
       "id": "ccna-exam-v2-23-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The AP supplies the over-the-air link and attaches clients to the network."
+      "explanation": "The AP supplies the over-the-air link and attaches clients to the network.",
+      "option_explanations": {
+        "A": "A controller manages APs, but a controller alone does not supply the client-facing radio.",
+        "B": "The AP supplies the over-the-air link and attaches clients to the network.",
+        "C": "A hub supports wired physical-layer connections.",
+        "D": "A device without a wireless radio cannot be the Wi-Fi attachment point."
+      }
     },
     {
       "id": "ccna-exam-v2-23-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "An L2 switch uses a MAC forwarding table. A hub repeats signals without lookup."
+      "explanation": "An L2 switch uses a MAC forwarding table. A hub repeats signals without lookup.",
+      "option_explanations": {
+        "A": "Managing AP firmware is not the local Ethernet switching role.",
+        "B": "A hub repeats rather than learning destination addresses.",
+        "C": "A routed interface forwards using destination IP and rewrites link-layer headers for each hop.",
+        "D": "An L2 switch uses a MAC forwarding table. A hub repeats signals without lookup."
+      }
     },
     {
       "id": "ccna-exam-v2-23-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "A capable Layer 3 switch can combine MAC switching and IP routing."
+      "explanation": "A capable Layer 3 switch can combine MAC switching and IP routing.",
+      "option_explanations": {
+        "A": "A hub does not switch within VLANs or route between them.",
+        "B": "A midspan supplies power rather than processing forwarding headers.",
+        "C": "A capable Layer 3 switch can combine MAC switching and IP routing.",
+        "D": "A Layer 2 switch alone does not route between VLAN gateways."
+      }
     },
     {
       "id": "ccna-exam-v2-23-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A firewall applies traffic policy at the security boundary."
+      "explanation": "A firewall applies traffic policy at the security boundary.",
+      "option_explanations": {
+        "A": "A PoE source supplies power but does not enforce session policy.",
+        "B": "A firewall applies traffic policy at the security boundary.",
+        "C": "A hub repeats signals without considering connection policy.",
+        "D": "A repeater operates below the layers where firewall sessions are classified."
+      }
     },
     {
       "id": "ccna-exam-v2-23-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "An inline intrusion prevention system can detect and stop policy-matching traffic."
+      "explanation": "An inline intrusion prevention system can detect and stop policy-matching traffic.",
+      "option_explanations": {
+        "A": "A hub repeats signals without inspecting attack signatures.",
+        "B": "A media converter changes the physical medium without making prevention decisions.",
+        "C": "An out-of-band monitor can observe traffic but is outside the forwarding path and cannot drop inline packets itself.",
+        "D": "An inline intrusion prevention system can detect and stop policy-matching traffic."
+      }
     },
     {
       "id": "ccna-exam-v2-23-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A WLC coordinates compatible APs and centralizes wireless policy and configuration."
+      "explanation": "A WLC coordinates compatible APs and centralizes wireless policy and configuration.",
+      "option_explanations": {
+        "A": "A hub has no configuration-control relationship with APs.",
+        "B": "A local injector powers an AP but does not centrally manage it.",
+        "C": "An unmanaged switch can carry traffic, but it is not an AP management platform.",
+        "D": "A WLC coordinates compatible APs and centralizes wireless policy and configuration."
+      }
     },
     {
       "id": "ccna-exam-v2-23-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Unified Communications Manager handles functions such as call setup and routing for enterprise voice endpoints."
+      "explanation": "Unified Communications Manager handles functions such as call setup and routing for enterprise voice endpoints.",
+      "option_explanations": {
+        "A": "Unified Communications Manager handles functions such as call setup and routing for enterprise voice endpoints.",
+        "B": "The Catalyst access switch attaches phones to the LAN, and may power them, but does not provide this call control role.",
+        "C": "A Nexus switch is aimed at data-center networking.",
+        "D": "A WLC manages WLANs and APs rather than enterprise phone call policy."
+      }
     },
     {
       "id": "ccna-exam-v2-23-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Nexus is Cisco's data-center switching family, while the others address voice or wireless roles."
+      "explanation": "Nexus is Cisco's data-center switching family, while the others address voice or wireless roles.",
+      "option_explanations": {
+        "A": "Nexus is Cisco's data-center switching family, while the others address voice or wireless roles.",
+        "B": "A WLC centralizes wireless management.",
+        "C": "Unified Communications Manager handles call control.",
+        "D": "An IP Phone 8800 is a voice endpoint, not a data-center switch."
+      }
     },
     {
       "id": "ccna-exam-v2-23-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The associations and local path work. The logged policy deny identifies the firewall boundary as the source of this restriction."
+      "explanation": "The associations and local path work. The logged policy deny identifies the firewall boundary as the source of this restriction.",
+      "option_explanations": {
+        "A": "Association and gateway reachability show that the AP's access function is working.",
+        "B": "The WLC is not the component logging the client-subnet service denial.",
+        "C": "The associations and local path work. The logged policy deny identifies the firewall boundary as the source of this restriction.",
+        "D": "MAC learning supplies local forwarding, not the security-zone rule shown in the log."
+      }
     }
   ]
 }

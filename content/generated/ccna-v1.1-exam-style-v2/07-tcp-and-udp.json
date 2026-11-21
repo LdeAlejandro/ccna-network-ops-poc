@@ -19,7 +19,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The server listens at the destination transport port."
+      "explanation": "The server listens at the destination transport port.",
+      "option_explanations": {
+        "A": "TTL limits the life of the encapsulating IP packet.",
+        "B": "The receive window advertises buffer space.",
+        "C": "The server listens at the destination transport port.",
+        "D": "A source MAC identifies a link-layer sender."
+      }
     },
     {
       "id": "ccna-exam-v2-07-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Both peers synchronize initial sequence numbers and acknowledge the other peer's SYN."
+      "explanation": "Both peers synchronize initial sequence numbers and acknowledge the other peer's SYN.",
+      "option_explanations": {
+        "A": "The opening exchange starts with SYN and does not use FIN.",
+        "B": "FIN closes a stream rather than establishing it.",
+        "C": "Both peers synchronize initial sequence numbers and acknowledge the other peer's SYN.",
+        "D": "RST resets a connection attempt instead of opening one."
+      }
     },
     {
       "id": "ccna-exam-v2-07-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "UDP carries source port, destination port, length and checksum fields."
+      "explanation": "UDP carries source port, destination port, length and checksum fields.",
+      "option_explanations": {
+        "A": "UDP has no advertised receive window.",
+        "B": "UDP does not sequence datagrams.",
+        "C": "UDP provides no acknowledgment field.",
+        "D": "UDP carries source port, destination port, length and checksum fields."
+      }
     },
     {
       "id": "ccna-exam-v2-07-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The two endpoint addresses and ports identify a TCP connection."
+      "explanation": "The two endpoint addresses and ports identify a TCP connection.",
+      "option_explanations": {
+        "A": "The two endpoint addresses and ports identify a TCP connection.",
+        "B": "The same server or next-hop MAC can carry both connections.",
+        "C": "Both use the same IP protocol number for TCP.",
+        "D": "TTL is a hop limit rather than a connection identifier."
+      }
     },
     {
       "id": "ccna-exam-v2-07-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The acknowledgment number is the next byte position expected."
+      "explanation": "The acknowledgment number is the next byte position expected.",
+      "option_explanations": {
+        "A": "The acknowledgment number is the next byte position expected.",
+        "B": "The ACK field does not encode a port.",
+        "C": "520 is the next expected byte, not the last one received.",
+        "D": "The advertised window has its own header field."
+      }
     },
     {
       "id": "ccna-exam-v2-07-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "TCP uses retransmission to recover missing data."
+      "explanation": "TCP uses retransmission to recover missing data.",
+      "option_explanations": {
+        "A": "TCP uses retransmission to recover missing data.",
+        "B": "A TCP retransmission does not change the connection's transport.",
+        "C": "The receiver retains already acknowledged bytes.",
+        "D": "The destination port identifies the existing connection and stays the same."
+      }
     },
     {
       "id": "ccna-exam-v2-07-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The advertised window limits how much additional sequence space the sender may use."
+      "explanation": "The advertised window limits how much additional sequence space the sender may use.",
+      "option_explanations": {
+        "A": "A source port identifies a sending endpoint.",
+        "B": "The urgent pointer relates to urgent data.",
+        "C": "The advertised window limits how much additional sequence space the sender may use.",
+        "D": "Data Offset gives the header length."
+      }
     },
     {
       "id": "ccna-exam-v2-07-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The data occupy sequence numbers 700 through 739, so the next expected byte is 740."
+      "explanation": "The data occupy sequence numbers 700 through 739, so the next expected byte is 740.",
+      "option_explanations": {
+        "A": "739 is the last received byte, not the next expected byte.",
+        "B": "700 is the first byte of the received segment.",
+        "C": "741 would require one more byte or a sequence-consuming flag.",
+        "D": "The data occupy sequence numbers 700 through 739, so the next expected byte is 740."
+      }
     },
     {
       "id": "ccna-exam-v2-07-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Zero receive space stops ordinary new data. TCP uses window probes so the sender can detect reopening."
+      "explanation": "Zero receive space stops ordinary new data. TCP uses window probes so the sender can detect reopening.",
+      "option_explanations": {
+        "A": "A zero window does not alter the transport protocol.",
+        "B": "A reset would terminate the connection, which an advertised zero window does not require.",
+        "C": "Zero receive space stops ordinary new data. TCP uses window probes so the sender can detect reopening.",
+        "D": "Sending another block of ordinary data would ignore the advertised limit."
+      }
     },
     {
       "id": "ccna-exam-v2-07-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Data Offset tells a receiver where the TCP payload begins, including space for TCP options."
+      "explanation": "Data Offset tells a receiver where the TCP payload begins, including space for TCP options.",
+      "option_explanations": {
+        "A": "Data Offset tells a receiver where the TCP payload begins, including space for TCP options.",
+        "B": "The advertised Window field indicates receive space.",
+        "C": "Sequence and acknowledgment numbers track positions in the byte stream.",
+        "D": "IPv4 uses IHL for its own header length."
+      }
     }
   ]
 }

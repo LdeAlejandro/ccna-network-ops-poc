@@ -19,7 +19,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "IPv4 addresses consist of four 8-bit octets."
+      "explanation": "IPv4 addresses consist of four 8-bit octets.",
+      "option_explanations": {
+        "A": "128 bits is the size of an IPv6 address.",
+        "B": "16 bits account for only two IPv4 octets.",
+        "C": "48 bits is the size of a standard Ethernet MAC address.",
+        "D": "IPv4 addresses consist of four 8-bit octets."
+      }
     },
     {
       "id": "ccna-exam-v2-09-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Eight bits encode 0 to 255 inclusive."
+      "explanation": "Eight bits encode 0 to 255 inclusive.",
+      "option_explanations": {
+        "A": "0 fits in eight bits, even though whole-address rules may restrict particular uses.",
+        "B": "128 fits in eight bits as 10000000.",
+        "C": "255 is the maximum eight-bit value.",
+        "D": "Eight bits encode 0 to 255 inclusive."
+      }
     },
     {
       "id": "ccna-exam-v2-09-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The packet's TTL decreases by one per forwarding router in this scenario. 64 minus three gives 61."
+      "explanation": "The packet's TTL decreases by one per forwarding router in this scenario. 64 minus three gives 61.",
+      "option_explanations": {
+        "A": "60 would imply four forwarding decrements.",
+        "B": "64 ignores all forwarding decrements.",
+        "C": "62 would imply only two forwarding decrements.",
+        "D": "The packet's TTL decreases by one per forwarding router in this scenario. 64 minus three gives 61."
+      }
     },
     {
       "id": "ccna-exam-v2-09-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The Protocol field identifies the encapsulated protocol. ICMP is protocol number 1."
+      "explanation": "The Protocol field identifies the encapsulated protocol. ICMP is protocol number 1.",
+      "option_explanations": {
+        "A": "Total Length gives the IPv4 datagram size.",
+        "B": "Identification helps associate fragments of a datagram.",
+        "C": "The Protocol field identifies the encapsulated protocol. ICMP is protocol number 1.",
+        "D": "Time to Live limits how far the packet can be forwarded."
+      }
     },
     {
       "id": "ccna-exam-v2-09-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "IHL counts 32-bit words, so five words form a 20-byte header. Subtract the header from the total length to get 64 bytes."
+      "explanation": "IHL counts 32-bit words, so five words form a 20-byte header. Subtract the header from the total length to get 64 bytes.",
+      "option_explanations": {
+        "A": "104 adds the 20-byte header to a total that already includes it.",
+        "B": "IHL counts 32-bit words, so five words form a 20-byte header. Subtract the header from the total length to get 64 bytes.",
+        "C": "79 treats IHL 5 as five bytes instead of five 32-bit words.",
+        "D": "84 includes the IPv4 header as well as its payload."
+      }
     },
     {
       "id": "ccna-exam-v2-09-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "A usable static address and mask allow on-link communication. A default gateway supplies a next hop for other destinations."
+      "explanation": "A usable static address and mask allow on-link communication. A default gateway supplies a next hop for other destinations.",
+      "option_explanations": {
+        "A": "A usable static address and mask allow on-link communication. A default gateway supplies a next hop for other destinations.",
+        "B": "Static addressing does not need a DHCP lease duration.",
+        "C": "A DNS suffix affects name lookup rather than routing to a known IP.",
+        "D": "The local Ethernet interface is already reaching peers, and its MAC cannot supply a default route."
+      }
     },
     {
       "id": "ccna-exam-v2-09-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "DHCP options can supply the client mask and default-router information."
+      "explanation": "DHCP options can supply the client mask and default-router information.",
+      "option_explanations": {
+        "A": "A MAC and FCS belong to Ethernet, and the FCS is calculated for each frame.",
+        "B": "Those are physical link properties rather than DHCP address options.",
+        "C": "These are per-connection TCP values.",
+        "D": "DHCP options can supply the client mask and default-router information."
+      }
     },
     {
       "id": "ccna-exam-v2-09-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The checksum protects the IPv4 header, so a TTL change requires an update."
+      "explanation": "The checksum protects the IPv4 header, so a TTL change requires an update.",
+      "option_explanations": {
+        "A": "Ordinary forwarding changes next-hop link-layer addresses, not the IPv4 destination.",
+        "B": "The checksum protects the IPv4 header, so a TTL change requires an update.",
+        "C": "TCP ports are normally unchanged in ordinary forwarding.",
+        "D": "The IPv4 header checksum does not cover Ethernet fields."
+      }
     },
     {
       "id": "ccna-exam-v2-09-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Forwarding would exhaust TTL, so the packet is dropped. ICMP Time Exceeded can report this condition."
+      "explanation": "Forwarding would exhaust TTL, so the packet is dropped. ICMP Time Exceeded can report this condition.",
+      "option_explanations": {
+        "A": "Decrementing TTL makes it zero, which prevents forwarding.",
+        "B": "Forwarding would exhaust TTL, so the packet is dropped. ICMP Time Exceeded can report this condition.",
+        "C": "An intermediate router normally reports expiration with ICMP rather than TCP RST.",
+        "D": "TTL is not reset to 255 in ordinary forwarding."
+      }
     },
     {
       "id": "ccna-exam-v2-09-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A DHCP client needs a reachable DHCP service, directly or through a relay."
+      "explanation": "A DHCP client needs a reachable DHCP service, directly or through a relay.",
+      "option_explanations": {
+        "A": "DNS records do not establish whether a DHCP server can answer discovery.",
+        "B": "A DHCP client needs a reachable DHCP service, directly or through a relay.",
+        "C": "A switch's MAC aging timer is unrelated to whether a DHCP service can be reached.",
+        "D": "IPv4 DHCP uses UDP, not a TCP peer window."
+      }
     }
   ]
 }

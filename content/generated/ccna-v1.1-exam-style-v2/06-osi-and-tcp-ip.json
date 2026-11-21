@@ -19,7 +19,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The physical layer defines transmission over the medium."
+      "explanation": "The physical layer defines transmission over the medium.",
+      "option_explanations": {
+        "A": "The physical layer defines transmission over the medium.",
+        "B": "Network handles logical addressing and routing.",
+        "C": "Transport handles end-to-end delivery services.",
+        "D": "Data Link organizes bits into frames and mediates local delivery."
+      }
     },
     {
       "id": "ccna-exam-v2-06-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Ethernet framing and MAC addressing are data-link functions."
+      "explanation": "Ethernet framing and MAC addressing are data-link functions.",
+      "option_explanations": {
+        "A": "Session manages dialogs between applications.",
+        "B": "Network handles packets across networks.",
+        "C": "Presentation deals with data representation.",
+        "D": "Ethernet framing and MAC addressing are data-link functions."
+      }
     },
     {
       "id": "ccna-exam-v2-06-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The IPv4 address belongs to Layer 3. The Ethernet MAC belongs to Layer 2."
+      "explanation": "The IPv4 address belongs to Layer 3. The Ethernet MAC belongs to Layer 2.",
+      "option_explanations": {
+        "A": "Ports identify transport endpoints.",
+        "B": "The unchanged MAC belongs to the data-link layer.",
+        "C": "The IPv4 address belongs to Layer 3. The Ethernet MAC belongs to Layer 2.",
+        "D": "Physical describes signaling and media."
+      }
     },
     {
       "id": "ccna-exam-v2-06-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "TCP encapsulates bytes in segments, which IP then carries in packets."
+      "explanation": "TCP encapsulates bytes in segments, which IP then carries in packets.",
+      "option_explanations": {
+        "A": "Bits are physical-layer units.",
+        "B": "TCP encapsulates bytes in segments, which IP then carries in packets.",
+        "C": "An Ethernet header belongs to the link layer.",
+        "D": "A frame is the data-link PDU."
+      }
     },
     {
       "id": "ccna-exam-v2-06-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The layers above transport are session (5), presentation (6) and application (7)."
+      "explanation": "The layers above transport are session (5), presentation (6) and application (7).",
+      "option_explanations": {
+        "A": "The layers above transport are session (5), presentation (6) and application (7).",
+        "B": "Session sits below presentation.",
+        "C": "This is the descending order rather than the ascending order.",
+        "D": "Data Link and Network are below Transport."
+      }
     },
     {
       "id": "ccna-exam-v2-06-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "TCP/IP groups these upper-layer functions into its application layer."
+      "explanation": "TCP/IP groups these upper-layer functions into its application layer.",
+      "option_explanations": {
+        "A": "Physical and Data Link are grouped at the link or network-access level.",
+        "B": "TCP/IP groups these upper-layer functions into its application layer.",
+        "C": "Data Link and Network are not bundled with the TCP/IP application layer.",
+        "D": "Network and Transport are distinct lower layers in that model."
+      }
     },
     {
       "id": "ccna-exam-v2-06-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "IP carries the segment and Ethernet carries the resulting IP packet."
+      "explanation": "IP carries the segment and Ethernet carries the resulting IP packet.",
+      "option_explanations": {
+        "A": "The headers are nested payloads, not separate Ethernet headers.",
+        "B": "IP wraps TCP rather than TCP wrapping IP.",
+        "C": "IP carries the segment and Ethernet carries the resulting IP packet.",
+        "D": "The Ethernet frame is the outer unit on the link."
+      }
     },
     {
       "id": "ccna-exam-v2-06-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "EtherType identifies IPv4, then the IPv4 Protocol field identifies its payload as TCP."
+      "explanation": "EtherType identifies IPv4, then the IPv4 Protocol field identifies its payload as TCP.",
+      "option_explanations": {
+        "A": "The FCS checks frame integrity.",
+        "B": "EtherType identifies IPv4, then the IPv4 Protocol field identifies its payload as TCP.",
+        "C": "TCP's window is available only after TCP is identified and parsed.",
+        "D": "The MAC identifies the Ethernet sender, not the IP payload protocol."
+      }
     },
     {
       "id": "ccna-exam-v2-06-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The router builds a fresh link-layer frame appropriate for the outgoing link."
+      "explanation": "The router builds a fresh link-layer frame appropriate for the outgoing link.",
+      "option_explanations": {
+        "A": "The original IPv4 destination remains end-to-end without NAT.",
+        "B": "The TCP destination port names the original application endpoint.",
+        "C": "The router builds a fresh link-layer frame appropriate for the outgoing link.",
+        "D": "The ACK number is part of the end-to-end TCP conversation."
+      }
     },
     {
       "id": "ccna-exam-v2-06-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "TCP flags, including RST, are interpreted at the transport layer even when lower-layer delivery succeeds."
+      "explanation": "TCP flags, including RST, are interpreted at the transport layer even when lower-layer delivery succeeds.",
+      "option_explanations": {
+        "A": "IP delivers the packet but has no TCP reset flag.",
+        "B": "Presentation concerns representation rather than connection flags.",
+        "C": "Ethernet carries the reset packet but does not generate the TCP RST indication.",
+        "D": "TCP flags, including RST, are interpreted at the transport layer even when lower-layer delivery succeeds."
+      }
     }
   ]
 }

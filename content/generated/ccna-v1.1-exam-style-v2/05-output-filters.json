@@ -19,7 +19,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The pipe separates the show command from the output modifier."
+      "explanation": "The pipe separates the show command from the output modifier.",
+      "option_explanations": {
+        "A": "? requests CLI help.",
+        "B": "The pipe separates the show command from the output modifier.",
+        "C": "# is part of privileged or configuration prompts here.",
+        "D": "> commonly ends the user EXEC prompt."
+      }
     },
     {
       "id": "ccna-exam-v2-05-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "include displays matching lines, and the pattern is case sensitive."
+      "explanation": "include displays matching lines, and the pattern is case sensitive.",
+      "option_explanations": {
+        "A": "This includes lines beginning with interface, not all lines containing Loopback.",
+        "B": "begin prints from the first occurrence onward, including lines without Loopback.",
+        "C": "include displays matching lines, and the pattern is case sensitive.",
+        "D": "exclude removes the lines the question asks to retain."
+      }
     },
     {
       "id": "ccna-exam-v2-05-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "begin skips the preceding output and shows everything from the match onward."
+      "explanation": "begin skips the preceding output and shows everything from the match onward.",
+      "option_explanations": {
+        "A": "begin skips the preceding output and shows everything from the match onward.",
+        "B": "The first matching line is included.",
+        "C": "Earlier lines are discarded.",
+        "D": "After the match, begin also prints lines that do not match."
+      }
     },
     {
       "id": "ccna-exam-v2-05-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "exclude operates line by line and drops each matching line."
+      "explanation": "exclude operates line by line and drops each matching line.",
+      "option_explanations": {
+        "A": "That behavior resembles the start boundary of begin, not exclusion of matching lines.",
+        "B": "exclude operates line by line and drops each matching line.",
+        "C": "The filter matches text and does not interpret protocol status.",
+        "D": "exclude operates on individual lines, not interface sections."
+      }
     },
     {
       "id": "ccna-exam-v2-05-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The lowercase search pattern does not match the uppercase D."
+      "explanation": "The lowercase search pattern does not match the uppercase D.",
+      "option_explanations": {
+        "A": "The lowercase search pattern does not match the uppercase D.",
+        "B": "The filter reads generated output regardless of where the description was saved.",
+        "C": "include takes a text pattern rather than only interface names.",
+        "D": "include does not modify letter case."
+      }
     },
     {
       "id": "ccna-exam-v2-05-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A line filter loses surrounding context when adjacent lines do not match."
+      "explanation": "A line filter loses surrounding context when adjacent lines do not match.",
+      "option_explanations": {
+        "A": "Filtering the display does not delete configuration.",
+        "B": "A line filter loses surrounding context when adjacent lines do not match.",
+        "C": "The filter keeps original output order.",
+        "D": "The base command still determines which source is shown."
+      }
     },
     {
       "id": "ccna-exam-v2-05-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The caret anchors the pattern to the beginning, and include keeps only matching lines."
+      "explanation": "The caret anchors the pattern to the beginning, and include keeps only matching lines.",
+      "option_explanations": {
+        "A": "begin also displays subsequent lines that fail the pattern.",
+        "B": "$ anchors the word to the end, not column one.",
+        "C": "exclude removes the lines beginning with interface.",
+        "D": "The caret anchors the pattern to the beginning, and include keeps only matching lines."
+      }
     },
     {
       "id": "ccna-exam-v2-05-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A bare dot matches any single character. A dot inside a character class matches a literal dot."
+      "explanation": "A bare dot matches any single character. A dot inside a character class matches a literal dot.",
+      "option_explanations": {
+        "A": ".* allows arbitrary runs of characters, not just literal dots.",
+        "B": "A bare dot matches any single character. A dot inside a character class matches a literal dot.",
+        "C": "The bracketed digits do not represent separators.",
+        "D": "A bare dot is a wildcard."
+      }
     },
     {
       "id": "ccna-exam-v2-05-09",
@@ -164,7 +212,13 @@
         "D"
       ],
       "explanation": "The anchor and interface family name select both physical interface records by their first field.",
-      "snippet": "Illustrative excerpt\nInterface              IP-Address     OK? Method Status Protocol\nGigabitEthernet0/0     192.0.2.1      YES manual up     up\nLoopback0              192.0.2.200    YES manual up     up\nGigabitEthernet0/1     198.51.100.1   YES manual up     up"
+      "snippet": "Illustrative excerpt\nInterface              IP-Address     OK? Method Status Protocol\nGigabitEthernet0/0     192.0.2.1      YES manual up     up\nLoopback0              192.0.2.200    YES manual up     up\nGigabitEthernet0/1     198.51.100.1   YES manual up     up",
+      "option_explanations": {
+        "A": "This removes the records the question asks to retain.",
+        "B": "begin keeps later nonmatching records too.",
+        "C": "This matches the header beginning with Interface, not the Gi records.",
+        "D": "The anchor and interface family name select both physical interface records by their first field."
+      }
     },
     {
       "id": "ccna-exam-v2-05-10",
@@ -183,7 +237,13 @@
         "A"
       ],
       "explanation": "Only the interface state line contains the requested contiguous text.",
-      "snippet": "Illustrative excerpt\nGigabitEthernet0/0 is up, line protocol is up\n  Hardware is Gigabit Ethernet\n  Description: Branch WAN\n  5 minute input rate 1000 bits/sec"
+      "snippet": "Illustrative excerpt\nGigabitEthernet0/0 is up, line protocol is up\n  Hardware is Gigabit Ethernet\n  Description: Branch WAN\n  5 minute input rate 1000 bits/sec",
+      "option_explanations": {
+        "A": "Only the interface state line contains the requested contiguous text.",
+        "B": "This line has no line protocol text.",
+        "C": "The rate line has no line protocol text.",
+        "D": "The description does not match the requested phrase."
+      }
     }
   ]
 }

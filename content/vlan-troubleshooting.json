@@ -19,7 +19,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A Layer 3 gateway must route between the two subnets. VLAN separation is not removed by configuring access ports."
+      "explanation": "A Layer 3 gateway must route between the two subnets. VLAN separation is not removed by configuring access ports.",
+      "option_explanations": {
+        "A": "Access ports retain membership in separate VLANs and do not route between their subnets.",
+        "B": "A Layer 3 gateway must route between the two subnets. VLAN separation is not removed by configuring access ports.",
+        "C": "Removing tags does not create a Layer 3 gateway or merge the IP subnets.",
+        "D": "Duplicate MAC addresses can disrupt switch learning and do not provide routing."
+      }
     }
   ]
 }

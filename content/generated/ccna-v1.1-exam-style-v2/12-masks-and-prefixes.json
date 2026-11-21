@@ -19,7 +19,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Six leading bits in the third octet total 252."
+      "explanation": "Six leading bits in the third octet total 252.",
+      "option_explanations": {
+        "A": "248 contributes five one bits in the third octet, giving /21.",
+        "B": "This mask contributes eight bits in each of the first three octets, giving /24.",
+        "C": "Six leading bits in the third octet total 252.",
+        "D": "254 contributes seven one bits in the third octet, giving /23."
+      }
     },
     {
       "id": "ccna-exam-v2-12-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Subtract 19 network bits from 32."
+      "explanation": "Subtract 19 network bits from 32.",
+      "option_explanations": {
+        "A": "Subtract 19 network bits from 32.",
+        "B": "19 is the prefix length itself.",
+        "C": "11 host bits would leave a /21 prefix.",
+        "D": "21 host bits would leave a /11 prefix."
+      }
     },
     {
       "id": "ccna-exam-v2-12-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The final octet 248 has five leading ones, giving 24 + 5 bits."
+      "explanation": "The final octet 248 has five leading ones, giving 24 + 5 bits.",
+      "option_explanations": {
+        "A": "/30 uses 252 in the final octet.",
+        "B": "The final octet 248 has five leading ones, giving 24 + 5 bits.",
+        "C": "/31 uses 254 in the final octet.",
+        "D": "/28 uses 240 in the final octet."
+      }
     },
     {
       "id": "ccna-exam-v2-12-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A valid prefix mask has an unbroken run of ones followed by zeros."
+      "explanation": "A valid prefix mask has an unbroken run of ones followed by zeros.",
+      "option_explanations": {
+        "A": "The third octet contains ones after the second octet has introduced zeros.",
+        "B": "The fourth octet sets a one after the all-zero third octet.",
+        "C": "232 is 11101000 and has a one after a zero.",
+        "D": "A valid prefix mask has an unbroken run of ones followed by zeros."
+      }
     },
     {
       "id": "ccna-exam-v2-12-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Both endpoints lie within the host range .129–.158 of 192.0.2.128/27."
+      "explanation": "Both endpoints lie within the host range .129–.158 of 192.0.2.128/27.",
+      "option_explanations": {
+        "A": "A default route is unnecessary because both addresses are in .128–.159.",
+        "B": "Both endpoints lie within the host range .129–.158 of 192.0.2.128/27.",
+        "C": "The local address is .142, distinct from .157.",
+        "D": "The /27 broadcast is .159."
+      }
     },
     {
       "id": "ccna-exam-v2-12-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The host is in the .64/27 network. Destination .101 is outside its connected range, so the next hop is the gateway."
+      "explanation": "The host is in the .64/27 network. Destination .101 is outside its connected range, so the next hop is the gateway.",
+      "option_explanations": {
+        "A": "The local MAC is the Ethernet source, not the next hop.",
+        "B": "The host is in the .64/27 network. Destination .101 is outside its connected range, so the next hop is the gateway.",
+        "C": "The host may broadcast an ARP request, but sends the routed IP packet in a unicast frame to its gateway.",
+        "D": "Direct ARP would apply to an on-link destination, while .101 is outside .64–.95."
+      }
     },
     {
       "id": "ccna-exam-v2-12-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Sixteen network bits cover the first two octets and four further bits are in octet three."
+      "explanation": "Sixteen network bits cover the first two octets and four further bits are in octet three.",
+      "option_explanations": {
+        "A": "All eight bits of the fourth octet are host bits.",
+        "B": "Sixteen network bits cover the first two octets and four further bits are in octet three.",
+        "C": "All eight bits of the first octet belong to the prefix.",
+        "D": "All eight bits of the second octet belong to the prefix."
+      }
     },
     {
       "id": "ccna-exam-v2-12-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A's /26 ends at .63, while B's /25 includes both addresses."
+      "explanation": "A's /26 ends at .63, while B's /25 includes both addresses.",
+      "option_explanations": {
+        "A": "B's /25 includes both .61 and .70.",
+        "B": "A's /26 stops at .63 and excludes .70.",
+        "C": "It reverses the behavior of the /26 host and the /25 host.",
+        "D": "A's /26 ends at .63, while B's /25 includes both addresses."
+      }
     },
     {
       "id": "ccna-exam-v2-12-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Both addresses are usable in .32/27. A /28 divides them into separate blocks."
+      "explanation": "Both addresses are usable in .32/27. A /28 divides them into separate blocks.",
+      "option_explanations": {
+        "A": "Both addresses are usable in .32/27. A /28 divides them into separate blocks.",
+        "B": "/28 puts .33 in .32–.47 and .62 in .48–.63.",
+        "C": "/25 covers both addresses as usable hosts but includes more addresses than necessary.",
+        "D": "/26 also covers both, but /27 is more specific."
+      }
     },
     {
       "id": "ccna-exam-v2-12-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "A /21 advances by eight in octet three. The local block spans third octets 40 through 47."
+      "explanation": "A /21 advances by eight in octet three. The local block spans third octets 40 through 47.",
+      "option_explanations": {
+        "A": "A /21 advances by eight in octet three. The local block spans third octets 40 through 47.",
+        "B": "The second octet differs from the fixed value 19.",
+        "C": "48 starts the next /21 block.",
+        "D": "39 falls below the /21 block starting at third octet 40."
+      }
     }
   ]
 }

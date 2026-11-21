@@ -19,7 +19,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "show ip interface brief gives a one-line summary per interface with the IP address and status columns."
+      "explanation": "show ip interface brief gives a one-line summary per interface with the IP address and status columns.",
+      "option_explanations": {
+        "A": "The running configuration lists configured settings but does not summarize live interface and protocol status.",
+        "B": "show ip interface brief gives a one-line summary per interface with the IP address and status columns.",
+        "C": "This shows VLAN membership rather than IPv4 addresses and state columns.",
+        "D": "The routing table lists prefixes rather than the requested per-port summary."
+      }
     },
     {
       "id": "ios-002",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "show ip route displays installed IPv4 routes, including directly connected routes."
+      "explanation": "show ip route displays installed IPv4 routes, including directly connected routes.",
+      "option_explanations": {
+        "A": "This reports interface details and counters rather than installed IPv4 routes.",
+        "B": "This lists VLANs rather than Layer 3 routes.",
+        "C": "This reports system and software information.",
+        "D": "show ip route displays installed IPv4 routes, including directly connected routes."
+      }
     },
     {
       "id": "ios-003",
@@ -56,7 +68,13 @@
         "C"
       ],
       "explanation": "Status and Protocol are separate columns. Status is up while Protocol is down, so Layer 2 is not operational.",
-      "snippet": "Interface  IP-Address   OK? Method Status Protocol\nGi0/0      192.0.2.1    YES manual up     down"
+      "snippet": "Interface  IP-Address   OK? Method Status Protocol\nGi0/0      192.0.2.1    YES manual up     down",
+      "option_explanations": {
+        "A": "The protocol column is down, so the two columns are not both up.",
+        "B": "The status shows up, not administratively down.",
+        "C": "Status and Protocol are separate columns. Status is up while Protocol is down, so Layer 2 is not operational.",
+        "D": "The exhibit shows an assigned IPv4 address, independent of the line protocol state."
+      }
     }
   ]
 }

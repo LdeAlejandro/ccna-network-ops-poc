@@ -19,7 +19,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Varying subnet sizes reduces unused space while preserving separate LAN prefixes."
+      "explanation": "Varying subnet sizes reduces unused space while preserving separate LAN prefixes.",
+      "option_explanations": {
+        "A": "Identical lengths are characteristic of fixed-length subnetting.",
+        "B": "Varying subnet sizes reduces unused space while preserving separate LAN prefixes.",
+        "C": "A conventional VLSM LAN still reserves its network address.",
+        "D": "Overlapping LANs in the same forwarding domain cannot freely share individual addresses."
+      }
     },
     {
       "id": "ccna-exam-v2-15-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Larger allocations have stricter alignment and can be harder to place after fragmentation."
+      "explanation": "Larger allocations have stricter alignment and can be harder to place after fragmentation.",
+      "option_explanations": {
+        "A": "Larger allocations have stricter alignment and can be harder to place after fragmentation.",
+        "B": "Largest-first is a placement strategy, not a required ordering of every plan.",
+        "C": "Every prefix has an alignment boundary.",
+        "D": "Small blocks generally have more options for fitting into remaining aligned space."
+      }
     },
     {
       "id": "ccna-exam-v2-15-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Six host bits provide 64 addresses and 62 usable slots."
+      "explanation": "Six host bits provide 64 addresses and 62 usable slots.",
+      "option_explanations": {
+        "A": "A /28 supplies 14 usable addresses.",
+        "B": "A /27 supplies 30 usable addresses.",
+        "C": "A /25 supplies 126 but is larger than necessary.",
+        "D": "Six host bits provide 64 addresses and 62 usable slots."
+      }
     },
     {
       "id": "ccna-exam-v2-15-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "A /27 has boundaries every 32 addresses. .48 has nonzero host bits."
+      "explanation": "A /27 has boundaries every 32 addresses. .48 has nonzero host bits.",
+      "option_explanations": {
+        "A": "A /27 has boundaries every 32 addresses. .48 has nonzero host bits.",
+        "B": "Valid /27 network IDs occur every 32 addresses, including nonzero boundaries.",
+        "C": ".48 is below the .64 boundary.",
+        "D": "The broadcast of .32/27 is .63."
+      }
     },
     {
       "id": "ccna-exam-v2-15-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The reserved ranges end at .191. .192 and .224 both fit, with .192 lowest."
+      "explanation": "The reserved ranges end at .191. .192 and .224 both fit, with .192 lowest.",
+      "option_explanations": {
+        "A": ".176 is unaligned for a /27 and lies in the reserved .128–.191 block.",
+        "B": ".160 is aligned but lies inside the reserved /26.",
+        "C": "The reserved ranges end at .191. .192 and .224 both fit, with .192 lowest.",
+        "D": ".224 is available but comes after .192."
+      }
     },
     {
       "id": "ccna-exam-v2-15-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The adjacent third octets begin on an even /23 boundary."
+      "explanation": "The adjacent third octets begin on an even /23 boundary.",
+      "option_explanations": {
+        "A": "It includes only the second of the requested /24s.",
+        "B": "This summarizes third octets 46–47, not 44–45.",
+        "C": "The adjacent third octets begin on an even /23 boundary.",
+        "D": "This includes third octets 46 and 47 as well."
+      }
     },
     {
       "id": "ccna-exam-v2-15-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The two /26 blocks combine into the upper /25. Together the two /25s form the entire /24."
+      "explanation": "The two /26 blocks combine into the upper /25. Together the two /25s form the entire /24.",
+      "option_explanations": {
+        "A": "The two /26 blocks combine into the upper /25. Together the two /25s form the entire /24.",
+        "B": "This covers only the upper half of the required space.",
+        "C": "A /23 also covers 198.51.101.0/24.",
+        "D": "This covers only the lower half of the requested space."
+      }
     },
     {
       "id": "ccna-exam-v2-15-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The required block sizes are 128, 64, 32 and 16. They fit on descending boundaries and consume 240 addresses."
+      "explanation": "The required block sizes are 128, 64, 32 and 16. They fit on descending boundaries and consume 240 addresses.",
+      "option_explanations": {
+        "A": "The subnets consume 128 + 64 + 32 + 16 addresses, not 232.",
+        "B": "The required block sizes are 128, 64, 32 and 16. They fit on descending boundaries and consume 240 addresses.",
+        "C": "The blocks consume 240 addresses, not 220.",
+        "D": "The last block uses only 16 addresses, so the total remains below 256."
+      }
     },
     {
       "id": "ccna-exam-v2-15-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The /21 covers third octets 8–15, even though only 8–11 are present."
+      "explanation": "The /21 covers third octets 8–15, even though only 8–11 are present.",
+      "option_explanations": {
+        "A": "Those addresses belong to the component networks being summarized.",
+        "B": "Third octets 16–19 lie beyond the /21.",
+        "C": "Third octets 4–7 precede the /21.",
+        "D": "The /21 covers third octets 8–15, even though only 8–11 are present."
+      }
     },
     {
       "id": "ccna-exam-v2-15-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The lower 128 addresses fit one /25 and the next 64 fit the aligned /26 starting at .128."
+      "explanation": "The lower 128 addresses fit one /25 and the next 64 fit the aligned /26 starting at .128.",
+      "option_explanations": {
+        "A": "A /24 includes .192–.255 and already contains the proposed /26.",
+        "B": "This misses .64–.127 and includes .192–.255.",
+        "C": "Together these /26s cover only .0–.127.",
+        "D": "The lower 128 addresses fit one /25 and the next 64 fit the aligned /26 starting at .128."
+      }
     }
   ]
 }

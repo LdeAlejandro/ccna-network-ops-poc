@@ -19,7 +19,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A /32 fixes every bit and matches exactly one address."
+      "explanation": "A /32 fixes every bit and matches exactly one address.",
+      "option_explanations": {
+        "A": "/31 matches two adjacent IPv4 addresses.",
+        "B": "A /32 fixes every bit and matches exactly one address.",
+        "C": "/29 matches eight addresses.",
+        "D": "/30 matches four addresses."
+      }
     },
     {
       "id": "ccna-exam-v2-16-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A /30 has four addresses, including a network and broadcast address."
+      "explanation": "A /30 has four addresses, including a network and broadcast address.",
+      "option_explanations": {
+        "A": "Four is the total before excluding the network and broadcast.",
+        "B": "Excluding two from four still leaves two endpoints.",
+        "C": "This excludes only one of the two reserved addresses.",
+        "D": "A /30 has four addresses, including a network and broadcast address."
+      }
     },
     {
       "id": "ccna-exam-v2-16-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Both addresses in the two-address block are endpoints on an RFC 3021 point-to-point link."
+      "explanation": "Both addresses in the two-address block are endpoints on an RFC 3021 point-to-point link.",
+      "option_explanations": {
+        "A": "Both addresses in the two-address block are endpoints on an RFC 3021 point-to-point link.",
+        "B": ".39 belongs to the .38–.39 pair.",
+        "C": ".35 belongs to the .34–.35 pair.",
+        "D": ".38 belongs to the next /31, not the same pair as .37."
+      }
     },
     {
       "id": "ccna-exam-v2-16-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "A /29 provides six assignable addresses. A /30 provides only two, and /31 and /32 do not meet the segment requirements."
+      "explanation": "A /29 provides six assignable addresses. A /30 provides only two, and /31 and /32 do not meet the segment requirements.",
+      "option_explanations": {
+        "A": "A /29 provides six assignable addresses. A /30 provides only two, and /31 and /32 do not meet the segment requirements.",
+        "B": "The /31 has two addresses and uses special endpoint semantics on point-to-point links.",
+        "C": "An ordinary /30 has only two usable host addresses.",
+        "D": "A /32 matches one address and provides no ordinary shared LAN block."
+      }
     },
     {
       "id": "ccna-exam-v2-16-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "RFC 3021 allows both bit values as endpoint addresses and removes the need for a directed broadcast on that link."
+      "explanation": "RFC 3021 allows both bit values as endpoint addresses and removes the need for a directed broadcast on that link.",
+      "option_explanations": {
+        "A": "In this use of /31 the all-ones bit is available to a peer.",
+        "B": "RFC 3021 does not keep a separate directed broadcast address on the link.",
+        "C": "RFC 3021 allows both bit values as endpoint addresses and removes the need for a directed broadcast on that link.",
+        "D": "Only two addresses exist, so there is no third management address."
+      }
     },
     {
       "id": "ccna-exam-v2-16-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A /31 is useful for a supported two-endpoint link and cannot number five interfaces."
+      "explanation": "A /31 is useful for a supported two-endpoint link and cannot number five interfaces.",
+      "option_explanations": {
+        "A": "Four addresses with two reserved is the conventional /30 model.",
+        "B": "There is no four-host minimum for /31. The issue is insufficient addresses for this LAN.",
+        "C": "Eight addresses is the size of a /29 rather than a /31.",
+        "D": "A /31 is useful for a supported two-endpoint link and cannot number five interfaces."
+      }
     },
     {
       "id": "ccna-exam-v2-16-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A /31 starts on an even final octet. Odd .53 pairs with the preceding even .52."
+      "explanation": "A /31 starts on an even final octet. Odd .53 pairs with the preceding even .52.",
+      "option_explanations": {
+        "A": ".51 is paired with .50.",
+        "B": ".55 is paired with .54.",
+        "C": ".54 starts the next pair, whose other endpoint is .55.",
+        "D": "A /31 starts on an even final octet. Odd .53 pairs with the preceding even .52."
+      }
     },
     {
       "id": "ccna-exam-v2-16-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": ".97 belongs with .96 and .98 belongs with .99. At least one endpoint must be renumbered."
+      "explanation": ".97 belongs with .96 and .98 belongs with .99. At least one endpoint must be renumbered.",
+      "option_explanations": {
+        "A": "RFC 3021 treats both bit values as endpoints rather than directed broadcasts.",
+        "B": ".97 belongs with .96 and .98 belongs with .99. At least one endpoint must be renumbered.",
+        "C": "Both odd and even addresses are assignable within an RFC 3021 pair.",
+        "D": "An aligned /31 can use part of the old block, but it cannot hold both .97 and .98."
+      }
     },
     {
       "id": "ccna-exam-v2-16-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Each /31 uses two total addresses versus four for a /30. Eight links save 8 × 2 addresses."
+      "explanation": "Each /31 uses two total addresses versus four for a /30. Eight links save 8 × 2 addresses.",
+      "option_explanations": {
+        "A": "Each /31 uses two total addresses versus four for a /30. Eight links save 8 × 2 addresses.",
+        "B": "32 is the total consumed by eight /30 links, not the savings.",
+        "C": "Saving 24 would mean saving three addresses per link.",
+        "D": "Saving eight assumes only one address saved per link."
+      }
     },
     {
       "id": "ccna-exam-v2-16-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The all-ones mask installs a host route. Longer address ranges are matched by the /31, /30, and /24 alternatives."
+      "explanation": "The all-ones mask installs a host route. Longer address ranges are matched by the /31, /30, and /24 alternatives.",
+      "option_explanations": {
+        "A": "The /31 mask also matches .43.",
+        "B": "The /24 matches all destinations from .0 to .255 in that third octet.",
+        "C": "The /30 covers .40 through .43.",
+        "D": "The all-ones mask installs a host route. Longer address ranges are matched by the /31, /30, and /24 alternatives."
+      }
     }
   ]
 }

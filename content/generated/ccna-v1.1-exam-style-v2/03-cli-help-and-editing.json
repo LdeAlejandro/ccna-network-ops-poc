@@ -19,7 +19,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "A question mark immediately after a partial token requests completions for that token."
+      "explanation": "A question mark immediately after a partial token requests completions for that token.",
+      "option_explanations": {
+        "A": "Help is written after the partial keyword.",
+        "B": "The space asks about the next token after sh.",
+        "C": "Enter attempts to execute the input.",
+        "D": "A question mark immediately after a partial token requests completions for that token."
+      }
     },
     {
       "id": "ccna-exam-v2-03-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Tab expands an unambiguous keyword without submitting the command."
+      "explanation": "Tab expands an unambiguous keyword without submitting the command.",
+      "option_explanations": {
+        "A": "Tab expands an unambiguous keyword without submitting the command.",
+        "B": "History is independent of Tab completion.",
+        "C": "Tab does not change privilege modes.",
+        "D": "Enter executes the completed command."
+      }
     },
     {
       "id": "ccna-exam-v2-03-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Up arrow moves toward older history entries."
+      "explanation": "Up arrow moves toward older history entries.",
+      "option_explanations": {
+        "A": "Down arrow moves toward newer history entries.",
+        "B": "End moves within the current input line.",
+        "C": "Up arrow moves toward older history entries.",
+        "D": "Tab completes a keyword."
+      }
     },
     {
       "id": "ccna-exam-v2-03-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "After a space, ? lists arguments or keywords valid at that position."
+      "explanation": "After a space, ? lists arguments or keywords valid at that position.",
+      "option_explanations": {
+        "A": "Enter tries to run the current input.",
+        "B": "Tab completes a unique partial token rather than listing next arguments after a space.",
+        "C": "After a space, ? lists arguments or keywords valid at that position.",
+        "D": "Backspace deletes a character."
+      }
     },
     {
       "id": "ccna-exam-v2-03-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "IOS resolves unique prefixes against the valid keywords for the current context."
+      "explanation": "IOS resolves unique prefixes against the valid keywords for the current context.",
+      "option_explanations": {
+        "A": "Unique abbreviations are also available in EXEC modes.",
+        "B": "Commands with arguments can contain abbreviated keywords too.",
+        "C": "Two characters can still match several keywords.",
+        "D": "IOS resolves unique prefixes against the valid keywords for the current context."
+      }
     },
     {
       "id": "ccna-exam-v2-03-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Ctrl+A moves to the beginning, while Ctrl+E moves to the end."
+      "explanation": "Ctrl+A moves to the beginning, while Ctrl+E moves to the end.",
+      "option_explanations": {
+        "A": "Ctrl+E goes to the end of the line.",
+        "B": "Ctrl+P recalls the previous command.",
+        "C": "Ctrl+A moves to the beginning, while Ctrl+E moves to the end.",
+        "D": "Ctrl+N moves toward the next command in history."
+      }
     },
     {
       "id": "ccna-exam-v2-03-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "An ambiguous token matches multiple keywords in the current context."
+      "explanation": "An ambiguous token matches multiple keywords in the current context.",
+      "option_explanations": {
+        "A": "An ambiguous token matches multiple keywords in the current context.",
+        "B": "Lower privilege does not resolve the intended token in the current context.",
+        "C": "An extra argument cannot disambiguate the keyword prefix.",
+        "D": "Reloading does not change what the prefix matches."
+      }
     },
     {
       "id": "ccna-exam-v2-03-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The parser recognized the input so far and expects further arguments or keywords."
+      "explanation": "The parser recognized the input so far and expects further arguments or keywords.",
+      "option_explanations": {
+        "A": "Repeating Enter runs the same incomplete input.",
+        "B": "The parser recognized the input so far and expects further arguments or keywords.",
+        "C": "Removing the first letter may invalidate an otherwise recognized prefix.",
+        "D": "end exits configuration mode and does not inspect command syntax or clear counters."
+      }
     },
     {
       "id": "ccna-exam-v2-03-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Inspect the token or command context at the reported parser position."
+      "explanation": "Inspect the token or command context at the reported parser position.",
+      "option_explanations": {
+        "A": "A parser caret concerns typed input rather than network traffic.",
+        "B": "Inspect the token or command context at the reported parser position.",
+        "C": "A syntax error does not compare the running and saved configurations.",
+        "D": "The indicated token might belong to any command, not specifically a description."
+      }
     },
     {
       "id": "ccna-exam-v2-03-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The carriage-return entry means the parser accepts the input without another argument."
+      "explanation": "The carriage-return entry means the parser accepts the input without another argument.",
+      "option_explanations": {
+        "A": "<cr> represents pressing Enter, not a literal argument.",
+        "B": "An ambiguity would require more characters before the keyword is accepted.",
+        "C": "The carriage-return entry means the parser accepts the input without another argument.",
+        "D": "Help shows valid completions in the current context."
+      }
     }
   ]
 }

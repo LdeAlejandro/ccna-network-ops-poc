@@ -19,7 +19,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A source MAC provides evidence that the station is reachable via the ingress port."
+      "explanation": "A source MAC provides evidence that the station is reachable via the ingress port.",
+      "option_explanations": {
+        "A": "Layer 2 learning does not use the sender's IPv4 address.",
+        "B": "A source MAC provides evidence that the station is reachable via the ingress port.",
+        "C": "A destination MAC can select the egress port, but does not identify the ingress station.",
+        "D": "The destination IP is used for routing decisions, not ordinary MAC learning."
+      }
     },
     {
       "id": "ccna-exam-v2-19-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "ARP resolves an on-link IPv4 address to a link-layer address."
+      "explanation": "ARP resolves an on-link IPv4 address to a link-layer address.",
+      "option_explanations": {
+        "A": "ARP does not discover an application's transport port.",
+        "B": "ARP resolves an on-link IPv4 address to a link-layer address.",
+        "C": "The LAN mask is already configured or learned through DHCP.",
+        "D": "Ethernet FCS calculation is independent of ARP."
+      }
     },
     {
       "id": "ccna-exam-v2-19-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Unknown unicast flooding is scoped to the frame's VLAN and excludes ingress."
+      "explanation": "Unknown unicast flooding is scoped to the frame's VLAN and excludes ingress.",
+      "option_explanations": {
+        "A": "Flooding is confined to the ingress VLAN.",
+        "B": "The switch excludes the ingress port from the flood.",
+        "C": "Unknown unicast flooding is scoped to the frame's VLAN and excludes ingress.",
+        "D": "An Ethernet switch can flood an unknown unicast without waiting for ARP."
+      }
     },
     {
       "id": "ccna-exam-v2-19-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Known unicast is forwarded to the port associated with the destination MAC."
+      "explanation": "Known unicast is forwarded to the port associated with the destination MAC.",
+      "option_explanations": {
+        "A": "Known unicast is forwarded to the port associated with the destination MAC.",
+        "B": "The destination already has a known egress port.",
+        "C": "The source is expected to arrive on a port different from the destination's.",
+        "D": "Forwarding uses the learned destination port instead of echoing to the ingress port."
+      }
     },
     {
       "id": "ccna-exam-v2-19-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The destination is on the ingress segment, so no forwarding to another port is needed."
+      "explanation": "The destination is on the ingress segment, so no forwarding to another port is needed.",
+      "option_explanations": {
+        "A": "The destination is known, so there is no unknown-unicast flood.",
+        "B": "The destination is on the ingress segment, so no forwarding to another port is needed.",
+        "C": "Filtering avoids sending the frame back out the same segment.",
+        "D": "Ordinary switching does not rewrite the destination MAC."
+      }
     },
     {
       "id": "ccna-exam-v2-19-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Dynamic forwarding associations age out when no qualifying source traffic refreshes them."
+      "explanation": "Dynamic forwarding associations age out when no qualifying source traffic refreshes them.",
+      "option_explanations": {
+        "A": "Dynamic forwarding associations age out when no qualifying source traffic refreshes them.",
+        "B": "Aging removes dynamic entries rather than promoting them to static.",
+        "C": "Aging does not change the interface's administrative state.",
+        "D": "VLAN assignment is independent of MAC learning and aging."
+      }
     },
     {
       "id": "ccna-exam-v2-19-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Dynamic forwarding entries are held independently of both ARP and the startup configuration."
+      "explanation": "Dynamic forwarding entries are held independently of both ARP and the startup configuration.",
+      "option_explanations": {
+        "A": "This erases startup settings rather than learned MAC entries.",
+        "B": "This clears IP-to-MAC neighbor state rather than the switch forwarding database.",
+        "C": "Dynamic forwarding entries are held independently of both ARP and the startup configuration.",
+        "D": "show only displays the entries."
+      }
     },
     {
       "id": "ccna-exam-v2-19-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The gateway is the Ethernet next hop. The remote address remains the IP packet's destination."
+      "explanation": "The gateway is the Ethernet next hop. The remote address remains the IP packet's destination.",
+      "option_explanations": {
+        "A": "The remote host is outside the local broadcast domain, so ARP resolves the gateway instead.",
+        "B": "Broadcast may be the Ethernet destination of the request, but the ARP target IP is the gateway.",
+        "C": "A management IP is not the target unless that device is the selected gateway.",
+        "D": "The gateway is the Ethernet next hop. The remote address remains the IP packet's destination."
+      }
     },
     {
       "id": "ccna-exam-v2-19-09",
@@ -163,7 +211,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Ordinary source learning updates the association when the switch sees the MAC on its new port."
+      "explanation": "Ordinary source learning updates the association when the switch sees the MAC on its new port.",
+      "option_explanations": {
+        "A": "A frame from another source MAC cannot relearn the moved host.",
+        "B": "Reading ARP does not update the switch's forwarding database.",
+        "C": "Ordinary source learning updates the association when the switch sees the MAC on its new port.",
+        "D": "A switch learns from the source MAC of an incoming frame, not the destination of an outgoing one."
+      }
     },
     {
       "id": "ccna-exam-v2-19-10",
@@ -181,7 +235,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "ARP supplies the IP-to-MAC relation. The switch table supplies the VLAN and port for a learned MAC."
+      "explanation": "ARP supplies the IP-to-MAC relation. The switch table supplies the VLAN and port for a learned MAC.",
+      "option_explanations": {
+        "A": "An IP route selects a next hop or interface, not the port where the host MAC was learned.",
+        "B": "A DHCP lease can associate an address with a client identifier but does not supply the switch's learned port mapping.",
+        "C": "A host's ARP cache maps IP to MAC, not MAC to physical switch port.",
+        "D": "ARP supplies the IP-to-MAC relation. The switch table supplies the VLAN and port for a learned MAC."
+      }
     }
   ]
 }

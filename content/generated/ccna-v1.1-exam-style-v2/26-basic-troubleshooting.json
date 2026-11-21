@@ -19,7 +19,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "An ICMP Echo Reply answers the request for the probed destination."
+      "explanation": "An ICMP Echo Reply answers the request for the probed destination.",
+      "option_explanations": {
+        "A": "Time Exceeded reports a forwarding lifetime expiration rather than a successful echo.",
+        "B": "SYN-ACK is a TCP connection response, and ping uses ICMP.",
+        "C": "An ICMP Echo Reply answers the request for the probed destination.",
+        "D": "An ARP reply resolves the next-hop MAC and is not an end-to-end ping response."
+      }
     },
     {
       "id": "ccna-exam-v2-26-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The brief status table shows interface and line protocol state together."
+      "explanation": "The brief status table shows interface and line protocol state together.",
+      "option_explanations": {
+        "A": "The brief status table shows interface and line protocol state together.",
+        "B": "This displays local name information rather than interface status.",
+        "C": "This displays the saved configuration rather than live interface states.",
+        "D": "This filters IPv4 routes and does not show both state columns."
+      }
     },
     {
       "id": "ccna-exam-v2-26-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Successful ping supports ICMP reachability at the time of testing."
+      "explanation": "Successful ping supports ICMP reachability at the time of testing.",
+      "option_explanations": {
+        "A": "Ping replies do not show whether the routes were symmetric.",
+        "B": "The echo result does not report link duplex.",
+        "C": "Successful ping supports ICMP reachability at the time of testing.",
+        "D": "ICMP success does not test whether a TCP HTTPS connection can be established."
+      }
     },
     {
       "id": "ccna-exam-v2-26-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Timeouts alone do not identify the failing hop or cause."
+      "explanation": "Timeouts alone do not identify the failing hop or cause.",
+      "option_explanations": {
+        "A": "A timeout does not locate where the request or reply was lost.",
+        "B": "Timeouts alone do not identify the failing hop or cause.",
+        "C": "A live host might filter ICMP or be unreachable on the return path.",
+        "D": "The display does not identify the routing table as the cause."
+      }
     },
     {
       "id": "ccna-exam-v2-26-05",
@@ -92,7 +116,13 @@
         "B"
       ],
       "explanation": "Use both VLAN and destination MAC in the table to select the learned port.",
-      "snippet": "Illustrative excerpt\nVlan    Mac Address       Type        Ports\n  10    001a.2b03.04c5    DYNAMIC     Gi1/0/3\n  20    001a.2b03.04c5    DYNAMIC     Gi1/0/7\n  20    001a.2b03.04c6    DYNAMIC     Gi1/0/21"
+      "snippet": "Illustrative excerpt\nVlan    Mac Address       Type        Ports\n  10    001a.2b03.04c5    DYNAMIC     Gi1/0/3\n  20    001a.2b03.04c5    DYNAMIC     Gi1/0/7\n  20    001a.2b03.04c6    DYNAMIC     Gi1/0/21",
+      "option_explanations": {
+        "A": "The supplied table maps the destination MAC to a switch port, not to the router's interface.",
+        "B": "Use both VLAN and destination MAC in the table to select the learned port.",
+        "C": "This port has the similar but different MAC ending c6.",
+        "D": "That entry has the correct MAC but is in VLAN 10."
+      }
     },
     {
       "id": "ccna-exam-v2-26-06",
@@ -110,7 +140,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Local peer communication can succeed without a gateway. Remote forwarding normally uses it."
+      "explanation": "Local peer communication can succeed without a gateway. Remote forwarding normally uses it.",
+      "option_explanations": {
+        "A": "Ping uses ICMP, with no TCP destination port.",
+        "B": "The switch's name does not choose the host's next hop.",
+        "C": "The peer's FCS is not a configurable route for off-subnet traffic.",
+        "D": "Local peer communication can succeed without a gateway. Remote forwarding normally uses it."
+      }
     },
     {
       "id": "ccna-exam-v2-26-07",
@@ -128,7 +164,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The address-specific routing lookup displays forwarding prefix information, unlike neighbor and Layer 2 tables."
+      "explanation": "The address-specific routing lookup displays forwarding prefix information, unlike neighbor and Layer 2 tables.",
+      "option_explanations": {
+        "A": "The address-specific routing lookup displays forwarding prefix information, unlike neighbor and Layer 2 tables.",
+        "B": "ARP output lists IP-to-MAC neighbor mappings, not the chosen route.",
+        "C": "This lists learned Ethernet destinations rather than IPv4 prefixes.",
+        "D": "This summarizes interface state and addresses, not a destination lookup."
+      }
     },
     {
       "id": "ccna-exam-v2-26-08",
@@ -146,7 +188,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "The contrasting results and resolver timeout point to name resolution as the next check."
+      "explanation": "The contrasting results and resolver timeout point to name resolution as the next check.",
+      "option_explanations": {
+        "A": "The contrasting results and resolver timeout point to name resolution as the next check.",
+        "B": "A unicast name lookup does not require routing to the LAN's directed broadcast.",
+        "C": "Successful IP pings already establish some IP connectivity and there is specific evidence of a resolver timeout.",
+        "D": "MAC aging is not the first dependency indicated by a failed name lookup."
+      }
     },
     {
       "id": "ccna-exam-v2-26-09",
@@ -164,7 +212,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Choosing the LAN interface address exercises the return path toward the LAN prefix."
+      "explanation": "Choosing the LAN interface address exercises the return path toward the LAN prefix.",
+      "option_explanations": {
+        "A": "A self-ping does not exercise the remote return path.",
+        "B": "Choosing the LAN interface address exercises the return path toward the LAN prefix.",
+        "C": "A transit-sourced probe gives the remote router a transit address to reply to, not a LAN address.",
+        "D": "A local broadcast does not test unicast return forwarding from the remote router."
+      }
     },
     {
       "id": "ccna-exam-v2-26-10",
@@ -182,7 +236,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "ARP identifies the next-hop MAC. The matching VLAN MAC entry identifies the switch port toward it."
+      "explanation": "ARP identifies the next-hop MAC. The matching VLAN MAC entry identifies the switch port toward it.",
+      "option_explanations": {
+        "A": "Clearing routes would change the network unnecessarily and would not identify the learned switch port.",
+        "B": "DNS settings do not affect which interface has learned the gateway's MAC.",
+        "C": "For a remote server the local host resolves the gateway, not the remote server's MAC.",
+        "D": "ARP identifies the next-hop MAC. The matching VLAN MAC entry identifies the switch port toward it."
+      }
     }
   ]
 }

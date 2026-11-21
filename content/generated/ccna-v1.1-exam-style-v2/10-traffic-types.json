@@ -19,7 +19,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "Unicast targets one addressed endpoint."
+      "explanation": "Unicast targets one addressed endpoint.",
+      "option_explanations": {
+        "A": "Loopback stays on the originating host.",
+        "B": "Unicast targets one addressed endpoint.",
+        "C": "Broadcast addresses every receiver in its broadcast scope.",
+        "D": "Multicast addresses a group rather than one individual address."
+      }
     },
     {
       "id": "ccna-exam-v2-10-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Limited broadcast targets the local broadcast domain and routers do not forward it."
+      "explanation": "Limited broadcast targets the local broadcast domain and routers do not forward it.",
+      "option_explanations": {
+        "A": "0.0.0.0 denotes an unspecified IPv4 address in this context.",
+        "B": "127.0.0.1 is loopback.",
+        "C": "Limited broadcast targets the local broadcast domain and routers do not forward it.",
+        "D": "224.0.0.1 is the all-hosts group on the local multicast link."
+      }
     },
     {
       "id": "ccna-exam-v2-10-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Multicast addressing represents a group rather than a particular receiver."
+      "explanation": "Multicast addressing represents a group rather than a particular receiver.",
+      "option_explanations": {
+        "A": "Multicast addressing represents a group rather than a particular receiver.",
+        "B": "Limited broadcast targets the entire local broadcast scope.",
+        "C": "Loopback targets the originating host.",
+        "D": "Unicast targets one destination."
+      }
     },
     {
       "id": "ccna-exam-v2-10-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The all-ones destination MAC makes this ARP frame a link-layer broadcast."
+      "explanation": "The all-ones destination MAC makes this ARP frame a link-layer broadcast.",
+      "option_explanations": {
+        "A": "A switch floods the Ethernet broadcast rather than consulting one learned port.",
+        "B": "The all-ones destination MAC makes this ARP frame a link-layer broadcast.",
+        "C": "The all-ones MAC is broadcast, regardless of group membership.",
+        "D": "Routers do not forward ordinary Ethernet broadcasts across subnets."
+      }
     },
     {
       "id": "ccna-exam-v2-10-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "A /26 block spans 64 addresses. The all-ones host portion makes .127 the subnet broadcast."
+      "explanation": "A /26 block spans 64 addresses. The all-ones host portion makes .127 the subnet broadcast.",
+      "option_explanations": {
+        "A": ".64 has all host bits clear and identifies the subnet.",
+        "B": "A /26 block spans 64 addresses. The all-ones host portion makes .127 the subnet broadcast.",
+        "C": ".126 is the last usable host, one below broadcast.",
+        "D": ".128 starts the next /26."
+      }
     },
     {
       "id": "ccna-exam-v2-10-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "IPv4 multicast addresses occupy 224.0.0.0 through 239.255.255.255."
+      "explanation": "IPv4 multicast addresses occupy 224.0.0.0 through 239.255.255.255.",
+      "option_explanations": {
+        "A": "192.0.2.8 is in documentation unicast space.",
+        "B": "198.51.100.8 is in documentation unicast space.",
+        "C": "IPv4 multicast addresses occupy 224.0.0.0 through 239.255.255.255.",
+        "D": "127.8.8.8 is in the loopback range."
+      }
     },
     {
       "id": "ccna-exam-v2-10-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "Multicast forwarding can replicate the packet at branching points instead of carrying each receiver's copy upstream."
+      "explanation": "Multicast forwarding can replicate the packet at branching points instead of carrying each receiver's copy upstream.",
+      "option_explanations": {
+        "A": "Multicast still uses a destination IP group address.",
+        "B": "Independent copies describe per-receiver unicast traffic.",
+        "C": "Multicast forwarding can replicate the packet at branching points instead of carrying each receiver's copy upstream.",
+        "D": "Receivers join groups without becoming broadcast sources."
+      }
     },
     {
       "id": "ccna-exam-v2-10-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "A relay receives the local discovery and forwards DHCP information to the remote server."
+      "explanation": "A relay receives the local discovery and forwards DHCP information to the remote server.",
+      "option_explanations": {
+        "A": "A relay receives the local discovery and forwards DHCP information to the remote server.",
+        "B": "Recalculating the Ethernet checksum does not relay a DHCP message.",
+        "C": "The initial client broadcast does not use a static neighbor entry to address a remote server.",
+        "D": "DHCP rides on UDP rather than TCP."
+      }
     },
     {
       "id": "ccna-exam-v2-10-09",
@@ -164,7 +212,13 @@
         "D"
       ],
       "explanation": "192.0.2.88 can identify one endpoint, 239.10.10.10 is a group, and the all-ones address is limited broadcast.",
-      "snippet": "Illustrative excerpt\n1  192.0.2.88\n2  239.10.10.10\n3  255.255.255.255"
+      "snippet": "Illustrative excerpt\n1  192.0.2.88\n2  239.10.10.10\n3  255.255.255.255",
+      "option_explanations": {
+        "A": "239.10.10.10 is multicast and the final all-ones address is broadcast, so this swaps the last two.",
+        "B": "192.0.2.88 is a unicast address, and the second address is multicast.",
+        "C": "The first address is unicast and the last address is the limited broadcast, so this reverses those roles.",
+        "D": "192.0.2.88 can identify one endpoint, 239.10.10.10 is a group, and the all-ones address is limited broadcast."
+      }
     },
     {
       "id": "ccna-exam-v2-10-10",
@@ -182,7 +236,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Ordinary local broadcasts stop at the router. A service-specific relay can carry selected information across the boundary."
+      "explanation": "Ordinary local broadcasts stop at the router. A service-specific relay can carry selected information across the boundary.",
+      "option_explanations": {
+        "A": "A common link speed does not extend a broadcast domain across routed interfaces.",
+        "B": "Each FCS verifies its own frame and cannot propagate discovery.",
+        "C": "Routing tables select next hops and do not carry a shared destination MAC field.",
+        "D": "Ordinary local broadcasts stop at the router. A service-specific relay can carry selected information across the boundary."
+      }
     }
   ]
 }

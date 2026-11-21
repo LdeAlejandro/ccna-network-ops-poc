@@ -19,7 +19,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The access point consumes power, while the switch supplies it."
+      "explanation": "The access point consumes power, while the switch supplies it.",
+      "option_explanations": {
+        "A": "Receiving Ethernet frames does not make a device the PoE power consumer.",
+        "B": "The switch is the power sourcing equipment in this setup.",
+        "C": "The access point consumes power, while the switch supplies it.",
+        "D": "A passive patch panel does not consume the PoE allocation."
+      }
     },
     {
       "id": "ccna-exam-v2-22-02",
@@ -37,7 +43,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "PoE combines DC power delivery and Ethernet communications on the supported copper cable."
+      "explanation": "PoE combines DC power delivery and Ethernet communications on the supported copper cable.",
+      "option_explanations": {
+        "A": "A compatible PoE port can also source electrical power.",
+        "B": "PoE combines DC power delivery and Ethernet communications on the supported copper cable.",
+        "C": "The cable continues to carry Ethernet data.",
+        "D": "This link uses copper signaling rather than optical signals."
+      }
     },
     {
       "id": "ccna-exam-v2-22-03",
@@ -55,7 +67,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The injector accepts data on the upstream side and supplies data plus power toward the camera."
+      "explanation": "The injector accepts data on the upstream side and supplies data plus power toward the camera.",
+      "option_explanations": {
+        "A": "A midspan must inject power onto the cable in the camera's Ethernet path.",
+        "B": "The console port is not the camera's Ethernet path.",
+        "C": "An injector on the upstream link cannot send power through a non-PoE switch to the camera port.",
+        "D": "The injector accepts data on the upstream side and supplies data plus power toward the camera."
+      }
     },
     {
       "id": "ccna-exam-v2-22-04",
@@ -73,7 +91,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The power output has to face the powered camera. The data-only input connects to the non-PoE switch."
+      "explanation": "The power output has to face the powered camera. The data-only input connects to the non-PoE switch.",
+      "option_explanations": {
+        "A": "A data-only input does not deliver the required power.",
+        "B": "Moving the injector upstream leaves the camera without a powered cable.",
+        "C": "The power output has to face the powered camera. The data-only input connects to the non-PoE switch.",
+        "D": "Duplex settings cannot make the data-only input source power."
+      }
     },
     {
       "id": "ccna-exam-v2-22-05",
@@ -91,7 +115,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "The switch cannot reserve 15 W from a budget with only 10 W available."
+      "explanation": "The switch cannot reserve 15 W from a budget with only 10 W available.",
+      "option_explanations": {
+        "A": "The required 15 W is greater than the 10 W remaining.",
+        "B": "The existing 50 W reservations consume budget.",
+        "C": "An allocation of 10 W cannot meet a 15 W request.",
+        "D": "The switch cannot reserve 15 W from a budget with only 10 W available."
+      }
     },
     {
       "id": "ccna-exam-v2-22-06",
@@ -109,7 +139,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "Both the port's supply capability and the available system budget must meet the device's requirements."
+      "explanation": "Both the port's supply capability and the available system budget must meet the device's requirements.",
+      "option_explanations": {
+        "A": "The management mask does not determine the power the switch can provide.",
+        "B": "Negotiated link speed is independent of the supported PoE power level.",
+        "C": "Aggregate capacity does not override the individual port's limit.",
+        "D": "Both the port's supply capability and the available system budget must meet the device's requirements."
+      }
     },
     {
       "id": "ccna-exam-v2-22-07",
@@ -127,7 +163,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The separately powered injector must stay energized for the camera to keep receiving power."
+      "explanation": "The separately powered injector must stay energized for the camera to keep receiving power.",
+      "option_explanations": {
+        "A": "The patch panel does not supply or back up the injector's power input.",
+        "B": "A second non-PoE port still provides no backup power for the camera.",
+        "C": "The separately powered injector must stay energized for the camera to keep receiving power.",
+        "D": "A DHCP lease has no role in electrical power delivery."
+      }
     },
     {
       "id": "ccna-exam-v2-22-08",
@@ -145,7 +187,13 @@
       "correct_answers": [
         "B"
       ],
-      "explanation": "The power and data functions have distinct status. Investigate the data path and link state."
+      "explanation": "The power and data functions have distinct status. Investigate the data path and link state.",
+      "option_explanations": {
+        "A": "Being powered does not show that the AP is reachable at Layer 3.",
+        "B": "The power and data functions have distinct status. Investigate the data path and link state.",
+        "C": "With no Ethernet link, there is no evidence of a completed DHCP exchange.",
+        "D": "Power alone does not prove the switch received a frame from the AP."
+      }
     },
     {
       "id": "ccna-exam-v2-22-09",
@@ -164,7 +212,13 @@
         "C",
         "D"
       ],
-      "explanation": "An injector or a PoE switch can supply power. Cabling and patch panels only carry whatever the upstream device supplies."
+      "explanation": "An injector or a PoE switch can supply power. Cabling and patch panels only carry whatever the upstream device supplies.",
+      "option_explanations": {
+        "A": "A passive patch panel cannot add power to a link from a non-PoE switch.",
+        "B": "A crossover cable changes pair routing but cannot produce power.",
+        "C": "A compatible midspan adds power inline while passing the switch's Ethernet data.",
+        "D": "A compatible PoE switch port directly supplies both electrical power and the Ethernet link."
+      }
     },
     {
       "id": "ccna-exam-v2-22-10",
@@ -182,7 +236,13 @@
       "correct_answers": [
         "A"
       ],
-      "explanation": "Testing with independent power isolates the report from basic AP failure. The switch must have enough available power allocation."
+      "explanation": "Testing with independent power isolates the report from basic AP failure. The switch must have enough available power allocation.",
+      "option_explanations": {
+        "A": "Testing with independent power isolates the report from basic AP failure. The switch must have enough available power allocation.",
+        "B": "Changing uplink duplex does not increase the available PoE allocation.",
+        "C": "Changing the gateway affects routing only after the AP is operating.",
+        "D": "Clearing ARP does not release any reserved PoE watts."
+      }
     }
   ]
 }

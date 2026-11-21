@@ -19,7 +19,13 @@
       "correct_answers": [
         "C"
       ],
-      "explanation": "The Network layer (Layer 3) moves packets between networks using logical addresses."
+      "explanation": "The Network layer (Layer 3) moves packets between networks using logical addresses.",
+      "option_explanations": {
+        "A": "Physical carries signals that represent bits.",
+        "B": "Data Link delivers frames over a local link using link-layer addresses.",
+        "C": "The Network layer (Layer 3) moves packets between networks using logical addresses.",
+        "D": "Transport serves end-to-end conversations, for example using TCP or UDP ports."
+      }
     },
     {
       "id": "fund-002",
@@ -38,7 +44,13 @@
         "A",
         "C"
       ],
-      "explanation": "Ethernet carries source and destination MAC addresses. IP addresses and UDP ports are fields in higher-layer protocol headers."
+      "explanation": "Ethernet carries source and destination MAC addresses. IP addresses and UDP ports are fields in higher-layer protocol headers.",
+      "option_explanations": {
+        "A": "The source MAC identifies the frame's sender on the local link.",
+        "B": "The destination IPv4 address belongs to an IP packet, not the Ethernet header.",
+        "C": "The destination MAC identifies the intended receiver or group on the Ethernet link.",
+        "D": "The UDP source port belongs to the transport header rather than the Ethernet header."
+      }
     },
     {
       "id": "fund-003",
@@ -56,7 +68,13 @@
       "correct_answers": [
         "D"
       ],
-      "explanation": "TCP uses sequence numbers and acknowledgements to deliver an ordered byte stream. UDP does not provide these guarantees."
+      "explanation": "TCP uses sequence numbers and acknowledgements to deliver an ordered byte stream. UDP does not provide these guarantees.",
+      "option_explanations": {
+        "A": "IP carries packets without guaranteeing ordered delivery.",
+        "B": "UDP carries datagrams without ordered, reliable byte-stream semantics.",
+        "C": "ICMP reports network conditions and supports diagnostics rather than application streams.",
+        "D": "TCP uses sequence numbers and acknowledgements to deliver an ordered byte stream. UDP does not provide these guarantees."
+      }
     }
   ]
 }
