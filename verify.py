@@ -203,6 +203,18 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
                 def picture(rendered):
                     return re.search(rb'\x1bP.*?\x1b\\', rendered)[0]
 
+                def check_operator_rail(rendered, profile_width):
+                    image = picture(rendered)
+                    raster = re.match(rb'\x1bP0;1q"1;1;(\d+);(\d+)', image)
+                    pixel_width, pixel_height = map(int, raster.groups())
+                    assert pixel_width == (profile_width - 3) * 7
+                    after_image = rendered.split(image, 1)[1]
+                    rail = "▌".encode()
+                    for row in range(8, 8 + (pixel_height + 16) // 17):
+                        cursor = f"\x1b[{row};{profile_width + 1}H".encode()
+                        assert re.search(re.escape(cursor) + rb'(?:\x1b\[[\d;]+m)+' + rail, after_image)
+
+                check_operator_rail(initial, 43)
                 images = {picture(initial)}
                 assert b"1/4 Equipped" in initial
                 for stage in range(1, len(STAGES) + 1):
@@ -225,6 +237,7 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
                 tty.tcsetwinsize(master, (24, 80))
                 compact = dashboard()
                 assert b"RELAY" in compact and picture(compact) not in images
+                check_operator_rail(compact, 80 // 3)
             else:
                 skin_color = portrait_palette(THEMES[1])[20]
                 assert color(skin_color).encode() in initial

@@ -560,6 +560,7 @@ class Dashboard:
             if width >= 27:
                 put(x + width - 10, y + height - 1, "▀▀", t.secondary)
                 put(x + width - 8, y + height - 1, "▀", t.shadow)
+            return rail
 
         def body(x, y, width, value, ink=None):
             put(x + 2, y, value[:width - 4], ink, row_bg(y))
@@ -791,15 +792,18 @@ class Dashboard:
                     if gear_h == 8:
                         put(x + 1, gear_y + 6, role.center(width - 2), t.muted, card_bg)
 
-        panel(left, y0, profile_w, profile_end - y0, "PREVIEW" if preview else "OPERATOR",
-              active=self.focus == 0)
+        operator_rail = panel(left, y0, profile_w, profile_end - y0, "PREVIEW" if preview else "OPERATOR",
+                             active=self.focus == 0)
         portrait_y = y0 + 1
         portrait_rows = profile_end - portrait_y - 5
         portrait_columns = profile_w - 2
         palette = portrait_palette(t)
-        image = sixel(stage, palette, pixels, portrait_columns, portrait_rows, operator) if pixels else ""
+        # Some terminals claim an extra text cell along the Sixel raster edge.
+        image = sixel(stage, palette, pixels, portrait_columns - 1, portrait_rows, operator) if pixels else ""
         if image:
             frame.extend((f"{ESC}{portrait_y + 1};{left + gutter + 2}H", image))
+            for y in range(portrait_y, portrait_y + portrait_rows):
+                put(left + profile_w - 1, y, "▌", operator_rail, t.panel)
         else:
             for y, pairs in enumerate(half_blocks(stage, portrait_columns, portrait_rows, operator), portrait_y):
                 x = left + 1 + (portrait_columns - len(pairs)) // 2
