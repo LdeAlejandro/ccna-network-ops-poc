@@ -170,7 +170,8 @@ class EngineTest(unittest.TestCase):
             self.assertEqual(upgraded.start()["selected"], ["C"])
             self.assertEqual(upgraded.history()[0]["number"], 1)
             self.assertEqual(upgraded.summary()["xp"], 40)
-            self.assertEqual(upgraded.avatar_stage(40), 1)
+            self.assertEqual(upgraded.unlocked_stage(40), 0)
+            self.assertEqual(upgraded.db.execute("SELECT avatar FROM profile").fetchone()[0], 1)
             self.assertEqual(upgraded.reviews()[0]["due"], "2026-01-02")
             self.assertIsNone(upgraded.start(review=True))
             self.today += timedelta(days=1)
@@ -214,13 +215,19 @@ class EngineTest(unittest.TestCase):
         self.assertIn(session["question"], mission.questions)
         self.assertEqual(self.engine.session(REVIEW)["number"], session["number"])
 
-    def test_level_threshold_and_manual_avatar_persistence(self):
-        self.assertEqual(self.engine.level(359), 7)
-        self.assertEqual(self.engine.level(360), 8)
-        self.assertEqual(self.engine.avatar_stage(360), 1)
-        self.engine.toggle_avatar(0)
+    def test_operator_swap_and_evolution_stages(self):
+        boundaries = (-1000, 0, 359, 360, 1359, 1360, 2359, 2360, 9000)
+        self.assertEqual([self.engine.unlocked_stage(xp) for xp in boundaries],
+                         [0, 0, 0, 1, 1, 2, 2, 3, 3])
+        self.engine.cycle_operator()
         with closing(Learning(self.path)) as reopened:
-            self.assertEqual(reopened.avatar_stage(0), 1)
+            self.assertEqual(reopened.operator(), 1)
+            self.assertEqual(reopened.unlocked_stage(359), 0)
+            self.assertEqual(reopened.unlocked_stage(360), 1)
+            self.assertEqual(reopened.operator(), 1)
+            reopened.cycle_operator()
+        self.assertEqual(self.engine.operator(), 0)
+        self.assertEqual(self.engine.earned_xp(), 0)
 
 
 if __name__ == "__main__":

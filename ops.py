@@ -17,7 +17,7 @@ import termios
 from time import monotonic
 import tty
 
-from avatar import half_blocks, portrait_palette, sixel
+from avatar import OPERATORS, STAGES, half_blocks, portrait_palette, sixel
 from lettering import masthead
 from learning import Learning, LearningError, MISSION, PRACTICE, REVIEW
 from missions import MISSIONS, MISSIONS_BY_ID, load_bundled
@@ -62,6 +62,7 @@ class Dashboard:
             pass
         self.focus = self.offset = 0
         self.settings = False
+        self.preview_stage = self.preview_operator = None
         self.notice = ""
 
     def choose(self, index):
@@ -109,8 +110,21 @@ class Dashboard:
             self.notice = ""
             self.scroll = self.feed_cursor = 0
             self.reveal = None
+        elif key == "a":
+            if self.preview_stage is None:
+                self.learning.cycle_operator()
+            else:
+                self.preview_operator = (self.preview_operator + 1) % len(OPERATORS)
         elif key == "e":
-            self.learning.toggle_avatar(self.learning.earned_xp())
+            if self.preview_stage is None:
+                self.preview_stage = 0
+                self.preview_operator = self.learning.operator()
+            elif self.preview_stage == len(STAGES) - 1:
+                self.preview_stage = self.preview_operator = None
+            else:
+                self.preview_stage += 1
+        elif key == "ESC":
+            self.preview_stage = self.preview_operator = None
         elif key in ("DOWN", "TAB", "UP"):
             step = -1 if key == "UP" else 1
             self.focus = (self.focus + step) % 6
@@ -570,7 +584,11 @@ class Dashboard:
         summary = self.learning.summary()
         earned = summary["xp"]
         level = self.learning.level(earned)
-        stage = self.learning.avatar_stage(earned)
+        unlocked_stage = self.learning.unlocked_stage(earned)
+        preview = self.preview_stage is not None
+        stage = self.preview_stage if preview else unlocked_stage
+        operator = self.preview_operator if preview else self.learning.operator()
+        operator_name = OPERATORS[operator].upper()
         xp = (XP + earned) % XP_GOAL
         topics = tuple(f"{cell_text(name)}: {state}" + (f"  {right}/{total}" if total else "")
                        for name, (state, right, total) in summary["topics"].items())
@@ -664,8 +682,10 @@ class Dashboard:
                 body(detail_x, y0 + 3, 30, f"Difficulty {mission.difficulty}/5")
                 body(detail_x, y0 + 4, 30, f"Questions  {len(mission.questions)}")
                 body(detail_x, y0 + 5, 30, f"First pass +{mission.reward} XP")
-                if latest:
-                    meter(detail_x + 2, y0 + mission_h - 2, len(latest["questions"]), latest["answered"])
+                total = len(latest["questions"]) if latest else len(mission.questions)
+                done = latest["answered"] if latest else 0
+                body(detail_x, y0 + mission_h - 3, 30, f"Progress {done}/{total}", t.secondary)
+                meter(detail_x + 2, y0 + mission_h - 2, total, done)
             else:
                 study(0, right, y0, right_w, mission_h)
             study(1, right, mid_y, mid_w, mid_h)
@@ -710,16 +730,17 @@ class Dashboard:
                     if gear_h == 8:
                         put(x + 1, gear_y + 6, role.center(width - 2), t.muted, card_bg)
 
-        panel(left, y0, profile_w, profile_end - y0, "OPERATOR", active=self.focus == 0)
+        panel(left, y0, profile_w, profile_end - y0, "PREVIEW" if preview else "OPERATOR",
+              active=self.focus == 0)
         portrait_y = y0 + 1
         portrait_rows = profile_end - portrait_y - 5
         portrait_columns = profile_w - 2
         palette = portrait_palette(t)
-        image = sixel(stage, palette, pixels, portrait_columns, portrait_rows) if pixels else ""
+        image = sixel(stage, palette, pixels, portrait_columns, portrait_rows, operator) if pixels else ""
         if image:
             frame.extend((f"{ESC}{portrait_y + 1};{left + gutter + 2}H", image))
         else:
-            for y, pairs in enumerate(half_blocks(stage, portrait_columns, portrait_rows), portrait_y):
+            for y, pairs in enumerate(half_blocks(stage, portrait_columns, portrait_rows, operator), portrait_y):
                 x = left + 1 + (portrait_columns - len(pairs)) // 2
                 for (top, bottom), cells in groupby(pairs):
                     length = sum(1 for _ in cells)
@@ -728,11 +749,16 @@ class Dashboard:
 
         stats_y = profile_end - 5
         if profile_w >= 25:
-            put(left + 1, stats_y, " ▸ ROOK".ljust(profile_w - 2), t.background, t.secondary, bold=True)
+            put(left + 1, stats_y, f" ▸ {operator_name}".ljust(profile_w - 2), t.background, t.secondary, bold=True)
             put(left + profile_w - 11, stats_y, f" LEVEL {level:02d} ", t.background, t.accent, bold=True)
         else:
-            put(left + 1, stats_y, f" ROOK / LV {level:02d}"[:profile_w - 2], t.background, t.secondary, bold=True)
-        body(left, stats_y + 1, profile_w, f"Evolution {stage + 1} / 2", t.secondary)
+            put(left + 1, stats_y, f" {operator_name} / LV {level:02d}"[:profile_w - 2], t.background, t.secondary, bold=True)
+        if preview:
+            state = "Locked" if stage > unlocked_stage else "Unlocked"
+            progress = f"{stage + 1}/{len(STAGES)} {state} · {STAGES[stage]}"
+        else:
+            progress = f"{stage + 1}/{len(STAGES)} Equipped · {STAGES[stage]}"
+        body(left, stats_y + 1, profile_w, progress, t.secondary)
         body(left, stats_y + 2, profile_w, f"XP {xp:,}/{XP_GOAL:,}", t.text)
         segments = min(16, (profile_w - 3) // 2)
         meter(left + 2, stats_y + 3, segments, xp * segments // XP_GOAL)
@@ -745,13 +771,15 @@ class Dashboard:
             focus += "  /  Enter details"
         commands = (("M", "Missions"), ("X", "Practice"), ("R", "Review"), ("F", "Feed"),
                     ("S", "Theme"), ("Q", "Quit"))
-        if cols >= 95:
-            commands += (("Tab/↑↓", "Panels"), ("E", "Avatar"))
+        if cols >= 110:
+            commands += (("A", "Operator"), ("E", "Preview"), ("Tab/↑↓", "Panels"))
         elif cols >= 68:
-            focus += "  /  Tab Panels  E Avatar"
+            focus += "  /  A Swap  E Preview  Tab Panels"
         else:
-            commands = (("M", "Missions"), ("X", "Practice"), ("R", "Review"), ("S", "Theme"), ("Q", "Quit"))
-            focus += "  /  F Feed  E Avatar  Tab Panels"
+            commands = (("M", "Missions"), ("X", "Practice"), ("R", "Review"), ("A", "Swap"), ("Q", "Quit"))
+            focus += "  /  F Feed  E Preview  S Theme"
+        if preview:
+            focus = "E Next  A Preview operator  Esc Exit"
         footer(commands, focus)
         return "".join(frame)
 

@@ -17,7 +17,7 @@ import tty
 from learning import Learning, MISSION, REVIEW
 from missions import MISSIONS
 from model import THEMES
-from avatar import portrait_palette
+from avatar import OPERATORS, STAGES, portrait_palette
 from ops import color
 
 
@@ -65,7 +65,7 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
 
     def dashboard():
         rendered = frame()
-        assert b"OPERATOR" in rendered and b"XP 640/1,000" in rendered
+        assert (b"OPERATOR" in rendered or b"PREVIEW" in rendered) and b"XP 640/1,000" in rendered
         for label in ("Missions", "Practice", "Review", "Feed", "Theme", "Quit"):
             assert label.encode() in rendered
         return rendered
@@ -187,12 +187,31 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
         else:
             initial = dashboard()
             if graphics_reply:
-                first_image = re.search(rb'\x1bP.*?\x1b\\', initial)[0]
+                def picture(rendered):
+                    return re.search(rb'\x1bP.*?\x1b\\', rendered)[0]
+
+                images = {picture(initial)}
+                assert b"1/4 Equipped" in initial
+                for stage in range(1, len(STAGES) + 1):
+                    os.write(master, b"e")
+                    for operator in OPERATORS:
+                        rendered = dashboard()
+                        assert b"PREVIEW" in rendered and operator.upper().encode() in rendered
+                        state = "Unlocked" if stage == 1 else "Locked"
+                        assert f"{stage}/4 {state}".encode() in rendered
+                        images.add(picture(rendered))
+                        if capture:
+                            capture(f"{operator.lower()}-{stage}", rendered)
+                        os.write(master, b"a")
+                    dashboard()  # The second swap restores the preview operator.
+                assert len(images) == len(STAGES) * len(OPERATORS)
                 os.write(master, b"e")
-                evolved = dashboard()
-                assert b"Evolution 2 / 2" in evolved
-                second_image = re.search(rb'\x1bP.*?\x1b\\', evolved)[0]
-                assert first_image != second_image
+                assert b"1/4 Equipped" in dashboard()
+                os.write(master, b"a")
+                assert b"RELAY" in dashboard()
+                tty.tcsetwinsize(master, (24, 80))
+                compact = dashboard()
+                assert b"RELAY" in compact and picture(compact) not in images
             else:
                 skin_color = portrait_palette(THEMES[1])[20]
                 assert color(skin_color).encode() in initial
@@ -207,7 +226,9 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
                 os.write(master, b"\x1b[A")
                 assert "▸ NEXT REVIEW".encode() in dashboard()
                 os.write(master, b"e")
-                assert b"Evolution 2 / 2" in dashboard()
+                assert b"1/4 Unlocked" in dashboard()
+                os.write(master, b"a")
+                assert b"RELAY" in dashboard()
                 os.write(master, b"s")
                 assert b"THEME SETTINGS" in frame()
                 for index, theme in enumerate(THEMES, 1):
@@ -217,7 +238,7 @@ def verify(mode, root, graphics_reply=False, study=None, capture=None):
                     assert f"{index}  ●  {theme.name}".encode() in rendered
                     assert b"Theme saved" in rendered
                 os.write(master, b"\x1b")
-                assert b"Evolution 2 / 2" in dashboard()
+                assert b"1/4 Unlocked" in dashboard()
                 assert (root / "ccna-network-ops" / "theme").read_text().strip() == THEMES[-1].name
         os.write(master, b"q")
         receive(b"\x1b[?1049l")

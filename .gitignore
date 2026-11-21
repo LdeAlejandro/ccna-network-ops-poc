@@ -49,3 +49,8 @@ dist/
 !/design/screenshots/rc-mission-briefing.png
 !/design/screenshots/rc-mission-quiz.png
 !/design/screenshots/rc-mission-summary.png
+
+# Avatar references are local review material.
+/content/design/avatar_refinement/references/
+/design/avatar_refinement/references/
+/content/CCNA_Avatar_Refinement_Codex_References.zip

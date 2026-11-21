@@ -10,6 +10,7 @@ import re
 import sqlite3
 import unicodedata
 
+from avatar import FIRST_LEVEL, OPERATORS, stage_for_level, valid_index
 from model import XP, XP_GOAL
 from missions import MISSIONS_BY_ID
 
@@ -49,8 +50,12 @@ CREATE TABLE IF NOT EXISTS active (
     question TEXT NOT NULL REFERENCES questions(id), cursor INTEGER NOT NULL,
     selected TEXT NOT NULL
 );
+-- Legacy preview settings are retained for compatibility with older releases.
 CREATE TABLE IF NOT EXISTS profile (
     slot INTEGER PRIMARY KEY CHECK (slot = 1), avatar INTEGER
+);
+CREATE TABLE IF NOT EXISTS operator_choice (
+    slot INTEGER PRIMARY KEY CHECK (slot = 1), operator INTEGER NOT NULL
 );
 CREATE TABLE IF NOT EXISTS mission_runs (
     id INTEGER PRIMARY KEY, mission TEXT NOT NULL, questions TEXT NOT NULL,
@@ -435,10 +440,8 @@ class Learning:
                              correct, xp, due.isoformat()))
             self.db.execute("INSERT OR REPLACE INTO reviews VALUES (?, ?, ?)", (q["id"], due.isoformat(), step))
             self.db.execute("INSERT INTO attempt_order(attempt) VALUES (?)", (session["number"],))
-            bonus = self.record_mission_answer(session["number"]) if slot == MISSION else 0
-            earned = self.earned_xp()
-            if self.level(earned) > self.level(earned - xp - bonus):
-                self.db.execute("DELETE FROM profile WHERE slot=1")
+            if slot == MISSION:
+                self.record_mission_answer(session["number"])
             return self.session(slot)
 
     def history(self):
@@ -473,15 +476,19 @@ class Learning:
 
     @staticmethod
     def level(earned):
-        return 7 + (XP + earned) // XP_GOAL
+        return FIRST_LEVEL + (XP + earned) // XP_GOAL
 
-    def avatar_stage(self, earned):
-        row = self.db.execute("SELECT avatar FROM profile WHERE slot=1").fetchone()
-        return row[0] if row else int(self.level(earned) > 7)
+    def operator(self):
+        row = self.db.execute("SELECT operator FROM operator_choice WHERE slot = 1").fetchone()
+        return row["operator"] if row and valid_index(row["operator"], OPERATORS) else 0
 
-    def toggle_avatar(self, earned):
+    def cycle_operator(self):
         with self.transaction():
-            self.db.execute("INSERT OR REPLACE INTO profile VALUES (1, ?)", (1 - self.avatar_stage(earned),))
+            choice = (self.operator() + 1) % len(OPERATORS)
+            self.db.execute("INSERT OR REPLACE INTO operator_choice VALUES (1, ?)", (choice,))
+
+    def unlocked_stage(self, earned):
+        return stage_for_level(self.level(earned))
 
     def reviews(self):
         return self.db.execute("""

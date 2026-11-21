@@ -76,7 +76,9 @@ Use the [question-pack schema](question-pack.schema.json) and a starter pack as 
 | --- | --- |
 | Tab / ↓ | Focus the next panel |
 | Shift+Tab / ↑ | Focus the previous panel |
-| E | Switch the portrait stage |
+| A | Switch the saved operator on the dashboard or compare operators in preview |
+| E | Preview all four stages in order, then return to the equipped stage |
+| Esc in preview | Return to the equipped portrait |
 | M / X / R | Open Missions / Practice / Review |
 | F | Open the local Feed |
 | Enter on Mission | Open the mission list |
@@ -114,7 +116,7 @@ The selected theme is saved under `${XDG_CONFIG_HOME:-$HOME/.config}/ccna-networ
 ## Progress, adaptation, and reviews
 
 - A topic becomes **Introduced** on import or explicit activation and **Practiced** after the first attempt. **Mastered** requires at least 80% topic accuracy and at least three distinct questions whose latest attempts were correct.
-- The operator starts at level 7 with 640 XP toward the next 1,000-point threshold, as in the original dashboard. The first correct answer to a question awards `20 × difficulty` XP. Repeated correct answers still count toward accuracy and reviews. Reaching level 8 unlocks the evolved portrait as the default.
+- The operator starts at level 7 with 640 XP toward the next 1,000-point threshold, as in the original dashboard. The first correct answer to a question awards `20 × difficulty` XP. Repeated correct answers still count toward accuracy and reviews. Both Rook and Relay have four portrait stages, unlocked at levels 7, 8, 9 and 10. The selected operator is saved and shares the same learning progress. Preview is temporary and can show locked stages. A missing or invalid stage sprite falls back to the same operator’s base portrait, then to their first available stage or an empty matte.
 - The scheduler considers unseen questions and questions due today or earlier. It prioritizes due reviews, balances eligible categories against the long-run targets, then favors weaker topics and missed questions. It avoids immediately repeating a question when another eligible choice exists.
 - Default weights are 35% networking theory, 20% IOS commands, and 15% each for IOS output, troubleshooting, and subnetting. When a category has no eligible questions, its weight is redistributed proportionally among the eligible categories. To override the targets, put a JSON object with positive integer weights for all five category IDs in `${XDG_CONFIG_HOME:-$HOME/.config}/ccna-network-ops/category-weights.json`.
 - Correct answers schedule reviews at 1, 3, 7, 14, then 30 days. Further correct answers stay at 30 days. An incorrect answer resets the sequence and schedules review in one day. Dates use UTC.
@@ -122,7 +124,7 @@ The selected theme is saved under `${XDG_CONFIG_HOME:-$HOME/.config}/ccna-networ
 
 ## Scope and roadmap
 
-Study is local and selection-based. IOS output and topologies are study examples. The project is independent of Cisco. The release defers typed command grading, live network labs, packet simulation, multiplayer, cloud services, external AI integration, and coverage of objectives beyond the supplied syllabus. The Rook portraits were generated for this project with OpenAI image generation and prepared as indexed pixel art.
+Study is local and selection-based. IOS output and topologies are study examples. The project is independent of Cisco. The release defers typed command grading, live network labs, packet simulation, multiplayer, cloud services, external AI integration, and coverage of objectives beyond the supplied syllabus. The base portraits were generated with OpenAI image generation and prepared as indexed pixel art. Advanced stages add operator equipment to the indexed sprites.
 
 ## Verification
 
